@@ -71,7 +71,7 @@ body {
   line-height: 1.45;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 img, svg { display: block; max-width: 100%; }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
@@ -315,7 +315,7 @@ body.scrolled .header-search {
   font-size: 12px; font-weight: 600;
   transition: background 0.15s;
 }
-.btn-primary-sm:hover { background: var(--accent); }
+.btn-primary-sm:hover { background: var(--accent); color: var(--accent-ink); }
 
 .menu-toggle { display: inline-flex; }
 
@@ -1168,20 +1168,30 @@ body.menu-open .mobile-menu {
 .detail-back svg { width: 14px; height: 14px; stroke: currentColor; }
 
 .detail-hero {
-  padding: 12px 0 36px;
-  display: grid; grid-template-columns: 1fr; gap: 28px;
+  padding: 12px 0 28px;
+  display: grid; grid-template-columns: 1fr; gap: 20px;
 }
+.detail-hero > * { min-width: 0; }
 @media (min-width: 900px) {
-  .detail-hero { grid-template-columns: 1fr 1.05fr; gap: 48px; }
+  .detail-hero { grid-template-columns: 1fr 1.05fr; gap: 48px; padding-bottom: 36px; }
 }
 
 .detail-poster {
   position: relative;
-  aspect-ratio: 4/5;
+  aspect-ratio: 4/3;
   border-radius: 20px;
   overflow: hidden;
-  background: #fbde00;
+  background: #0a0a0a;
   border: 1px solid var(--line);
+}
+@media (min-width: 900px) {
+  .detail-poster { aspect-ratio: 4/5; }
+}
+.detail-poster-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 .detail-poster .poster-art {
   position: absolute; inset: 0;
@@ -1215,6 +1225,7 @@ body.menu-open .mobile-menu {
   font-weight: 400; color: #0a0a0a; font-size: 22px;
 }
 
+.detail-info { min-width: 0; max-width: 100%; }
 .detail-info .event-hero-kicker {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-mono); font-size: 11px; font-weight: 600;
@@ -1242,6 +1253,276 @@ body.menu-open .mobile-menu {
   color: var(--ink-mid); margin-bottom: 4px;
 }
 .fact-value { font-size: 14px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); }
+
+/* ==== MULTI-DATE PICKER ==== */
+.datepicker-section { margin-bottom: 26px; overflow: hidden; max-width: 100%; }
+.datepicker-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 14px; gap: 8px; flex-wrap: wrap;
+}
+.datepicker-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-mid);
+}
+.datepicker-count {
+  font-size: 12px; color: var(--ink-mid);
+}
+.datepicker-scroll-wrap {
+  position: relative;
+  margin: 0 -20px;
+  padding: 0 20px;
+  overflow: hidden;
+}
+@media (min-width: 768px) {
+  .datepicker-scroll-wrap { margin: 0; padding: 0; }
+}
+.datepicker-scroll {
+  display: flex; gap: 10px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 8px 0 12px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  -ms-overflow-style: none;
+}
+.datepicker-scroll::-webkit-scrollbar { display: none; width: 0; height: 0; }
+.datepicker-scroll::after {
+  content: "";
+  flex: 0 0 8px;
+}
+.date-card {
+  flex-shrink: 0; scroll-snap-align: start;
+  width: 96px; min-height: 122px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 14px; padding: 14px 8px 12px;
+  display: flex; flex-direction: column; align-items: center;
+  cursor: pointer; transition: border-color 0.15s, transform 0.1s, background 0.15s;
+  position: relative;
+}
+.date-card:hover { border-color: var(--ink); }
+.date-card:active { transform: scale(0.98); }
+.date-card.selected {
+  border-color: var(--ink); border-width: 2px;
+  background: var(--ink); color: #fff;
+  padding: 13px 9px 11px;
+}
+.date-card[data-status="soldout"] {
+  opacity: 0.45; cursor: not-allowed;
+  border-style: dashed;
+}
+.date-card[data-status="soldout"]:hover { border-color: var(--line-strong); }
+.date-card .dayname {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.1em; color: var(--ink-mid);
+  margin-bottom: 2px;
+}
+.date-card.selected .dayname { color: rgba(255,255,255,0.7); }
+.date-card .daynum {
+  font-family: var(--font-display); font-weight: 800;
+  font-size: 28px; line-height: 1; letter-spacing: -0.04em;
+  color: var(--ink); margin: 2px 0;
+}
+.date-card.selected .daynum { color: #fff; }
+.date-card .month {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; color: var(--ink-mid);
+  margin-bottom: 8px;
+}
+.date-card.selected .month { color: rgba(255,255,255,0.7); }
+.date-card .price {
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
+  color: var(--ink);
+}
+.date-card.selected .price { color: var(--accent); }
+.date-card[data-status="soldout"] .price {
+  text-decoration: line-through;
+  color: var(--ink-mid);
+}
+.date-card .date-badge {
+  position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
+  background: var(--accent); color: var(--accent-ink);
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 100px;
+  white-space: nowrap;
+}
+.date-card[data-status="soldout"] .date-badge {
+  background: var(--ink-mid); color: #fff;
+}
+
+.selected-date-detail {
+  margin-top: 14px; padding: 14px 16px;
+  background: var(--bg-soft); border-radius: 12px;
+  display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap;
+  font-size: 13px;
+}
+.selected-date-detail-item {
+  display: flex; flex-direction: column; gap: 2px;
+  flex: 1 1 auto; min-width: 0;
+}
+.selected-date-detail-label {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mid);
+}
+.selected-date-detail-value {
+  font-size: 13px; font-weight: 600; color: var(--ink);
+}
+.selected-date-detail-divider {
+  width: 1px; background: var(--line); align-self: stretch;
+}
+
+.continue-cta {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; margin-top: 16px;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 16px 24px; border-radius: 14px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: background 0.15s, transform 0.1s;
+  border: none;
+}
+.continue-cta:hover { background: var(--accent-hover); }
+.continue-cta:active { transform: scale(0.98); }
+.continue-cta:disabled {
+  background: var(--line); color: var(--ink-mid);
+  cursor: not-allowed;
+}
+.continue-cta svg { width: 16px; height: 16px; stroke: currentColor; flex-shrink: 0; }
+
+.see-all-dates {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: none;
+  font-family: var(--font-display); font-weight: 600; font-size: 13px;
+  color: var(--ink); cursor: pointer;
+  padding: 8px 0; margin-top: 6px;
+  text-decoration: underline; text-underline-offset: 3px;
+}
+.see-all-dates:hover { color: var(--ink-mid); }
+
+/* ==== RECURRING CALENDAR (month view) ==== */
+.recurring-section { margin-bottom: 26px; }
+.recurring-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 14px;
+}
+.recurring-title {
+  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.recurring-subtitle {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-mid); margin-bottom: 4px;
+}
+.cal-wrapper {
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 16px; padding: 16px;
+}
+.cal-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px;
+}
+.cal-nav-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: transparent; border: 1.5px solid var(--line-strong);
+  cursor: pointer; transition: all 0.15s; flex-shrink: 0;
+}
+.cal-nav-btn:hover:not(:disabled) { border-color: var(--ink); background: var(--bg-soft); }
+.cal-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.cal-nav-btn svg { width: 16px; height: 16px; stroke: var(--ink); }
+.cal-month-label {
+  font-family: var(--font-display); font-weight: 800; font-size: 17px;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.cal-grid {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px;
+}
+.cal-dow {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mid); text-align: center;
+  padding: 6px 0 10px;
+}
+.cal-day {
+  aspect-ratio: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  border-radius: 10px; cursor: pointer;
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  color: var(--ink);
+  transition: background 0.12s, color 0.12s;
+  position: relative; border: none; background: transparent;
+}
+.cal-day.empty { cursor: default; pointer-events: none; }
+.cal-day.has-classes:hover { background: var(--bg-soft); }
+.cal-day.has-classes::after {
+  content: ""; position: absolute; bottom: 5px; left: 50%;
+  transform: translateX(-50%);
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent);
+}
+.cal-day.no-classes {
+  color: var(--ink-dim); cursor: default; pointer-events: none;
+}
+.cal-day.selected {
+  background: var(--ink); color: #fff;
+}
+.cal-day.selected::after { background: var(--accent); }
+
+.cal-classes-header {
+  margin-top: 20px; margin-bottom: 12px;
+  font-family: var(--font-display); font-weight: 800; font-size: 16px;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.cal-classes-list {
+  display: flex; flex-direction: column; gap: 8px;
+}
+.class-slot {
+  display: flex; align-items: center; gap: 14px;
+  padding: 14px 16px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 14px;
+  cursor: pointer; transition: border-color 0.15s, background 0.15s;
+  text-align: left;
+}
+.class-slot:hover:not([data-status="soldout"]) { border-color: var(--ink); }
+.class-slot.selected {
+  border-color: var(--ink); border-width: 2px;
+  padding: 13px 15px;
+  background: var(--ink); color: #fff;
+}
+.class-slot[data-status="soldout"] {
+  opacity: 0.5; cursor: not-allowed;
+  border-style: dashed;
+}
+.class-slot-time {
+  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  letter-spacing: -0.02em; flex-shrink: 0; min-width: 70px;
+}
+.class-slot-info { flex: 1; min-width: 0; }
+.class-slot-name {
+  font-weight: 600; font-size: 14px; margin-bottom: 2px;
+}
+.class-slot-teacher {
+  font-size: 12px; color: var(--ink-mid);
+}
+.class-slot.selected .class-slot-teacher { color: rgba(255,255,255,0.7); }
+.class-slot-price {
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  flex-shrink: 0;
+}
+.class-slot[data-status="soldout"] .class-slot-price { text-decoration: line-through; }
+.class-slot-badge {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: var(--accent); color: var(--accent-ink);
+  padding: 3px 8px; border-radius: 100px;
+  margin-right: 4px;
+}
+.cal-empty-state {
+  padding: 40px 20px; text-align: center;
+  color: var(--ink-mid); font-size: 13px;
+}
 
 .event-desc { color: var(--ink-mid); font-size: 14px; line-height: 1.6; margin-bottom: 24px; }
 .event-desc strong { color: var(--ink); font-weight: 600; }
@@ -1305,8 +1586,8 @@ body.menu-open .mobile-menu {
   font-size: 30px; letter-spacing: -0.03em; color: var(--ink);
   line-height: 1;
 }
-.buy-box .btn-primary { margin-left: auto; padding: 14px 26px; font-size: 15px; background: var(--accent); border-color: var(--accent); }
-.buy-box .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: #fff; }
+.buy-box .btn-primary { margin-left: auto; padding: 14px 26px; font-size: 15px; background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.buy-box .btn-primary:hover { background: var(--accent-hover); border-color: var(--accent-hover); color: var(--accent-ink); }
 
 @media (max-width: 900px) {
   .buy-box { display: none; }
@@ -2228,17 +2509,17 @@ body.menu-open .mobile-menu {
           <div class="event-price"><span>Desde</span><strong>$40.00</strong></div>
         </div>
       </a>
-      <a onclick="navigate('evento')" class="event-card">
+      <a onclick="navigate('evento', 'yoga')" class="event-card">
         <div class="event-thumb-wrap">
           <div class="event-thumb-img"><div class="art-yoga"></div></div>
           <span class="event-genre">YOGA</span>
           <button class="event-save" onclick="toggleSave(event, this)" aria-label="Guardar evento"><svg stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.8 4.6a5.5 5.5 0 00-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 00-7.8 7.8l1 1L12 21l7.8-7.8 1-1a5.5 5.5 0 000-7.6z"/></svg></button>
         </div>
         <div class="event-body">
-          <h3 class="event-title">Beach Yoga &amp; Brunch</h3>
-          <div class="event-date">DOM 19 ABR · 7:45 AM</div>
-          <div class="event-venue">Playa Hermosa</div>
-          <div class="event-price"><span>Desde</span><strong>$45.00</strong></div>
+          <h3 class="event-title">Yoga Sunset en la playa</h3>
+          <div class="event-date">CLASES SEMANALES · ABR</div>
+          <div class="event-venue">Flow Studio CR</div>
+          <div class="event-price"><span>Desde</span><strong>$12.00</strong></div>
         </div>
       </a>
       <a onclick="navigate('evento')" class="event-card">
@@ -2425,18 +2706,21 @@ body.menu-open .mobile-menu {
 <section class="container">
   <div class="detail-hero">
     <div class="detail-poster" id="detail-poster">
-      <div class="bg-yatra" style="position:absolute;inset:0;"></div>
+      <div class="detail-poster-bg bg-yatra"></div>
     </div>
 
     <div class="detail-info">
       <div class="event-hero-kicker"><span class="pulse-dot"></span><span id="detail-kicker">ENTRE TANTA GENTE TOUR</span></div>
       <h1 id="detail-title">Sebastián<br><em>Yatra.</em></h1>
 
-      <div class="event-facts">
-        <div class="fact"><div class="fact-label">Fecha</div><div class="fact-value" id="detail-date">Sáb 15 Jun</div></div>
-        <div class="fact"><div class="fact-label">Hora</div><div class="fact-value" id="detail-time">8:30 PM</div></div>
-        <div class="fact"><div class="fact-label">Venue</div><div class="fact-value" id="detail-venue">Estadio Nacional</div></div>
-        <div class="fact"><div class="fact-label">Ciudad</div><div class="fact-value" id="detail-city">San José</div></div>
+      <!-- Container que cambia según eventType: single | multi-date | recurring -->
+      <div id="detail-date-section">
+        <div class="event-facts" id="detail-event-facts">
+          <div class="fact"><div class="fact-label">Fecha</div><div class="fact-value" id="detail-date">Sáb 15 Jun</div></div>
+          <div class="fact"><div class="fact-label">Hora</div><div class="fact-value" id="detail-time">8:30 PM</div></div>
+          <div class="fact"><div class="fact-label">Venue</div><div class="fact-value" id="detail-venue">Estadio Nacional</div></div>
+          <div class="fact"><div class="fact-label">Ciudad</div><div class="fact-value" id="detail-city">San José</div></div>
+        </div>
       </div>
 
       <div class="event-desc" id="detail-desc">
@@ -2461,7 +2745,7 @@ body.menu-open .mobile-menu {
         <button class="organizer-follow" onclick="this.textContent = this.textContent.includes('+') ? '✓ Siguiendo' : '+ Seguir';">+ Seguir</button>
       </div>
 
-      <div class="buy-box">
+      <div class="buy-box" id="detail-buy-box">
         <div>
           <span class="price-label">Desde</span>
           <span class="price-value" id="detail-price">$45.00</span>
@@ -2671,6 +2955,7 @@ body.menu-open .mobile-menu {
 // ============================================
 const EVENT_DATA = {
   yatra: {
+    eventType: 'single',
     kicker: 'ENTRE TANTA GENTE TOUR',
     title: 'Sebastián<br><em>Yatra.</em>',
     date: 'Sáb 15 Jun',
@@ -2695,6 +2980,7 @@ const EVENT_DATA = {
     ]
   },
   alejandro: {
+    eventType: 'single',
     kicker: 'DE REY A REY · HOMENAJE A VICENTE FERNÁNDEZ',
     title: 'Alejandro<br><em>Fernández.</em>',
     date: 'Vie 22 Ago',
@@ -2719,6 +3005,7 @@ const EVENT_DATA = {
     ]
   },
   arcangel: {
+    eventType: 'single',
     kicker: 'LA 8VA MARAVILLA · WORLD TOUR',
     title: 'Arcángel.<br><em>La 8va Maravilla.</em>',
     date: 'Sáb 28 Jun',
@@ -2744,29 +3031,34 @@ const EVENT_DATA = {
     ]
   },
   beret: {
+    eventType: 'multi-date',
     kicker: 'LO BELLO Y LO ROTO TOUR',
     title: 'Beret.<br><em>Lo Bello y Lo Roto.</em>',
-    date: 'Jue 12 Jun',
-    time: '8:00 PM',
-    venue: 'Teatro Melico Salazar',
-    city: 'San José',
+    dates: [
+      { id: 'b1', dayName: 'JUE', day: '12', month: 'JUN', venue: 'Teatro Melico Salazar', city: 'San José', time: '8:00 PM', price: '$38.00', status: 'available' },
+      { id: 'b2', dayName: 'VIE', day: '13', month: 'JUN', venue: 'Teatro Melico Salazar', city: 'San José', time: '8:00 PM', price: '$38.00', status: 'last' },
+      { id: 'b3', dayName: 'SÁB', day: '14', month: 'JUN', venue: 'Teatro Nacional', city: 'San José', time: '8:30 PM', price: '$48.00', status: 'available' },
+      { id: 'b4', dayName: 'DOM', day: '15', month: 'JUN', venue: 'Teatro Nacional', city: 'San José', time: '7:00 PM', price: '$48.00', status: 'soldout' },
+      { id: 'b5', dayName: 'MAR', day: '17', month: 'JUN', venue: 'Auditorio Municipal', city: 'Heredia', time: '8:00 PM', price: '$32.00', status: 'available' }
+    ],
     desc: '<p><strong>Beret</strong> llega a Costa Rica con su gira <em>Lo Bello y Lo Roto</em>, un show acústico donde presenta los temas de su último álbum junto a sus grandes éxitos.</p><p>Show íntimo en teatro. Experiencia única acústica con banda en vivo.</p>',
     lineup: [
       { name: 'Beret', main: true }
     ],
     orgAvatar: 'NL',
     orgName: 'Nueva Luna Producciones',
-    price: '$38.00',
+    price: '$32.00',
     bg: 'bg-beret',
     info: [
       ['Edad mínima', 'Mayores de 12 años'],
-      ['Puertas', '7:00 PM — inicio 8:00 PM'],
-      ['Parqueo', 'Calles cercanas · $5'],
+      ['Puertas', '1 hora antes del show'],
+      ['Parqueo', 'Según venue'],
       ['Pagos', 'Tarjeta, SINPE, efectivo'],
       ['Reembolsos', 'Hasta 48h antes']
     ]
   },
   tristito: {
+    eventType: 'single',
     kicker: 'IMPERIAL PRESENTA · OLD SCHOOL',
     title: 'Reggaetón<br><em>Tristito.</em>',
     date: 'Sáb 2 May',
@@ -2792,17 +3084,94 @@ const EVENT_DATA = {
       ['Pagos', 'Efectivo, SINPE, tarjeta'],
       ['Reembolsos', 'Hasta 48h antes']
     ]
+  },
+  yoga: {
+    eventType: 'recurring',
+    kicker: 'FLOW STUDIO · CLASES SEMANALES',
+    title: 'Yoga Sunset<br><em>en la playa.</em>',
+    desc: '<p><strong>Yoga Sunset</strong> es una experiencia semanal de vinyasa flow al aire libre, con vista al atardecer del Pacífico. Incluye mat, música en vivo y té chai al finalizar la clase.</p><p>Clases para todos los niveles. Duración 75 minutos.</p>',
+    // Schedule por mes. Cada mes es un objeto con key = día del mes -> array de clases.
+    // month: 0=Enero ... 11=Diciembre
+    scheduleByMonth: {
+      '2026-3': { // Abril 2026
+        '2':  [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '4':  [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '6':  [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'last' } ],
+        '9':  [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '11': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '13': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '16': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '18': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'soldout' } ],
+        '20': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '23': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '25': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '27': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow + Live Music', teacher: 'Especial', price: '$22', status: 'last' } ],
+        '30': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ]
+      },
+      '2026-4': { // Mayo 2026
+        '2':  [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '5':  [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '7':  [ { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '9':  [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '12': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '14': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '16': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'last' } ],
+        '19': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '21': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '23': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '26': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '28': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '30': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ]
+      },
+      '2026-5': { // Junio 2026
+        '2':  [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '4':  [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '6':  [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '9':  [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ],
+        '11': [ { time: '5:30 PM', name: 'Power Yoga', teacher: 'Daniel', price: '$12', status: 'available' } ],
+        '13': [ { time: '7:00 AM', name: 'Morning Flow', teacher: 'Marcela', price: '$15', status: 'available' }, { time: '5:30 PM', name: 'Sunset Flow', teacher: 'Daniel', price: '$15', status: 'available' } ],
+        '16': [ { time: '5:30 PM', name: 'Vinyasa Flow', teacher: 'Marcela', price: '$12', status: 'available' } ]
+      }
+    },
+    // Rango navegable
+    calMinMonth: '2026-3',
+    calMaxMonth: '2026-5',
+    lineup: [
+      { name: 'Marcela Ramírez', main: true },
+      { name: 'Daniel Quesada' }
+    ],
+    orgAvatar: 'FS',
+    orgName: 'Flow Studio CR',
+    price: '$12.00',
+    bg: 'art-yoga',
+    info: [
+      ['Qué traer', 'Ropa cómoda y botella de agua'],
+      ['Duración', '75 minutos'],
+      ['Nivel', 'Todos los niveles'],
+      ['Pagos', 'Tarjeta, SINPE, efectivo'],
+      ['Reembolsos', 'Hasta 6h antes']
+    ]
   }
+};
+
+// State for multi-date/recurring selection per event
+let currentEventState = {
+  eventId: null,
+  selectedDateId: null,
+  selectedClassKey: null,
+  selectedDay: null
 };
 
 function populateEventDetail(eventId) {
   const data = EVENT_DATA[eventId];
   if (!data) return;
 
-  // Poster background
+  currentEventState = { eventId, selectedDateId: null, selectedClassKey: null, selectedDay: null };
+
+  // Poster background - inner div inherits dimensions from poster parent
   const poster = document.getElementById('detail-poster');
   if (poster) {
-    poster.innerHTML = `<div class="${data.bg}" style="position:absolute;inset:0;"></div>`;
+    poster.innerHTML = `<div class="detail-poster-bg ${data.bg}"></div>`;
   }
 
   // Text content
@@ -2812,10 +3181,6 @@ function populateEventDetail(eventId) {
   };
   set('detail-kicker', data.kicker);
   set('detail-title', data.title);
-  set('detail-date', data.date);
-  set('detail-time', data.time);
-  set('detail-venue', data.venue);
-  set('detail-city', data.city);
   set('detail-desc', data.desc);
   set('detail-org-avatar', data.orgAvatar);
   set('detail-org-name', data.orgName);
@@ -2837,11 +3202,327 @@ function populateEventDetail(eventId) {
     ).join('');
   }
 
+  // Render date section depending on eventType
+  const section = document.getElementById('detail-date-section');
+  if (!section) return;
+
+  const eventType = data.eventType || 'single';
+
+  // Show/hide the desktop buy-box (single uses it; multi/recurring use inline continue CTA)
+  const buyBox = document.getElementById('detail-buy-box');
+  if (buyBox) {
+    buyBox.style.display = (eventType === 'single') ? '' : 'none';
+  }
+
+  if (eventType === 'single') {
+    section.innerHTML = `
+      <div class="event-facts">
+        <div class="fact"><div class="fact-label">Fecha</div><div class="fact-value">${data.date}</div></div>
+        <div class="fact"><div class="fact-label">Hora</div><div class="fact-value">${data.time}</div></div>
+        <div class="fact"><div class="fact-label">Venue</div><div class="fact-value">${data.venue}</div></div>
+        <div class="fact"><div class="fact-label">Ciudad</div><div class="fact-value">${data.city}</div></div>
+      </div>
+    `;
+  } else if (eventType === 'multi-date') {
+    renderMultiDate(section, data);
+  } else if (eventType === 'recurring') {
+    renderRecurring(section, data);
+  }
+
   // Update sticky buy bar price
+  updateStickyPrice(data.price);
+}
+
+function updateStickyPrice(price) {
   const stickyPrice = document.querySelector('.sticky-buy-price');
   if (stickyPrice) {
-    stickyPrice.innerHTML = `<span class="from">Desde</span>${data.price}`;
+    stickyPrice.innerHTML = `<span class="from">Desde</span>${price}`;
   }
+}
+
+// ===== MULTI-DATE RENDER =====
+function renderMultiDate(section, data) {
+  const dates = data.dates || [];
+  const count = dates.length;
+  section.innerHTML = `
+    <div class="datepicker-section">
+      <div class="datepicker-head">
+        <span class="datepicker-label">Elegí tu fecha</span>
+        <span class="datepicker-count">${count} funciones disponibles</span>
+      </div>
+      <div class="datepicker-scroll-wrap">
+        <div class="datepicker-scroll" id="date-scroll">
+          ${dates.map(d => `
+            <button class="date-card" data-date-id="${d.id}" data-status="${d.status}" ${d.status === 'soldout' ? 'disabled' : ''} onclick="selectDate('${d.id}')">
+              ${d.status === 'last' ? '<span class="date-badge">Últimas</span>' : ''}
+              ${d.status === 'soldout' ? '<span class="date-badge">Agotado</span>' : ''}
+              <span class="dayname">${d.dayName}</span>
+              <span class="daynum">${d.day}</span>
+              <span class="month">${d.month}</span>
+              <span class="price">${d.price}</span>
+            </button>
+          `).join('')}
+        </div>
+      </div>
+      <div id="selected-date-detail-wrap"></div>
+      <button class="continue-cta" id="continue-btn" disabled onclick="continueToTickets()">
+        Elegí una fecha
+      </button>
+    </div>
+  `;
+}
+
+function selectDate(dateId) {
+  const data = EVENT_DATA[currentEventState.eventId];
+  if (!data || !data.dates) return;
+  const date = data.dates.find(d => d.id === dateId);
+  if (!date || date.status === 'soldout') return;
+
+  currentEventState.selectedDateId = dateId;
+
+  // Update visual selection
+  document.querySelectorAll('.date-card').forEach(c => c.classList.remove('selected'));
+  const card = document.querySelector(`.date-card[data-date-id="${dateId}"]`);
+  if (card) card.classList.add('selected');
+
+  // Show detail of selected
+  const detailWrap = document.getElementById('selected-date-detail-wrap');
+  if (detailWrap) {
+    detailWrap.innerHTML = `
+      <div class="selected-date-detail">
+        <div class="selected-date-detail-item">
+          <span class="selected-date-detail-label">Venue</span>
+          <span class="selected-date-detail-value">${date.venue}</span>
+        </div>
+        <div class="selected-date-detail-divider"></div>
+        <div class="selected-date-detail-item">
+          <span class="selected-date-detail-label">Hora</span>
+          <span class="selected-date-detail-value">${date.time}</span>
+        </div>
+        <div class="selected-date-detail-divider"></div>
+        <div class="selected-date-detail-item">
+          <span class="selected-date-detail-label">Ciudad</span>
+          <span class="selected-date-detail-value">${date.city}</span>
+        </div>
+      </div>
+    `;
+  }
+
+  // Enable continue button
+  const btn = document.getElementById('continue-btn');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = `Continuar con esta fecha <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+    // Smooth scroll to reveal detail + CTA
+    setTimeout(() => {
+      const wrap = document.getElementById('selected-date-detail-wrap');
+      if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  }
+
+  // Update sticky price (even though sticky is hidden for multi-date, keep state consistent)
+  updateStickyPrice(date.price);
+}
+
+// ===== RECURRING (CALENDAR) RENDER =====
+const MONTH_NAMES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+const DOW_NAMES_ES = ['Dom','Lun','Mar','Mié','Jue','Vie','Sáb'];
+
+function parseMonthKey(key) {
+  const [y, m] = key.split('-').map(Number);
+  return { year: y, month: m };
+}
+function makeMonthKey(year, month) {
+  return `${year}-${month}`;
+}
+function compareMonthKeys(a, b) {
+  const pa = parseMonthKey(a);
+  const pb = parseMonthKey(b);
+  return (pa.year - pb.year) * 12 + (pa.month - pb.month);
+}
+
+function renderRecurring(section, data) {
+  // Default to first month with schedule
+  const months = Object.keys(data.scheduleByMonth || {}).sort(compareMonthKeys);
+  const initial = months[0] || '2026-3';
+  currentEventState.calMonthKey = initial;
+  section.innerHTML = `
+    <div class="recurring-section">
+      <div class="recurring-subtitle">Calendario de clases</div>
+      <div class="cal-wrapper">
+        <div class="cal-nav">
+          <button class="cal-nav-btn" id="cal-prev" aria-label="Mes anterior"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M15 19l-7-7 7-7"/></svg></button>
+          <div class="cal-month-label" id="cal-month-label"></div>
+          <button class="cal-nav-btn" id="cal-next" aria-label="Mes siguiente"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 5l7 7-7 7"/></svg></button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div id="cal-classes-wrap">
+        <div class="cal-empty-state">Tocá un día con punto verde para ver las clases disponibles</div>
+      </div>
+      <button class="continue-cta" id="continue-btn" disabled onclick="continueToTickets()">
+        Elegí una clase
+      </button>
+    </div>
+  `;
+
+  // Wire nav buttons
+  document.getElementById('cal-prev').addEventListener('click', () => changeCalMonth(-1));
+  document.getElementById('cal-next').addEventListener('click', () => changeCalMonth(1));
+
+  renderCalMonth();
+}
+
+function renderCalMonth() {
+  const data = EVENT_DATA[currentEventState.eventId];
+  if (!data) return;
+  const key = currentEventState.calMonthKey;
+  const { year, month } = parseMonthKey(key);
+  const schedule = (data.scheduleByMonth && data.scheduleByMonth[key]) || {};
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1);
+  const startDow = firstDay.getDay();
+  const mondayStart = (startDow + 6) % 7;
+
+  // Month label + prev/next state
+  const label = document.getElementById('cal-month-label');
+  if (label) label.textContent = `${MONTH_NAMES_ES[month]} ${year}`;
+  const minKey = data.calMinMonth || key;
+  const maxKey = data.calMaxMonth || key;
+  const prevBtn = document.getElementById('cal-prev');
+  const nextBtn = document.getElementById('cal-next');
+  if (prevBtn) prevBtn.disabled = compareMonthKeys(key, minKey) <= 0;
+  if (nextBtn) nextBtn.disabled = compareMonthKeys(key, maxKey) >= 0;
+
+  // Cells
+  let cellsHTML = `
+    <div class="cal-dow">Lun</div>
+    <div class="cal-dow">Mar</div>
+    <div class="cal-dow">Mié</div>
+    <div class="cal-dow">Jue</div>
+    <div class="cal-dow">Vie</div>
+    <div class="cal-dow">Sáb</div>
+    <div class="cal-dow">Dom</div>
+  `;
+  for (let i = 0; i < mondayStart; i++) cellsHTML += `<div class="cal-day empty"></div>`;
+  for (let d = 1; d <= daysInMonth; d++) {
+    const hasClasses = schedule[String(d)] && schedule[String(d)].length > 0;
+    cellsHTML += `
+      <button class="cal-day ${hasClasses ? 'has-classes' : 'no-classes'}" ${hasClasses ? `onclick="selectCalDay('${d}')"` : 'disabled'} data-day="${d}">
+        ${d}
+      </button>
+    `;
+  }
+  const grid = document.getElementById('cal-grid');
+  if (grid) grid.innerHTML = cellsHTML;
+
+  // Reset day/class selection on month change
+  currentEventState.selectedDay = null;
+  currentEventState.selectedClassKey = null;
+  const wrap = document.getElementById('cal-classes-wrap');
+  if (wrap) wrap.innerHTML = `<div class="cal-empty-state">Tocá un día con punto verde para ver las clases disponibles</div>`;
+  const btn = document.getElementById('continue-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = 'Elegí una clase';
+  }
+}
+
+function changeCalMonth(delta) {
+  const key = currentEventState.calMonthKey;
+  const { year, month } = parseMonthKey(key);
+  let newMonth = month + delta;
+  let newYear = year;
+  if (newMonth < 0) { newMonth = 11; newYear -= 1; }
+  if (newMonth > 11) { newMonth = 0; newYear += 1; }
+  const newKey = makeMonthKey(newYear, newMonth);
+  const data = EVENT_DATA[currentEventState.eventId];
+  if (!data) return;
+  // Stay within bounds
+  if (data.calMinMonth && compareMonthKeys(newKey, data.calMinMonth) < 0) return;
+  if (data.calMaxMonth && compareMonthKeys(newKey, data.calMaxMonth) > 0) return;
+  currentEventState.calMonthKey = newKey;
+  renderCalMonth();
+}
+
+function selectCalDay(day) {
+  const data = EVENT_DATA[currentEventState.eventId];
+  if (!data || !data.scheduleByMonth) return;
+  const key = currentEventState.calMonthKey;
+  const monthSchedule = data.scheduleByMonth[key] || {};
+  const classes = monthSchedule[day] || [];
+
+  currentEventState.selectedDay = day;
+  currentEventState.selectedClassKey = null;
+
+  document.querySelectorAll('.cal-day').forEach(c => c.classList.remove('selected'));
+  const cell = document.querySelector(`.cal-day[data-day="${day}"]`);
+  if (cell) cell.classList.add('selected');
+
+  const { year, month } = parseMonthKey(key);
+  const date = new Date(year, month, parseInt(day, 10));
+  const dow = DOW_NAMES_ES[date.getDay()];
+
+  const wrap = document.getElementById('cal-classes-wrap');
+  if (!wrap) return;
+  if (classes.length === 0) {
+    wrap.innerHTML = `<div class="cal-empty-state">No hay clases este día</div>`;
+    return;
+  }
+
+  wrap.innerHTML = `
+    <div class="cal-classes-header">${dow} ${day} de ${MONTH_NAMES_ES[month]}</div>
+    <div class="cal-classes-list">
+      ${classes.map((c, i) => `
+        <button class="class-slot" data-class-key="${day}-${i}" data-status="${c.status}" ${c.status === 'soldout' ? 'disabled' : ''} onclick="selectClassSlot('${day}', ${i})">
+          <div class="class-slot-time">${c.time}</div>
+          <div class="class-slot-info">
+            <div class="class-slot-name">${c.name}</div>
+            <div class="class-slot-teacher">Con ${c.teacher}</div>
+          </div>
+          ${c.status === 'last' ? '<span class="class-slot-badge">Últimas</span>' : ''}
+          ${c.status === 'soldout' ? '<span class="class-slot-badge" style="background:var(--ink-mid);color:#fff;">Agotado</span>' : ''}
+          <div class="class-slot-price">${c.price}</div>
+        </button>
+      `).join('')}
+    </div>
+  `;
+
+  const btn = document.getElementById('continue-btn');
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = 'Elegí una clase';
+  }
+}
+
+function selectClassSlot(day, idx) {
+  const data = EVENT_DATA[currentEventState.eventId];
+  if (!data || !data.scheduleByMonth) return;
+  const key = currentEventState.calMonthKey;
+  const monthSchedule = data.scheduleByMonth[key] || {};
+  const c = monthSchedule[day] && monthSchedule[day][idx];
+  if (!c || c.status === 'soldout') return;
+
+  currentEventState.selectedClassKey = `${key}-${day}-${idx}`;
+
+  document.querySelectorAll('.class-slot').forEach(s => s.classList.remove('selected'));
+  const slot = document.querySelector(`.class-slot[data-class-key="${day}-${idx}"]`);
+  if (slot) slot.classList.add('selected');
+
+  const btn = document.getElementById('continue-btn');
+  if (btn) {
+    btn.disabled = false;
+    btn.innerHTML = `Continuar con esta clase <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>`;
+    setTimeout(() => {
+      btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 100);
+  }
+
+  updateStickyPrice(c.price);
+}
+
+function continueToTickets() {
+  navigate('tickets');
 }
 
 function navigate(pageName, eventId) {
@@ -2855,10 +3536,13 @@ function navigate(pageName, eventId) {
     populateEventDetail(eventId || 'tristito');
   }
 
-  // Show sticky buy bar only on evento page
+  // Show sticky buy bar only on evento page AND only for single-date events.
+  // Multi-date/recurring have their own inline "Continuar" CTA.
   const sticky = document.getElementById('sticky-buy');
   if (sticky) {
-    sticky.style.display = (pageName === 'evento') ? '' : 'none';
+    const data = eventId ? EVENT_DATA[eventId] : EVENT_DATA.tristito;
+    const isSingle = !data || (data.eventType || 'single') === 'single';
+    sticky.style.display = (pageName === 'evento' && isSingle) ? '' : 'none';
   }
 
   document.body.classList.remove('menu-open');
