@@ -1217,9 +1217,9 @@ body.menu-open .mobile-menu {
 
 .detail-info .event-hero-kicker {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 600;
   letter-spacing: 0.15em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 18px;
+  color: var(--ink); margin-bottom: 18px;
 }
 .detail-info h1 {
   font-family: var(--font-display); font-weight: 900;
@@ -1336,10 +1336,13 @@ body.menu-open .mobile-menu {
 .sticky-buy-sub { font-size: 11px; color: var(--ink-mid); margin-top: 2px; }
 .sticky-buy-cta {
   background: var(--accent); color: var(--accent-ink);
-  padding: 14px 28px; border-radius: 100px;
-  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  padding: 14px 32px; border-radius: 100px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
   white-space: nowrap;
   transition: background 0.15s;
+  min-width: 140px;
+  text-align: center;
+  line-height: 1;
 }
 .sticky-buy-cta:hover { background: var(--accent-hover); }
 
@@ -2531,9 +2534,7 @@ body.menu-open .mobile-menu {
     <div class="sticky-buy-price"><span class="from">Desde</span>$11.00</div>
     <div class="sticky-buy-sub">Compra fácil y rápido</div>
   </div>
-  <button class="sticky-buy-cta" onclick="navigate('tickets')">Comprar
-    <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24" width="14" height="14" style="display:inline-block;vertical-align:middle;margin-left:6px;"><path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
-  </button>
+  <button class="sticky-buy-cta" onclick="navigate('tickets')">Comprar</button>
 </div>
 
 <!-- ============================================= -->
