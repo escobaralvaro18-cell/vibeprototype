@@ -6547,7 +6547,7 @@ body.menu-open .mobile-menu {
             <span>Acepto los <a href="#">Términos</a> y la <a href="#">Política de Privacidad</a> de VIBE.</span>
           </label>
 
-          <button type="submit" class="pay-cta" id="pay-cta" disabled>
+          <button type="button" class="pay-cta" id="pay-cta" disabled onclick="submitPayment()">
             <span class="pay-cta-text">Pagar <span id="pay-cta-amount">$64.05</span></span>
             <span class="pay-cta-loading" style="display:none;">
               <span class="pay-spinner"></span>
@@ -6624,17 +6624,17 @@ body.menu-open .mobile-menu {
 
 <section class="success-body">
   <div class="container">
-    <!-- Event ticket card -->
+    <!-- Event ticket card (populated by renderSuccessPage) -->
     <div class="success-event-card" id="success-event-card">
-      <div class="success-event-thumb"><div class="art-reggaeton"></div></div>
+      <div class="success-event-thumb" id="success-event-thumb"><div class="art-reggaeton"></div></div>
       <div class="success-event-info">
-        <p class="success-event-kicker">IMPERIAL PRESENTA</p>
-        <h2 class="success-event-title">Reggaetón Tristito</h2>
+        <p class="success-event-kicker" id="success-event-kicker">IMPERIAL PRESENTA</p>
+        <h2 class="success-event-title" id="success-event-title">Reggaetón Tristito</h2>
         <div class="success-event-meta">
-          <span><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Sáb 2 May · 9:00 PM</span>
-          <span><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 22s-8-7-8-13a8 8 0 1116 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>Finca La Glorita</span>
+          <span id="success-event-datetime"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Sáb 2 May · 9:00 PM</span>
+          <span id="success-event-venue"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 22s-8-7-8-13a8 8 0 1116 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>Finca La Glorita</span>
         </div>
-        <div class="success-tickets-list">
+        <div class="success-tickets-list" id="success-tickets-list">
           <div class="success-ticket-line">1× General Fase 2</div>
           <div class="success-ticket-line">2× VIP Fase 2</div>
         </div>
@@ -8838,21 +8838,128 @@ function generateOrderRef() {
 }
 
 function submitPayment() {
-  const cta = document.getElementById('pay-cta');
-  if (!cta || cta.disabled) return;
-  cta.classList.add('is-loading');
-  cta.disabled = true;
-  // Simulate payment processing
-  setTimeout(() => {
-    PAYMENT_STATE.orderRef = generateOrderRef();
-    cta.classList.remove('is-loading');
-    navigate('checkout-success');
-  }, 1200);
+  try {
+    const cta = document.getElementById('pay-cta');
+    if (!cta) return;
+    // If button is disabled, revalidate the form — maybe a field just became valid
+    // after the user tapped away from a keyboard and validatePaymentForm didn't fire.
+    if (cta.disabled) {
+      validatePaymentForm();
+      if (cta.disabled) {
+        // Still disabled → identify which field is failing for a helpful hint
+        const missing = [];
+        const num = (document.getElementById('card-number')?.value || '').replace(/\s/g, '');
+        if (num.length !== 16) missing.push('número de tarjeta de 16 dígitos');
+        if (!/^\d{2}\/\d{2}$/.test(document.getElementById('card-expiry')?.value || '')) missing.push('fecha de vencimiento (MM/AA)');
+        if (!/^\d{3,4}$/.test(document.getElementById('card-cvv')?.value || '')) missing.push('CVV');
+        if (((document.getElementById('card-holder')?.value || '').trim()).length < 3) missing.push('nombre del titular');
+        if (!document.getElementById('payment-terms')?.checked) missing.push('aceptar los términos');
+        alert('Falta completar: ' + missing.join(', '));
+        return;
+      }
+    }
+    cta.classList.add('is-loading');
+    cta.disabled = true;
+
+    // Snapshot event + cart items so the success page can render the right data
+    const evId = (typeof currentEventState !== 'undefined' && currentEventState.eventId) || 'tristito';
+    PAYMENT_STATE.eventId = evId;
+    PAYMENT_STATE.eventData = (typeof EVENT_DATA !== 'undefined' ? EVENT_DATA[evId] : null) || null;
+    PAYMENT_STATE.cartItems = (function() {
+      const items = [];
+      // Quantity-based tickets
+      document.querySelectorAll('.ticket[data-name]').forEach(t => {
+        const q = parseInt(t.querySelector('.qty-val')?.textContent) || 0;
+        if (q > 0) items.push({ name: t.dataset.name, qty: q, isSeat: false });
+      });
+      // Seat-based tickets
+      document.querySelectorAll('.seat-dot.selected').forEach(s => {
+        items.push({
+          name: `${s.dataset.sectionName} · Fila ${s.dataset.row}, As. ${s.dataset.seat}`,
+          qty: 1,
+          isSeat: true,
+        });
+      });
+      return items;
+    })();
+
+    // Simulate payment processing
+    setTimeout(() => {
+      PAYMENT_STATE.orderRef = generateOrderRef();
+      cta.classList.remove('is-loading');
+      navigate('checkout-success');
+    }, 1200);
+  } catch (err) {
+    console.error('submitPayment error:', err);
+    alert('Error al procesar el pago: ' + err.message);
+  }
 }
 
 // ============================================
 // CHECKOUT SUCCESS
 // ============================================
+
+// Flatten an event title that may contain <br> / <em>/</em> HTML into plain text
+function flattenEventTitle(titleHtml) {
+  if (!titleHtml) return '';
+  return String(titleHtml)
+    .replace(/<br\s*\/?>/gi, ' ')
+    .replace(/<\/?em>/gi, '')
+    .replace(/\s+/g, ' ')
+    .replace(/\.$/, '') // drop trailing period that looks weird outside its design
+    .trim();
+}
+
+// Populate the success page event card from PAYMENT_STATE snapshot
+function renderSuccessEventCard() {
+  const data = PAYMENT_STATE.eventData;
+  const items = PAYMENT_STATE.cartItems || [];
+
+  // Thumbnail: use the event's bg-* class if available, fallback to art-reggaeton
+  const thumb = document.getElementById('success-event-thumb');
+  if (thumb) {
+    const bgClass = data?.bg;
+    thumb.innerHTML = bgClass
+      ? `<div class="${bgClass}" style="position:absolute;inset:0;"></div>`
+      : `<div class="art-reggaeton"></div>`;
+  }
+
+  // Kicker
+  const kickerEl = document.getElementById('success-event-kicker');
+  if (kickerEl) kickerEl.textContent = data?.kicker || 'VIBE · EVENTO';
+
+  // Title
+  const titleEl = document.getElementById('success-event-title');
+  if (titleEl) titleEl.textContent = flattenEventTitle(data?.title) || 'Tu evento';
+
+  // Datetime (keep the SVG icon, replace only the text after it)
+  const datetimeEl = document.getElementById('success-event-datetime');
+  if (datetimeEl) {
+    const datePart = [data?.date, data?.time].filter(Boolean).join(' · ') || 'Fecha por confirmar';
+    datetimeEl.innerHTML = `<svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>${escapeHtml(datePart)}`;
+  }
+
+  // Venue
+  const venueEl = document.getElementById('success-event-venue');
+  if (venueEl) {
+    const venueText = data?.venue || 'Venue por confirmar';
+    venueEl.innerHTML = `<svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 22s-8-7-8-13a8 8 0 1116 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>${escapeHtml(venueText)}`;
+  }
+
+  // Tickets list
+  const listEl = document.getElementById('success-tickets-list');
+  if (listEl) {
+    if (items.length === 0) {
+      listEl.innerHTML = `<div class="success-ticket-line">1× Entrada</div>`;
+    } else {
+      listEl.innerHTML = items.map(it => {
+        const prefix = it.isSeat ? '' : `${it.qty}× `;
+        return `<div class="success-ticket-line">${prefix}${escapeHtml(it.name)}</div>`;
+      }).join('');
+    }
+  }
+}
+
 function renderSuccessPage() {
   const user = getActiveUser();
   const isLoggedIn = !!user;
@@ -8861,6 +8968,9 @@ function renderSuccessPage() {
   // Order ref
   const refEl = document.getElementById('success-order-ref');
   if (refEl) refEl.textContent = PAYMENT_STATE.orderRef || generateOrderRef();
+
+  // Populate event card dynamically from the purchased event snapshot
+  renderSuccessEventCard();
 
   const notice = document.getElementById('success-notice');
   const actions = document.getElementById('success-actions');
