@@ -150,12 +150,12 @@ em { font-family: var(--font-serif); font-style: italic; font-weight: 400; color
   border-bottom: none;
   transition: background 0.35s ease, backdrop-filter 0.35s ease;
 }
-/* Header over dark hero (SeatGeek-style) — transparent until scrolled */
+/* Header over dark hero (SeatGeek-style) — dark translucent until scrolled */
 .header-hero {
-  background: transparent;
+  background: rgba(10, 10, 10, 0.72);
   border-bottom: none !important;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
+  backdrop-filter: saturate(140%) blur(14px);
+  -webkit-backdrop-filter: saturate(140%) blur(14px);
   box-shadow: none;
   transition: background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease;
 }
@@ -225,6 +225,293 @@ body.scrolled .header-hero .logo-mark svg {
 @media (min-width: 1200px) {
   .header-inner { gap: 32px; }
 }
+
+/* ==================================================== */
+/* HEADER MINIMAL (para flujo de compra y auth)        */
+/* ==================================================== */
+.header-minimal .header-inner {
+  justify-content: space-between;
+}
+.header-minimal .nav-desktop,
+.header-minimal .header-search,
+.header-minimal .btn-signin,
+.header-minimal .btn-ghost,
+.header-minimal .btn-primary-sm {
+  display: none !important;
+}
+.header-minimal .header-actions {
+  gap: 8px;
+}
+
+/* ==================================================== */
+/* AUTH PAGES (login/signup, compradores y creadores)  */
+/* ==================================================== */
+.auth-page {
+  min-height: calc(100vh - 64px);
+  padding: 48px 20px 80px;
+  background: var(--bg);
+  display: flex; flex-direction: column; align-items: center;
+}
+.auth-page.auth-creator {
+  background: var(--bg-soft);
+}
+.auth-card-wrap {
+  width: 100%; max-width: 420px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 36px 28px;
+  box-shadow: 0 2px 20px rgba(10,10,10,0.04);
+}
+.auth-page.auth-creator .auth-card-wrap {
+  max-width: 460px;
+}
+@media (max-width: 500px) {
+  .auth-card-wrap { padding: 28px 22px; box-shadow: none; border: none; background: transparent; }
+}
+.auth-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; margin-bottom: 16px;
+  background: var(--ink); color: var(--accent);
+  border-radius: 100px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+.auth-title {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(28px, 4vw, 36px);
+  line-height: 1.05; letter-spacing: -0.035em;
+  color: var(--ink); margin-bottom: 8px;
+}
+.auth-title em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 400; color: var(--ink-mid);
+  letter-spacing: -0.02em;
+}
+.auth-sub {
+  font-size: 15px; color: var(--ink-mid);
+  margin-bottom: 26px; line-height: 1.45;
+}
+.auth-social-row {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 22px;
+}
+.auth-social-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 13px 16px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 100px;
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  color: var(--ink); cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+}
+.auth-social-btn:hover { border-color: var(--ink); background: var(--bg-soft); }
+.auth-social-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+.auth-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 4px 0 22px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.auth-divider::before, .auth-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--line);
+}
+.auth-form {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.auth-form .form-field { gap: 6px; }
+.auth-submit {
+  width: 100%;
+  padding: 15px 20px; margin-top: 8px;
+  background: var(--accent); color: var(--accent-ink);
+  border: none; border-radius: 100px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: background 0.15s, transform 0.1s;
+  letter-spacing: -0.01em;
+}
+.auth-submit.dark {
+  background: var(--ink); color: #fff;
+}
+.auth-submit:hover { background: var(--accent-hover); }
+.auth-submit.dark:hover { background: #1a1a1a; }
+.auth-submit:active { transform: scale(0.98); }
+.auth-foot {
+  text-align: center; margin-top: 20px;
+  font-size: 14px; color: var(--ink-mid);
+}
+.auth-foot a {
+  color: var(--ink); font-weight: 600;
+  text-decoration: underline; text-underline-offset: 3px;
+  cursor: pointer;
+}
+.auth-legal {
+  margin-top: 18px; font-size: 11px; color: var(--ink-dim);
+  line-height: 1.5; text-align: center;
+}
+.auth-legal a { color: var(--ink-mid); text-decoration: underline; text-underline-offset: 2px; }
+
+.auth-switcher {
+  text-align: center; margin-top: 28px;
+  padding: 16px 20px;
+  background: var(--bg-soft); border-radius: 12px;
+  font-size: 13px; color: var(--ink-mid);
+}
+.auth-switcher strong { color: var(--ink); font-weight: 700; }
+.auth-switcher a { color: var(--ink); font-weight: 700; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+
+/* ==================================================== */
+/* CREATORS LANDING PAGE                                */
+/* ==================================================== */
+.creators-hero {
+  padding: 72px 0 56px;
+  background: var(--ink); color: #fff;
+  position: relative; overflow: hidden;
+}
+.creators-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 80% 30%, rgba(198,248,0,0.15), transparent 60%);
+  pointer-events: none;
+}
+.creators-hero-inner {
+  position: relative;
+  display: grid; grid-template-columns: 1fr; gap: 36px;
+  align-items: center;
+}
+@media (min-width: 900px) {
+  .creators-hero-inner { grid-template-columns: 1.2fr 1fr; gap: 56px; }
+  .creators-hero { padding: 96px 0 80px; }
+}
+.creators-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px; margin-bottom: 18px;
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: 100px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.15em; text-transform: uppercase;
+}
+.creators-hero h1 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(40px, 6vw, 72px);
+  line-height: 0.95; letter-spacing: -0.045em;
+  margin-bottom: 20px;
+}
+.creators-hero h1 em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 400; color: var(--accent);
+  letter-spacing: -0.02em;
+}
+.creators-hero-sub {
+  font-size: 17px; line-height: 1.5; max-width: 500px;
+  color: rgba(255,255,255,0.8); margin-bottom: 28px;
+}
+.creators-cta-row {
+  display: flex; gap: 12px; flex-wrap: wrap;
+}
+.creators-cta-primary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 24px;
+  background: var(--accent); color: var(--accent-ink);
+  border: none; border-radius: 100px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: transform 0.1s, background 0.15s;
+  letter-spacing: -0.01em;
+}
+.creators-cta-primary:hover { background: var(--accent-hover); }
+.creators-cta-primary svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; }
+.creators-cta-secondary {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 15px 24px;
+  background: transparent; color: #fff;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 100px;
+  font-family: var(--font-display); font-weight: 600; font-size: 15px;
+  cursor: pointer; transition: all 0.15s;
+}
+.creators-cta-secondary:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+
+.creators-hero-stats {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  padding: 24px; border-radius: 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.creators-stat-num {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(24px, 3vw, 36px);
+  letter-spacing: -0.03em;
+  color: var(--accent); line-height: 1;
+}
+.creators-stat-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-top: 6px;
+}
+
+/* Benefits grid */
+.creators-benefits { padding: 72px 0 40px; }
+.creators-benefits-head { text-align: center; margin-bottom: 40px; }
+.creators-benefits-head h2 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -0.045em; margin-bottom: 10px; color: var(--ink);
+}
+.creators-benefits-head h2 em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 400; color: var(--ink-mid);
+}
+.creators-benefits-head p {
+  font-size: 16px; color: var(--ink-mid); max-width: 560px; margin: 0 auto;
+}
+.creators-benefits-grid {
+  display: grid; grid-template-columns: 1fr; gap: 16px;
+}
+@media (min-width: 700px) {
+  .creators-benefits-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1000px) {
+  .creators-benefits-grid { grid-template-columns: repeat(3, 1fr); }
+}
+.benefit-card {
+  padding: 24px; border-radius: 16px;
+  background: #fff; border: 1px solid var(--line);
+}
+.benefit-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--accent-soft);
+  display: inline-flex; align-items: center; justify-content: center;
+  margin-bottom: 14px;
+}
+.benefit-icon svg { width: 22px; height: 22px; stroke: var(--accent-ink); stroke-width: 2; }
+.benefit-card h3 {
+  font-family: var(--font-display); font-weight: 800; font-size: 17px;
+  letter-spacing: -0.02em; color: var(--ink); margin-bottom: 6px;
+}
+.benefit-card p {
+  font-size: 14px; line-height: 1.5; color: var(--ink-mid);
+}
+
+.creators-cta-section {
+  margin-top: 40px; padding: 56px 32px;
+  background: var(--ink); color: #fff;
+  border-radius: 24px;
+  text-align: center;
+}
+.creators-cta-section h2 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(28px, 4vw, 44px);
+  letter-spacing: -0.04em; margin-bottom: 10px;
+}
+.creators-cta-section h2 em {
+  font-family: var(--font-serif); font-style: italic;
+  font-weight: 400; color: var(--accent);
+}
+.creators-cta-section p {
+  font-size: 16px; color: rgba(255,255,255,0.7);
+  margin-bottom: 24px; max-width: 480px; margin-left: auto; margin-right: auto;
+}
+.creators-cta-section .creators-cta-row { justify-content: center; }
 .logo {
   display: inline-flex; align-items: center; gap: 6px;
   font-family: var(--font-display); font-weight: 900;
@@ -291,7 +578,7 @@ body.scrolled .header-search {
 }
 .header-search input::placeholder { color: var(--ink-dim); }
 
-.nav-desktop { display: none; gap: 4px; margin-left: auto; }
+.nav-desktop { display: none; gap: 4px; }
 .nav-link {
   font-size: 14px; font-weight: 500; color: var(--ink-mid);
   padding: 8px 14px; border-radius: 8px;
@@ -301,7 +588,14 @@ body.scrolled .header-search {
 .nav-link:hover { color: var(--ink); background: var(--bg-elev); }
 .nav-link.active { color: var(--ink); font-weight: 600; }
 
+/* Right-aligned block: nav + actions, agrupados juntos con separación visual */
 .header-actions { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+/* Divider sutil entre nav y actions (solo desktop, cuando nav visible) */
+@media (min-width: 768px) {
+  .nav-desktop { margin-left: auto; margin-right: 4px; padding-right: 12px; border-right: 1px solid var(--line); }
+  body:not(.scrolled) .header-hero .nav-desktop { border-right-color: rgba(255,255,255,0.14); }
+  .header-actions { margin-left: 0; }
+}
 /* Sign in hidden on mobile across ALL pages (goes to hamburger menu); shown only on desktop */
 .header-actions .btn-signin,
 .header-actions .btn-ghost,
@@ -331,35 +625,65 @@ body.scrolled .header-search {
 
 .mobile-menu {
   display: flex; flex-direction: column;
-  padding: 12px 20px 16px; background: #fff;
-  border-bottom: 1px solid var(--line); gap: 2px;
+  padding: 0 20px; background: #fff;
+  border-bottom: 1px solid var(--line);
   max-height: 0;
   overflow: hidden;
-  padding-top: 0; padding-bottom: 0;
-  transition: max-height 0.3s ease, padding 0.3s ease;
+  transition: max-height 0.35s ease, padding 0.3s ease;
 }
-.mobile-menu a { padding: 14px 4px; font-size: 15px; font-weight: 500; border-bottom: 1px solid var(--line); cursor: pointer; display: flex; align-items: center; gap: 10px; }
-.mobile-menu a:last-of-type { border-bottom: none; }
-.mobile-menu hr { border: none; height: 10px; }
-.mobile-menu .mobile-cta-primary {
-  background: var(--accent); color: var(--accent-ink);
-  border-radius: 100px; text-align: center;
-  font-weight: 700; font-size: 14px;
-  margin-bottom: 10px; padding: 14px 18px;
-  letter-spacing: -0.01em; border-bottom: none;
-  justify-content: center;
+.mobile-menu-section {
+  display: flex; flex-direction: column;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
 }
-.mobile-menu .mobile-cta {
+.mobile-menu-section:last-child { border-bottom: none; }
+.mobile-menu-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-dim); margin-bottom: 6px;
+  padding: 0 2px;
+}
+.mobile-menu a {
+  padding: 12px 2px; font-size: 16px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; gap: 10px;
+  color: var(--ink); letter-spacing: -0.01em;
+  transition: color 0.15s;
+}
+.mobile-menu a:hover { color: var(--ink-mid); }
+.mobile-menu a .chev {
+  margin-left: auto; color: var(--ink-dim);
+  font-size: 14px;
+}
+.mobile-menu-creators {
+  background: var(--bg-soft);
+  margin: 0 -20px; padding: 18px 20px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.mobile-menu-creators .mobile-menu-label { color: var(--ink-mid); }
+.mobile-menu-ctas {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 18px 0;
+}
+.mobile-menu-ctas .mobile-cta-primary {
   background: var(--ink); color: #fff;
   border-radius: 100px; text-align: center;
-  font-weight: 600; margin-top: 6px; border: none; padding: 14px;
-  justify-content: center;
-  border-bottom: none;
+  font-weight: 700; font-size: 15px;
+  padding: 14px 18px;
+  letter-spacing: -0.01em;
+  justify-content: center; display: flex; cursor: pointer;
+}
+.mobile-menu-ctas .mobile-cta-secondary {
+  background: #fff; color: var(--ink);
+  border: 1.5px solid var(--ink);
+  border-radius: 100px; text-align: center;
+  font-weight: 700; font-size: 15px;
+  padding: 12.5px 18px;
+  letter-spacing: -0.01em;
+  justify-content: center; display: flex; cursor: pointer;
 }
 body.menu-open .mobile-menu {
-  max-height: 600px;
-  padding-top: 12px;
-  padding-bottom: 16px;
+  max-height: 800px;
 }
 
 /* ==== HERO (SeatGeek-style dark, compact) ==== */
@@ -380,7 +704,7 @@ body.menu-open .mobile-menu {
 @media (min-width: 900px) {
   .hero-dark {
     padding: 28px 0 32px;
-    padding-top: 88px;
+    padding-top: 92px;
     min-height: min(380px, 48vh);
     display: flex;
     align-items: center;
@@ -491,7 +815,7 @@ body.menu-open .mobile-menu {
 .hero-title {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(40px, 7vw, 68px);
-  line-height: 0.95; letter-spacing: -0.045em;
+  line-height: 0.95; letter-spacing: -0.055em;
   max-width: 940px;
 }
 .hero-dark .hero-title { color: #fff; }
@@ -645,7 +969,7 @@ body.menu-open .mobile-menu {
   color: rgba(255,255,255,0.8); margin-bottom: 4px;
 }
 .cartelera-title {
-  font-family: var(--font-display); font-weight: 800;
+  font-family: var(--font-display); font-weight: 900;
   font-size: clamp(28px, 3.4vw, 46px);
   line-height: 0.95; letter-spacing: -0.03em;
   color: #fff;
@@ -671,7 +995,7 @@ body.menu-open .mobile-menu {
   color: rgba(255,255,255,0.6);
 }
 .cartelera-price strong {
-  font-family: var(--font-display); font-weight: 800; font-size: 22px;
+  font-family: var(--font-display); font-weight: 900; font-size: 22px;
   letter-spacing: -0.02em; color: #fff; line-height: 1.1;
 }
 .cartelera-buy {
@@ -796,7 +1120,7 @@ body.menu-open .mobile-menu {
   color: var(--ink-dim); margin-bottom: 6px;
 }
 .section-title {
-  font-family: var(--font-display); font-weight: 800;
+  font-family: var(--font-display); font-weight: 900;
   font-size: clamp(28px, 4vw, 44px);
   line-height: 1; letter-spacing: -0.04em;
   color: var(--ink);
@@ -1084,7 +1408,7 @@ body.menu-open .mobile-menu {
   font-family: var(--font-display); font-size: 12px; color: var(--ink-mid);
 }
 .event-price strong {
-  font-weight: 700; font-size: 14px; color: var(--ink);
+  font-weight: 800; font-size: 14px; color: var(--ink);
   letter-spacing: -0.01em; margin-left: 3px;
 }
 
@@ -1122,7 +1446,7 @@ body.menu-open .mobile-menu {
 }
 
 /* ==== PAGE: EVENT LIST ==== */
-.page-head { padding: 44px 0 28px; }
+.page-head { padding: 44px 0 20px; }
 .page-head h1 {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(44px, 7vw, 80px);
@@ -1130,30 +1454,196 @@ body.menu-open .mobile-menu {
   color: var(--ink);
 }
 .page-head .page-count { color: var(--ink-mid); font-size: 15px; }
-.filters-row { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
-.filter-label {
-  font-family: var(--font-mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-mid); margin-right: 4px;
+
+/* ==== Eventos: Search bar inline ==== */
+.eventos-search {
+  display: flex; align-items: center; gap: 10px;
+  width: 100%; max-width: 640px;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 24px;
+  transition: border-color 0.15s, background 0.15s;
 }
-.filter-select {
-  padding: 9px 12px; background: #fff;
-  border: 1.5px solid var(--line-strong); border-radius: 10px;
-  font-size: 13px; color: var(--ink); cursor: pointer;
-  appearance: none; padding-right: 30px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%238c8c88' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right 10px center; background-size: 12px;
+.eventos-search:focus-within {
+  border-color: var(--ink);
+  background: #fff;
+}
+.eventos-search svg {
+  width: 18px; height: 18px;
+  stroke: var(--ink-mid); flex-shrink: 0;
+}
+.eventos-search input {
+  flex: 1; border: none; background: transparent;
+  font-family: var(--font-display); font-size: 15px;
+  color: var(--ink); outline: none; min-width: 0;
+}
+.eventos-search input::placeholder { color: var(--ink-dim); }
+.eventos-search-clear {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--ink-mid); color: #fff;
+  display: none; align-items: center; justify-content: center;
+  flex-shrink: 0; cursor: pointer; border: none;
+  font-size: 12px; line-height: 1;
+}
+.eventos-search input:not(:placeholder-shown) ~ .eventos-search-clear { display: inline-flex; }
+
+/* ==== Eventos: Quick filter pills (sticky) ==== */
+.quick-filters {
+  position: sticky;
+  top: var(--header-h, 64px);
+  background: var(--bg);
+  z-index: 30;
+  padding: 12px 0 10px;
+  margin-bottom: 0;
+  border-bottom: 1px solid var(--line);
+}
+.quick-filters-wrap {
+  position: relative;
+}
+.quick-filters-wrap::after {
+  content: "";
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: 24px;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+}
+.quick-filters-scroll {
+  display: flex; gap: 6px;
+  overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 2px 12px 2px 0;
+  scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.quick-filters-scroll::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .quick-filters-wrap::after { display: none; }
+  .quick-filters-scroll { flex-wrap: wrap; overflow-x: visible; padding: 0; }
+}
+.quick-pill {
+  flex-shrink: 0; scroll-snap-align: start;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 7px 13px; border-radius: 100px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  font-family: var(--font-display); font-weight: 600; font-size: 12px;
+  color: var(--ink); cursor: pointer;
   transition: all 0.15s;
+  white-space: nowrap;
 }
-.filter-select:hover { border-color: var(--ink); }
+.quick-pill:hover { border-color: var(--ink); }
+.quick-pill.active {
+  background: var(--ink); color: #fff; border-color: var(--ink);
+}
+.quick-pill svg { width: 13px; height: 13px; stroke: currentColor; flex-shrink: 0; }
+
+/* ==== Eventos: Advanced filters (dropdowns) — horizontal scroll on mobile ==== */
+.advanced-filters-wrap {
+  position: relative;
+  padding-top: 14px;
+}
+.advanced-filters-wrap::after {
+  content: "";
+  position: absolute; top: 14px; right: 0; bottom: 0;
+  width: 24px;
+  background: linear-gradient(to right, transparent, var(--bg));
+  pointer-events: none;
+}
+.advanced-filters {
+  display: flex; gap: 6px; align-items: center;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding-right: 12px;
+}
+.advanced-filters::-webkit-scrollbar { display: none; }
+@media (min-width: 768px) {
+  .advanced-filters-wrap::after { display: none; }
+  .advanced-filters {
+    flex-wrap: wrap; overflow-x: visible;
+    padding-right: 0;
+  }
+}
+.filter-chip {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 28px 8px 12px; background: #fff;
+  border: 1.5px solid var(--line-strong); border-radius: 100px;
+  font-family: var(--font-display); font-size: 12px; font-weight: 500;
+  color: var(--ink); cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%238c8c88' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 11px;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-chip-icon {
+  display: inline-flex; flex-shrink: 0;
+  width: 14px; height: 14px;
+  stroke: var(--ink-mid); stroke-width: 2;
+  fill: none;
+}
+.filter-chip.has-value .filter-chip-icon,
+.filter-chip.has-value {
+  stroke: #fff;
+}
+.filter-chip:hover { border-color: var(--ink); }
+.filter-chip.has-value {
+  background-color: var(--ink); color: #fff; border-color: var(--ink);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%23fff' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+.clear-filters-btn {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 12px;
+  background: transparent; border: none;
+  font-family: var(--font-display); font-size: 12px; font-weight: 600;
+  color: var(--ink); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  white-space: nowrap;
+}
+.clear-filters-btn:hover { color: var(--ink-mid); }
+.clear-filters-btn svg { width: 12px; height: 12px; }
+
+/* ==== Eventos: Results toolbar (count + sort) ==== */
 .results-toolbar {
   display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--line);
-  flex-wrap: wrap; gap: 10px;
+  margin: 20px 0 18px;
+  gap: 10px;
 }
-.results-count { font-size: 13px; color: var(--ink-mid); }
-.results-count strong { color: var(--ink); font-weight: 600; }
+.results-count {
+  font-family: var(--font-display); font-size: 13px; color: var(--ink-mid);
+  min-width: 0;
+}
+.results-count strong { color: var(--ink); font-weight: 700; }
+.sort-wrapper {
+  display: inline-flex; align-items: center; gap: 6px;
+  flex-shrink: 0;
+}
+.sort-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mid);
+}
+.sort-select {
+  appearance: none;
+  background: transparent; border: none;
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+  color: var(--ink); cursor: pointer;
+  padding: 4px 20px 4px 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%230a0a0a' stroke-width='2.5' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 0 center; background-size: 11px;
+  outline: none;
+}
+@media (max-width: 480px) {
+  .sort-label { display: none; }
+  .results-count { font-size: 12px; }
+}
+
 .load-more-wrap { display: flex; justify-content: center; margin-top: 32px; }
+
+/* Legacy classes kept for compat but we'll not use them */
+.filters-row { display: none; }
+.filter-select { display: none; }
+.filter-label { display: none; }
 
 /* ==== PAGE: EVENT DETAIL ==== */
 .detail-back {
@@ -1204,7 +1694,7 @@ body.menu-open .mobile-menu {
   color: rgba(0,0,0,0.7); margin-bottom: 16px;
 }
 .detail-poster .poster-big-title {
-  font-family: var(--font-display); font-weight: 900;
+  font-family: var(--font-display); font-weight: 700;
   font-size: clamp(44px, 8vw, 88px);
   line-height: 0.88; letter-spacing: -0.04em;
   color: #0a0a0a; text-transform: uppercase;
@@ -1318,7 +1808,7 @@ body.menu-open .mobile-menu {
 }
 .date-card.selected .dayname { color: rgba(255,255,255,0.7); }
 .date-card .daynum {
-  font-family: var(--font-display); font-weight: 800;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 28px; line-height: 1; letter-spacing: -0.04em;
   color: var(--ink); margin: 2px 0;
 }
@@ -1406,7 +1896,7 @@ body.menu-open .mobile-menu {
   margin-bottom: 14px;
 }
 .recurring-title {
-  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
   letter-spacing: -0.02em; color: var(--ink);
 }
 .recurring-subtitle {
@@ -1432,7 +1922,7 @@ body.menu-open .mobile-menu {
 .cal-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 .cal-nav-btn svg { width: 16px; height: 16px; stroke: var(--ink); }
 .cal-month-label {
-  font-family: var(--font-display); font-weight: 800; font-size: 17px;
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
   letter-spacing: -0.02em; color: var(--ink);
 }
 .cal-grid {
@@ -1471,7 +1961,7 @@ body.menu-open .mobile-menu {
 
 .cal-classes-header {
   margin-top: 20px; margin-bottom: 12px;
-  font-family: var(--font-display); font-weight: 800; font-size: 16px;
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
   letter-spacing: -0.02em; color: var(--ink);
 }
 .cal-classes-list {
@@ -1496,7 +1986,7 @@ body.menu-open .mobile-menu {
   border-style: dashed;
 }
 .class-slot-time {
-  font-family: var(--font-display); font-weight: 800; font-size: 18px;
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
   letter-spacing: -0.02em; flex-shrink: 0; min-width: 70px;
 }
 .class-slot-info { flex: 1; min-width: 0; }
@@ -1582,7 +2072,7 @@ body.menu-open .mobile-menu {
   color: var(--ink-mid); display: block; margin-bottom: 2px;
 }
 .buy-box .price-value {
-  font-family: var(--font-display); font-weight: 800;
+  font-family: var(--font-display); font-weight: 900;
   font-size: 30px; letter-spacing: -0.03em; color: var(--ink);
   line-height: 1;
 }
@@ -1606,7 +2096,7 @@ body.menu-open .mobile-menu {
 }
 .sticky-buy-info { flex: 1; min-width: 0; }
 .sticky-buy-price {
-  font-family: var(--font-display); font-weight: 800; font-size: 20px;
+  font-family: var(--font-display); font-weight: 900; font-size: 20px;
   letter-spacing: -0.025em; line-height: 1.1; color: var(--ink);
 }
 .sticky-buy-price .from {
@@ -1638,7 +2128,7 @@ body.menu-open .mobile-menu {
 .event-secondary { padding: 36px 0; border-top: 1px solid var(--line); }
 .event-secondary-grid { display: grid; grid-template-columns: 1fr; gap: 28px; }
 @media (min-width: 900px) { .event-secondary-grid { grid-template-columns: 1fr 1fr; } }
-.info-block h3 { font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: -0.025em; margin-bottom: 16px; color: var(--ink); }
+.info-block h3 { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.025em; margin-bottom: 16px; color: var(--ink); }
 .info-list { list-style: none; display: flex; flex-direction: column; gap: 0; }
 .info-list li {
   display: flex; gap: 14px; padding: 12px 0;
@@ -1684,19 +2174,35 @@ body.menu-open .mobile-menu {
 /* ==== PAGE: TICKETS ==== */
 .tickets-page { padding-bottom: 60px; }
 .tickets-layout { display: grid; grid-template-columns: 1fr; gap: 28px; padding-top: 24px; }
+.tickets-layout > * { min-width: 0; max-width: 100%; }
+#ticket-mode-container { min-width: 0; max-width: 100%; overflow: hidden; }
 @media (min-width: 900px) { .tickets-layout { grid-template-columns: 1fr 360px; gap: 36px; align-items: start; } }
 .tickets-header h2 {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(32px, 5vw, 52px);
-  letter-spacing: -0.045em; margin-bottom: 6px;
+  letter-spacing: -0.045em; margin-bottom: 20px;
   color: var(--ink);
 }
-.tickets-header .event-ref {
-  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 10px; display: inline-block;
+
+/* Progress stepper */
+.step-progress {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
 }
-.tickets-header p { color: var(--ink-mid); font-size: 14px; margin-bottom: 24px; }
+.step-progress-bars {
+  display: flex; gap: 6px; flex: 0 0 auto;
+}
+.step-progress-bar {
+  width: 28px; height: 4px; border-radius: 100px;
+  background: var(--line-strong);
+  transition: background 0.25s;
+}
+.step-progress-bar.active { background: var(--ink); }
+.step-progress-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mid);
+}
 
 .ticket-list { display: flex; flex-direction: column; gap: 10px; }
 .ticket {
@@ -1707,7 +2213,7 @@ body.menu-open .mobile-menu {
   transition: border-color 0.15s;
 }
 .ticket:not(.sold-out):hover { border-color: var(--ink); }
-.ticket.sold-out { opacity: 0.5; }
+.ticket.sold-out { opacity: 0.55; }
 .ticket.selected {
   border-color: var(--accent);
   background: var(--accent-soft);
@@ -1730,10 +2236,10 @@ body.menu-open .mobile-menu {
   padding: 2px 6px; border-radius: 3px;
 }
 .badge-soldout { background: rgba(225,25,0,0.12); color: var(--danger); }
-.badge-fewleft { background: var(--accent-soft); color: var(--accent); }
+.badge-fewleft { background: var(--accent-soft); color: var(--accent-ink); }
 .ticket-desc { font-size: 12px; color: var(--ink-mid); line-height: 1.4; }
 .ticket-price-col { text-align: right; flex-shrink: 0; }
-.ticket-price { font-family: var(--font-display); font-weight: 800; font-size: 22px; letter-spacing: -0.025em; margin-bottom: 10px; color: var(--ink); }
+.ticket-price { font-family: var(--font-display); font-weight: 900; font-size: 22px; letter-spacing: -0.025em; margin-bottom: 10px; color: var(--ink); }
 .ticket-price-before { font-family: var(--font-mono); font-size: 10px; color: var(--ink-dim); text-decoration: line-through; margin-right: 5px; }
 
 .qty-control {
@@ -1750,13 +2256,222 @@ body.menu-open .mobile-menu {
 }
 .qty-btn:hover { background: var(--bg-elev); }
 .qty-btn.plus { background: var(--ink); color: #fff; font-weight: 700; }
-.qty-btn.plus:hover { background: var(--accent); }
+.qty-btn.plus:hover { background: var(--accent); color: var(--accent-ink); }
 .qty-val { font-family: var(--font-mono); font-weight: 600; min-width: 22px; text-align: center; font-size: 13px; }
-.qty-soldout {
+
+/* Replace qty-control on sold-out tickets with a subtle notify link */
+.notify-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: none;
+  font-family: var(--font-display); font-size: 12px; font-weight: 600;
+  color: var(--ink); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  padding: 4px 0; opacity: 1;
+  transition: color 0.15s;
+}
+.notify-link:hover { color: var(--ink-mid); }
+.notify-link svg { width: 13px; height: 13px; stroke: currentColor; }
+.notify-link.active {
+  color: var(--ink-mid); text-decoration: none;
+}
+.ticket.sold-out .ticket-price {
+  color: var(--ink-mid); text-decoration: line-through;
+  opacity: 0.7;
+}
+
+/* ==== SEATED TICKET PICKER (venue map) ==== */
+.seated-wrapper {
+  background: #0a0a0a;
+  border-radius: 18px;
+  overflow: hidden;
+  position: relative;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+.seated-wrapper * { box-sizing: border-box; }
+.seated-legend {
+  display: flex; gap: 8px; align-items: center;
+  padding: 14px 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  background: #111;
+  position: relative;
+  mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%);
+}
+.seated-legend::-webkit-scrollbar { display: none; }
+.seated-legend-item {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 6px 12px;
+  background: rgba(255,255,255,0.06);
+  border-radius: 100px;
+  color: #fff; font-size: 12px; font-weight: 600;
+  font-family: var(--font-display);
+  white-space: nowrap; flex-shrink: 0;
+}
+.seated-legend-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  flex-shrink: 0;
+}
+.seated-legend-price {
+  opacity: 0.8; font-weight: 500;
+}
+
+.seated-stage {
+  text-align: center;
+  padding: 14px 16px 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+}
+.seated-stage::before,
+.seated-stage::after {
+  content: "";
+  display: inline-block;
+  width: 40px; height: 1px;
+  background: rgba(255,255,255,0.2);
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+.seated-map {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding: 8px 12px 20px;
+  max-height: 540px;
+  scrollbar-width: none;
+  box-sizing: border-box;
+}
+.seated-map::-webkit-scrollbar { display: none; }
+.seated-map svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+
+.seat-dot {
+  fill: rgba(255,255,255,0.18);
+  cursor: pointer;
+  transition: fill 0.12s, r 0.12s;
+}
+.seat-dot:hover {
+  fill: #fff;
+}
+.seat-dot.sold {
+  fill: rgba(255,255,255,0.06);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.seat-dot.selected {
+  fill: var(--accent);
+}
+.seat-dot[data-section="platinum"] { fill: rgba(198,248,0,0.55); }
+.seat-dot[data-section="vip"] { fill: rgba(0,170,92,0.65); }
+.seat-dot[data-section="general"] { fill: rgba(45,156,219,0.65); }
+.seat-dot[data-section="accessible"] { fill: rgba(245,158,11,0.75); }
+
+.seat-dot[data-section="platinum"]:hover { fill: #c6f800; }
+.seat-dot[data-section="vip"]:hover { fill: #00cc6f; }
+.seat-dot[data-section="general"]:hover { fill: #3ab0e6; }
+.seat-dot[data-section="accessible"]:hover { fill: #fbbf24; }
+
+.seat-dot[data-section="platinum"].selected,
+.seat-dot[data-section="vip"].selected,
+.seat-dot[data-section="general"].selected,
+.seat-dot[data-section="accessible"].selected {
+  fill: var(--accent);
+  stroke: #0a0a0a; stroke-width: 1.5;
+}
+
+.seated-section-label {
+  font-family: var(--font-mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  fill: rgba(255,255,255,0.35);
+}
+
+.seated-tooltip {
+  position: fixed;
+  z-index: 200;
+  background: #fff; color: var(--ink);
+  border-radius: 14px; padding: 14px 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  min-width: 220px; max-width: 280px;
+  pointer-events: auto;
+  opacity: 0; transform: translateY(4px) scale(0.96);
+  transition: opacity 0.15s, transform 0.15s;
+  visibility: hidden;
+}
+.seated-tooltip.visible {
+  opacity: 1; transform: translateY(0) scale(1);
+  visibility: visible;
+}
+.seated-tooltip-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 10px; padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.seated-tooltip-section {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 14px; letter-spacing: -0.02em;
+}
+.seated-tooltip-price {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 15px;
+}
+.seated-tooltip-meta {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+  margin-bottom: 12px;
+}
+.seated-tooltip-meta-item {
+  font-size: 11px;
+}
+.seated-tooltip-meta-label {
   font-family: var(--font-mono); font-size: 9px; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--danger); padding: 6px 12px;
-  border: 1px dashed rgba(225,25,0,0.3); border-radius: 100px;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mid); margin-bottom: 2px;
+}
+.seated-tooltip-meta-value {
+  font-family: var(--font-display); font-size: 13px; font-weight: 600;
+}
+.seated-tooltip-actions {
+  display: flex; gap: 8px;
+}
+.seated-tooltip-btn {
+  flex: 1; padding: 10px 14px;
+  font-family: var(--font-display); font-weight: 600; font-size: 13px;
+  border-radius: 10px;
+  cursor: pointer; border: none;
+  transition: all 0.12s;
+}
+.seated-tooltip-btn.cancel {
+  background: var(--bg-soft); color: var(--ink);
+}
+.seated-tooltip-btn.cancel:hover { background: var(--line); }
+.seated-tooltip-btn.confirm {
+  background: var(--ink); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+}
+.seated-tooltip-btn.confirm:hover { background: var(--accent); color: var(--accent-ink); }
+.seated-tooltip-btn.confirm.selected-state {
+  background: var(--danger); color: #fff;
+}
+.seated-tooltip-btn svg { width: 14px; height: 14px; stroke: currentColor; }
+
+.seated-hint {
+  padding: 10px 16px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  text-align: center;
+  font-family: var(--font-display);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: #111;
+  line-height: 1.4;
 }
 
 .cart-summary-box {
@@ -1765,7 +2480,7 @@ body.menu-open .mobile-menu {
   border-radius: 18px; padding: 22px;
 }
 .cart-summary-box h3 {
-  font-family: var(--font-display); font-weight: 800;
+  font-family: var(--font-display); font-weight: 700;
   font-size: 18px; letter-spacing: -0.025em;
   margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--line);
   color: var(--ink);
@@ -1778,7 +2493,7 @@ body.menu-open .mobile-menu {
   width: 44px; height: 44px; border-radius: 7px; flex-shrink: 0;
   background: #fbde00;
   display: grid; place-items: center;
-  font-family: var(--font-display); font-weight: 800; font-size: 13px;
+  font-family: var(--font-display); font-weight: 700; font-size: 13px;
   color: var(--ink);
 }
 .cart-event-info { min-width: 0; }
@@ -1796,7 +2511,7 @@ body.menu-open .mobile-menu {
 .cart-item { display: flex; justify-content: space-between; font-size: 13px; }
 .cart-item-name { color: var(--ink); }
 .cart-item-qty { font-family: var(--font-mono); font-size: 10px; color: var(--ink-mid); margin-right: 4px; }
-.cart-item-value { font-weight: 600; color: var(--ink); }
+.cart-item-value { font-weight: 800; color: var(--ink); }
 .cart-subtotal-row { display: flex; justify-content: space-between; padding: 4px 0; font-size: 12px; color: var(--ink-mid); }
 .cart-subtotal-row span:last-child { color: var(--ink); font-weight: 500; }
 .cart-total {
@@ -1826,7 +2541,7 @@ body.menu-open .mobile-menu {
   box-shadow: 0 -4px 20px rgba(0,0,0,0.06);
 }
 .mobile-cart-info { flex: 1; min-width: 0; }
-.mobile-cart-total { font-family: var(--font-display); font-weight: 800; font-size: 20px; letter-spacing: -0.025em; color: var(--ink); }
+.mobile-cart-total { font-family: var(--font-display); font-weight: 900; font-size: 20px; letter-spacing: -0.025em; color: var(--ink); }
 .mobile-cart-count {
   font-family: var(--font-mono); font-size: 9px; font-weight: 500;
   letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid);
@@ -1841,6 +2556,333 @@ body.menu-open .mobile-menu {
   .cart-summary-box { display: none; }
   .tickets-page { padding-bottom: 110px; }
 }
+
+/* ==================================================== */
+/* PAGE: CHECKOUT (Paso 2 - Tus datos)                 */
+/* ==================================================== */
+.checkout-page { padding-bottom: 120px; }
+.checkout-layout {
+  display: grid; grid-template-columns: 1fr; gap: 28px; padding-top: 24px;
+}
+@media (min-width: 900px) {
+  .checkout-layout { grid-template-columns: 1fr 360px; gap: 36px; align-items: start; }
+}
+
+.checkout-main { min-width: 0; }
+.checkout-main h2 {
+  font-family: var(--font-display); font-weight: 900;
+  font-size: clamp(32px, 5vw, 52px);
+  letter-spacing: -0.045em; margin-bottom: 8px;
+  color: var(--ink);
+}
+.checkout-main .checkout-lead {
+  font-size: 15px; color: var(--ink-mid);
+  margin-bottom: 28px; max-width: 520px;
+}
+
+/* ==== IDENTITY SCREEN (Pantalla A) ==== */
+.identity-card {
+  display: block;
+  background: var(--ink);
+  color: #fff;
+  padding: 22px 24px;
+  border-radius: 16px;
+  border: none; cursor: pointer;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 18px;
+  transition: transform 0.12s, background 0.15s;
+}
+.identity-card:hover { background: #1a1a1a; }
+.identity-card:active { transform: scale(0.99); }
+.identity-card-head {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 12px; margin-bottom: 4px;
+}
+.identity-card-title {
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.02em;
+}
+.identity-card-arrow {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--accent); color: var(--accent-ink);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.identity-card-arrow svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2.5; }
+.identity-card-desc {
+  font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.4;
+}
+
+.identity-divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.15em; text-transform: uppercase;
+  color: var(--ink-dim);
+}
+.identity-divider::before, .identity-divider::after {
+  content: ""; flex: 1; height: 1px; background: var(--line);
+}
+
+.social-auth {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-bottom: 24px;
+}
+.social-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 16px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 100px;
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  color: var(--ink); cursor: pointer;
+  transition: all 0.15s;
+}
+.social-btn:hover { border-color: var(--ink); background: var(--bg-soft); }
+.social-btn svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+.login-link-row {
+  display: flex; justify-content: center; gap: 6px;
+  font-size: 14px; color: var(--ink-mid);
+}
+.login-link-row a {
+  font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+/* ==== DETAILS SCREEN (Pantalla B) ==== */
+.checkout-section { margin-bottom: 28px; }
+.checkout-section-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 14px; gap: 10px; flex-wrap: wrap;
+}
+.checkout-section-title {
+  font-family: var(--font-display); font-weight: 700; font-size: 17px;
+  letter-spacing: -0.02em; color: var(--ink);
+}
+.checkout-section-hint {
+  font-size: 12px; color: var(--ink-mid);
+}
+
+.form-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
+}
+@media (max-width: 600px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
+.form-grid .full { grid-column: 1 / -1; }
+
+.form-field {
+  display: flex; flex-direction: column; gap: 6px;
+  position: relative;
+}
+.form-label {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-mid);
+}
+.form-input {
+  appearance: none;
+  padding: 14px 16px;
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 12px;
+  font-family: var(--font-display); font-size: 15px;
+  color: var(--ink); outline: none;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%;
+}
+.form-input::placeholder { color: var(--ink-dim); }
+.form-hint {
+  font-size: 12px; color: var(--ink-mid);
+  line-height: 1.4; margin-top: 2px;
+}
+.form-input:hover { border-color: var(--ink-mid); }
+.form-input:focus { border-color: var(--ink); background: var(--bg); }
+
+.form-phone {
+  display: grid; grid-template-columns: 100px 1fr; gap: 8px;
+}
+.form-phone .phone-prefix {
+  background: #fff; border: 1.5px solid var(--line-strong);
+  border-radius: 12px; padding: 14px 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  color: var(--ink); cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' stroke='%238c8c88' stroke-width='2' viewBox='0 0 24 24'%3E%3Cpath stroke-linecap='round' d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center; background-size: 10px;
+  padding-right: 28px;
+}
+
+/* Attendee cards with radio options */
+.attendees-list {
+  display: flex; flex-direction: column; gap: 14px;
+}
+.attendee-card {
+  background: #fff; border: 1.5px solid var(--line);
+  border-radius: 14px; padding: 18px;
+}
+.attendee-card-head {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.attendee-num {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  flex-shrink: 0;
+}
+.attendee-card-title {
+  font-family: var(--font-display); font-weight: 700; font-size: 14px;
+  color: var(--ink); letter-spacing: -0.01em;
+}
+.attendee-card-type {
+  font-family: var(--font-mono); font-size: 10px; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-mid); margin-left: auto;
+}
+
+/* Radio option rows (key UX element) */
+.radio-option {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px;
+  border: 1.5px solid var(--line-strong); border-radius: 12px;
+  cursor: pointer; background: #fff;
+  transition: border-color 0.15s, background 0.15s;
+  width: 100%; text-align: left;
+  margin-bottom: 8px;
+}
+.radio-option:hover { border-color: var(--ink-mid); }
+.radio-option.selected {
+  border-color: var(--ink); border-width: 2px;
+  padding: 13px;
+  background: var(--bg-soft);
+}
+.radio-option-dot {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 2px solid var(--line-strong);
+  flex-shrink: 0; background: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.radio-option.selected .radio-option-dot {
+  border-color: var(--ink); background: var(--ink);
+}
+.radio-option.selected .radio-option-dot::after {
+  content: ""; width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent);
+}
+.radio-option-body { flex: 1; min-width: 0; }
+.radio-option-label {
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  color: var(--ink); letter-spacing: -0.01em;
+}
+.radio-option-sub {
+  font-size: 12px; color: var(--ink-mid); margin-top: 2px;
+}
+.radio-option-edit {
+  flex-shrink: 0; font-family: var(--font-display);
+  font-size: 12px; font-weight: 600; color: var(--ink);
+  text-decoration: underline; text-underline-offset: 3px;
+  background: none; border: none; cursor: pointer;
+}
+.radio-option-edit:hover { color: var(--ink-mid); }
+
+/* Reveal inline form inside attendee when "other person" is selected */
+.attendee-guest-fields {
+  display: none;
+  padding-top: 14px;
+}
+.attendee-guest-fields.show { display: block; }
+
+/* Continue CTA */
+.checkout-continue {
+  width: 100%;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 24px; margin-top: 20px;
+  background: var(--accent); color: var(--accent-ink);
+  border-radius: 14px;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  cursor: pointer; transition: background 0.15s, transform 0.1s;
+  border: none;
+}
+.checkout-continue:hover { background: var(--accent-hover); }
+.checkout-continue:active { transform: scale(0.98); }
+.checkout-continue:disabled { background: var(--line); color: var(--ink-mid); cursor: not-allowed; }
+.checkout-continue svg { width: 16px; height: 16px; stroke: currentColor; }
+
+.checkout-terms-note {
+  margin-top: 14px; font-size: 12px; color: var(--ink-mid);
+  line-height: 1.5; text-align: center;
+}
+.checkout-terms-note a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+
+/* Timer */
+.checkout-timer {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid var(--line-strong);
+  border-radius: 100px;
+  font-family: var(--font-mono); font-size: 11px; font-weight: 500;
+  color: var(--ink-mid);
+  margin-bottom: 18px;
+  transition: background 0.3s, border-color 0.3s, color 0.3s;
+}
+.checkout-timer svg { width: 13px; height: 13px; stroke: currentColor; }
+.checkout-timer.warn {
+  background: rgba(245,158,11,0.1);
+  border-color: #f59e0b;
+  color: #7a4a00;
+}
+.checkout-timer.danger {
+  background: rgba(225,25,0,0.08);
+  border-color: var(--danger);
+  color: var(--danger);
+}
+
+/* Checkout cart summary mobile */
+.checkout-summary-mobile {
+  display: none;
+  margin-bottom: 20px;
+  background: var(--bg-soft); border: 1px solid var(--line);
+  border-radius: 14px; overflow: hidden;
+}
+@media (max-width: 900px) {
+  .checkout-summary-mobile { display: block; }
+}
+.checkout-summary-mobile summary {
+  padding: 14px 18px;
+  font-family: var(--font-display); font-weight: 600; font-size: 14px;
+  cursor: pointer; list-style: none;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.checkout-summary-mobile summary::-webkit-details-marker { display: none; }
+.checkout-summary-mobile summary::after {
+  content: "▾"; font-size: 14px; color: var(--ink-mid);
+  transition: transform 0.2s;
+}
+.checkout-summary-mobile[open] summary::after { transform: rotate(180deg); }
+.checkout-summary-mobile .summary-content {
+  padding: 4px 18px 18px;
+  border-top: 1px solid var(--line);
+}
+.checkout-summary-mobile .summary-row {
+  display: flex; justify-content: space-between;
+  font-size: 13px; margin-bottom: 8px;
+  color: var(--ink-mid);
+}
+.checkout-summary-mobile .summary-row.total {
+  margin-top: 10px; padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-family: var(--font-display); font-weight: 900; font-size: 16px;
+  color: var(--ink);
+}
+
 </style>
 </head>
 <body>
@@ -1860,24 +2902,37 @@ body.menu-open .mobile-menu {
     </label>
 
     <nav class="nav-desktop">
-      <a onclick="navigate('eventos')" class="nav-link active">Eventos</a>
-      <a class="nav-link">Venues</a>
-      <a class="nav-link">Organizadores</a>
+      <a onclick="navigate('creadores')" class="nav-link">Para creadores</a>
     </nav>
 
     <div class="header-actions">
       <button class="icon-btn header-search-icon" onclick="navigate('eventos')" aria-label="Buscar">
         <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
       </button>
-      <a class="btn-signin">Ingresar</a>
+      <a class="btn-signin" onclick="navigate('login')">Ingresar</a>
       <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
     </div>
   </div>
   <div class="mobile-menu">
-    <a class="mobile-cta-primary">Ingresar / Registrarme</a>
-    <a onclick="navigate('eventos')">Eventos</a>
-    <a>Venues</a><a>Organizadores</a><a>Ayuda</a>
-    <hr><a class="mobile-cta">Publicar evento</a>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
+    </div>
   </div>
 </header>
 
@@ -2581,20 +3636,34 @@ body.menu-open .mobile-menu {
 <header class="header">
   <div class="container header-inner">
     <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
-    <label class="header-search">
-      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" placeholder="Buscar evento, artista, venue…" />
-    </label>
     <nav class="nav-desktop">
-      <a onclick="navigate('eventos')" class="nav-link active">Eventos</a>
-      <a class="nav-link">Venues</a>
-      <a class="nav-link">Organizadores</a>
+      <a onclick="navigate('creadores')" class="nav-link">Para creadores</a>
     </nav>
     <div class="header-actions">
-      <button class="icon-btn search-mobile" aria-label="Buscar eventos"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg></button>
-      <a class="btn-ghost">Ingresar</a>
-      <a class="btn-primary-sm">Publicar</a>
+      <a class="btn-ghost" onclick="navigate('login')">Ingresar</a>
+      <a class="btn-primary-sm" onclick="navigate('creadores')">Publicar</a>
       <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
     </div>
   </div>
 </header>
@@ -2606,29 +3675,77 @@ body.menu-open .mobile-menu {
   </div>
 </section>
 
-<section class="pills-bar">
+<section>
   <div class="container">
-    <div class="pills-row">
-      <a class="pill active"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg></span>Todos</a>
-      <a class="pill"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg></span>Hoy</a>
-      <a class="pill"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg></span>Este finde</a>
-      <a class="pill"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></span>Electrónica</a>
-      <a class="pill"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M3 12h3l3-9 4 18 3-9h5"/></svg></span>Conciertos</a>
-      <a class="pill"><span class="pill-icon"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 2l2.4 7.2H22l-6 4.4 2.4 7.2L12 16.4 5.6 20.8 8 13.6 2 9.2h7.6L12 2z"/></svg></span>Populares</a>
+    <label class="eventos-search" for="eventos-search-input">
+      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
+      <input id="eventos-search-input" type="text" placeholder="Buscar por artista, evento o venue…" />
+      <button type="button" class="eventos-search-clear" onclick="document.getElementById('eventos-search-input').value=''; this.previousElementSibling.focus();" aria-label="Limpiar búsqueda">✕</button>
+    </label>
+  </div>
+</section>
+
+<section class="quick-filters">
+  <div class="container">
+    <div class="quick-filters-wrap">
+      <div class="quick-filters-scroll">
+        <button class="quick-pill active" data-quick="all"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>Todos</button>
+        <button class="quick-pill" data-quick="today"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Hoy</button>
+        <button class="quick-pill" data-quick="weekend"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Este finde</button>
+        <button class="quick-pill" data-quick="week"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>Próximos 7 días</button>
+        <button class="quick-pill" data-quick="month"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Este mes</button>
+        <button class="quick-pill" data-quick="free"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M8 14s1 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg>Gratis</button>
+      </div>
     </div>
   </div>
 </section>
 
 <section>
-  <div class="container" style="padding-top: 20px;">
-    <div class="filters-row">
-      <span class="filter-label">Filtrar:</span>
-      <select class="filter-select"><option>Cualquier fecha</option><option>Hoy</option><option>Mañana</option></select>
-      <select class="filter-select"><option>Todas las ciudades</option><option>San José</option></select>
-      <select class="filter-select"><option>Cualquier precio</option><option>Gratis</option><option>$10-$25</option></select>
+  <div class="container">
+    <div class="advanced-filters-wrap">
+      <div class="advanced-filters" id="advanced-filters">
+        <select class="filter-chip" id="filter-city" onchange="updateFilters()">
+          <option value="">Ciudad</option>
+          <option value="sj">San José</option>
+          <option value="heredia">Heredia</option>
+          <option value="alajuela">Alajuela</option>
+          <option value="guanacaste">Guanacaste</option>
+          <option value="limon">Limón</option>
+        </select>
+        <select class="filter-chip" id="filter-price" onchange="updateFilters()">
+          <option value="">Precio</option>
+          <option value="free">Gratis</option>
+          <option value="0-20">Hasta $20</option>
+          <option value="20-50">$20 – $50</option>
+          <option value="50+">Más de $50</option>
+        </select>
+        <select class="filter-chip" id="filter-genre" onchange="updateFilters()">
+          <option value="">Género</option>
+          <option value="electronic">Electrónica</option>
+          <option value="rock">Rock / Indie</option>
+          <option value="latin">Pop latino / Urbano</option>
+          <option value="festival">Festivales</option>
+          <option value="experiences">Experiencias</option>
+        </select>
+        <button class="clear-filters-btn" id="clear-filters" style="display:none;" onclick="clearAllFilters()">
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>
+          Limpiar
+        </button>
+      </div>
     </div>
+
     <div class="results-toolbar">
       <span class="results-count">Mostrando <strong>12 de 247</strong> eventos</span>
+      <div class="sort-wrapper">
+        <span class="sort-label">Ordenar</span>
+        <select class="sort-select">
+          <option>Próximos primero</option>
+          <option>Más populares</option>
+          <option>Precio: menor a mayor</option>
+          <option>Precio: mayor a menor</option>
+          <option>Recién agregados</option>
+        </select>
+      </div>
     </div>
   </div>
 </section>
@@ -2683,15 +3800,34 @@ body.menu-open .mobile-menu {
       <input type="text" placeholder="Buscar evento, artista, venue…" readonly />
     </label>
     <nav class="nav-desktop">
-      <a onclick="navigate('eventos')" class="nav-link">Eventos</a>
-      <a class="nav-link">Venues</a>
-      <a class="nav-link">Organizadores</a>
+      <a onclick="navigate('creadores')" class="nav-link">Para creadores</a>
     </nav>
     <div class="header-actions">
       <button class="icon-btn search-mobile" onclick="navigate('eventos')" aria-label="Buscar eventos"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg></button>
-      <a class="btn-ghost">Ingresar</a>
-      <a class="btn-primary-sm">Publicar</a>
+      <a class="btn-ghost" onclick="navigate('login')">Ingresar</a>
+      <a class="btn-primary-sm" onclick="navigate('creadores')">Publicar</a>
       <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
     </div>
   </div>
 </header>
@@ -2826,23 +3962,32 @@ body.menu-open .mobile-menu {
 <!-- ============================================= -->
 <div class="page" data-page="tickets">
 
-<header class="header">
+<header class="header header-minimal">
   <div class="container header-inner">
     <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
-    <label class="header-search" onclick="navigate('eventos')">
-      <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg>
-      <input type="text" placeholder="Buscar evento, artista, venue…" readonly />
-    </label>
-    <nav class="nav-desktop">
-      <a onclick="navigate('eventos')" class="nav-link">Eventos</a>
-      <a class="nav-link">Venues</a>
-      <a class="nav-link">Organizadores</a>
-    </nav>
     <div class="header-actions">
-      <button class="icon-btn search-mobile" onclick="navigate('eventos')" aria-label="Buscar eventos"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path stroke-linecap="round" d="M21 21l-4.3-4.3"/></svg></button>
-      <a class="btn-ghost">Ingresar</a>
-      <a class="btn-primary-sm">Publicar</a>
       <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
     </div>
   </div>
 </header>
@@ -2857,26 +4002,45 @@ body.menu-open .mobile-menu {
 <section class="tickets-page">
   <div class="container">
     <div class="tickets-header">
-      <span class="event-ref">Paso 1 de 3</span>
+      <div class="step-progress" aria-label="Paso 1 de 3">
+        <div class="step-progress-bars">
+          <span class="step-progress-bar active"></span>
+          <span class="step-progress-bar"></span>
+          <span class="step-progress-bar"></span>
+        </div>
+        <span class="step-progress-label">Paso 1 de 3 · Entradas</span>
+      </div>
       <h2>Elegí tus <em>entradas</em></h2>
-      <p>Las Early Bird se agotaron. Quedan cupos en Fase 2.</p>
     </div>
 
     <div class="tickets-layout">
+      <div id="ticket-mode-container">
       <div class="ticket-list">
         <div class="ticket sold-out">
           <div class="ticket-info">
             <div class="ticket-type">General Early Bird <span class="ticket-badge badge-soldout">Agotado</span></div>
             <div class="ticket-desc">Primera fase anticipada</div>
           </div>
-          <div class="ticket-price-col"><div class="ticket-price">$11</div><div class="qty-soldout">Sold out</div></div>
+          <div class="ticket-price-col">
+            <div class="ticket-price">$11</div>
+            <button class="notify-link" onclick="toggleNotify(this)">
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+              Avisame si se liberan
+            </button>
+          </div>
         </div>
         <div class="ticket sold-out">
           <div class="ticket-info">
             <div class="ticket-type">General Fase 1 <span class="ticket-badge badge-soldout">Agotado</span></div>
             <div class="ticket-desc">Acceso general</div>
           </div>
-          <div class="ticket-price-col"><div class="ticket-price">$13</div><div class="qty-soldout">Sold out</div></div>
+          <div class="ticket-price-col">
+            <div class="ticket-price">$13</div>
+            <button class="notify-link" onclick="toggleNotify(this)">
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+              Avisame si se liberan
+            </button>
+          </div>
         </div>
         <div class="ticket" data-name="General Fase 2" data-price="17">
           <div class="ticket-info">
@@ -2893,7 +4057,13 @@ body.menu-open .mobile-menu {
             <div class="ticket-type">VIP Fase 1 <span class="ticket-badge badge-soldout">Agotado</span></div>
             <div class="ticket-desc">VIP con barra exclusiva</div>
           </div>
-          <div class="ticket-price-col"><div class="ticket-price">$17</div><div class="qty-soldout">Sold out</div></div>
+          <div class="ticket-price-col">
+            <div class="ticket-price">$17</div>
+            <button class="notify-link" onclick="toggleNotify(this)">
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+              Avisame si se liberan
+            </button>
+          </div>
         </div>
         <div class="ticket" data-name="VIP Fase 2" data-price="22">
           <div class="ticket-info">
@@ -2916,6 +4086,7 @@ body.menu-open .mobile-menu {
           </div>
         </div>
       </div>
+      </div>
 
       <aside class="cart-summary-box">
         <h3>Tu compra</h3>
@@ -2932,7 +4103,7 @@ body.menu-open .mobile-menu {
         <div class="cart-subtotal-row"><span>Subtotal</span><span id="cart-subtotal">$0.00</span></div>
         <div class="cart-subtotal-row"><span>Cargo servicio (5%)</span><span id="cart-fee">$0.00</span></div>
         <div class="cart-total"><span class="lbl">Total</span><span class="val" id="cart-total">$0.00</span></div>
-        <button class="cart-cta" id="cart-cta" disabled onclick="alert('Continuando al pago (demo)')">Continuar al pago →</button>
+        <button class="cart-cta" id="cart-cta" disabled onclick="navigate('checkout')">Continuar al pago →</button>
         <p class="cart-note">Pago seguro · Tarjeta, SINPE o transferencia</p>
       </aside>
     </div>
@@ -2944,9 +4115,619 @@ body.menu-open .mobile-menu {
     <div class="mobile-cart-total" id="mobile-cart-total">$0.00</div>
     <div class="mobile-cart-count" id="mobile-cart-count">0 entradas</div>
   </div>
-  <button class="mobile-cart-cta" onclick="alert('Continuando al pago (demo)')">Continuar →</button>
+  <button class="mobile-cart-cta" onclick="navigate('checkout')">Continuar →</button>
 </div>
 
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CHECKOUT (Paso 2A — Identidad)           -->
+<!-- ============================================= -->
+<div class="page" data-page="checkout">
+
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <a onclick="navigate('tickets')" class="detail-back">
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver a entradas
+  </a>
+</div>
+
+<section class="checkout-page">
+  <div class="container">
+    <div class="step-progress" aria-label="Paso 2 de 3">
+      <div class="step-progress-bars">
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar"></span>
+      </div>
+      <span class="step-progress-label">Paso 2 de 3 · Tus datos</span>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="checkout-main">
+        <h2>¿Cómo querés <em>continuar</em>?</h2>
+        <p class="checkout-lead">Podés comprar sin registrarte. Si preferís guardar tus datos para la próxima, iniciá sesión o creá una cuenta.</p>
+
+        <!-- Primary: guest (big black card with lime arrow) -->
+        <button class="identity-card" onclick="navigate('checkout-details')">
+          <div class="identity-card-head">
+            <span class="identity-card-title">Continuar como invitado</span>
+            <span class="identity-card-arrow"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+          </div>
+          <div class="identity-card-desc">Recibís tus entradas por email. Lo más rápido.</div>
+        </button>
+
+        <div class="identity-divider">o</div>
+
+        <!-- Social auth secondary -->
+        <div class="social-auth">
+          <button class="social-btn" onclick="navigate('checkout-details')">
+            <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+            Google
+          </button>
+          <button class="social-btn" onclick="navigate('checkout-details')">
+            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            Apple
+          </button>
+        </div>
+
+        <p class="login-link-row">¿Ya tenés cuenta? <a onclick="navigate('checkout-details')">Iniciar sesión</a></p>
+      </div>
+
+      <!-- Desktop order summary (sticky) -->
+      <aside class="cart-summary-box">
+        <h3>Resumen del pedido</h3>
+        <div class="cart-event">
+          <div class="cart-event-thumb">RT</div>
+          <div class="cart-event-info">
+            <div class="cart-event-title">Reggaetón Tristito</div>
+            <div class="cart-event-date">SÁB 2 MAY · 9:00 PM</div>
+          </div>
+        </div>
+        <div class="cart-items">
+          <div class="cart-item"><span>1× General Fase 2</span><span>$17.00</span></div>
+          <div class="cart-item"><span>2× VIP Fase 2</span><span>$44.00</span></div>
+        </div>
+        <div class="cart-subtotal-row"><span>Subtotal</span><span>$61.00</span></div>
+        <div class="cart-subtotal-row"><span>Cargo servicio (5%)</span><span>$3.05</span></div>
+        <div class="cart-total"><span class="lbl">Total</span><span class="val">$64.05</span></div>
+        <p class="cart-note">Pago seguro · Tarjeta, SINPE o transferencia</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><span>© 2026 VIBE CR.</span><span>Hecho con <span style="color: var(--accent);">✦</span> en SJO</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CHECKOUT DETAILS (Paso 2B — Tus datos)   -->
+<!-- ============================================= -->
+<div class="page" data-page="checkout-details">
+
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+      <a>Mis favoritos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creadores')">Publicá tu evento <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Ayuda</span>
+      <a>Cómo funciona</a>
+      <a>Contacto</a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('login')">Ingresar</a>
+      <a class="mobile-cta-secondary" onclick="navigate('signup')">Crear cuenta</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <a onclick="navigate('checkout')" class="detail-back">
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver
+  </a>
+</div>
+
+<section class="checkout-page">
+  <div class="container">
+    <div class="step-progress" aria-label="Paso 2 de 3">
+      <div class="step-progress-bars">
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar"></span>
+      </div>
+      <span class="step-progress-label">Paso 2 de 3 · Tus datos</span>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="checkout-main">
+        <h2>Tus <em>datos</em></h2>
+
+        <div class="checkout-timer" id="checkout-timer">
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+          <span>Reservadas · <span id="checkout-timer-value">19:38</span></span>
+        </div>
+
+        <!-- Collapsible summary for mobile -->
+        <details class="checkout-summary-mobile">
+          <summary>Resumen · <strong>$64.05</strong></summary>
+          <div class="summary-content">
+            <div class="summary-row"><span>1× General Fase 2</span><span>$17.00</span></div>
+            <div class="summary-row"><span>2× VIP Fase 2</span><span>$44.00</span></div>
+            <div class="summary-row"><span>Subtotal</span><span>$61.00</span></div>
+            <div class="summary-row"><span>Cargo servicio</span><span>$3.05</span></div>
+            <div class="summary-row total"><span>Total</span><span>$64.05</span></div>
+          </div>
+        </details>
+
+        <!-- BUYER FORM -->
+        <div class="checkout-section">
+          <div class="checkout-section-head">
+            <span class="checkout-section-title">Tus datos de contacto</span>
+            <span class="checkout-section-hint">Te mandamos las entradas acá</span>
+          </div>
+          <div class="form-grid">
+            <div class="form-field">
+              <label class="form-label">Nombre</label>
+              <input class="form-input" type="text" id="buyer-firstname" placeholder="Tu nombre" oninput="updateBuyerName()" />
+            </div>
+            <div class="form-field">
+              <label class="form-label">Apellido</label>
+              <input class="form-input" type="text" id="buyer-lastname" placeholder="Tu apellido" oninput="updateBuyerName()" />
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Email</label>
+              <input class="form-input" type="email" id="buyer-email" placeholder="tu@email.com" />
+            </div>
+            <div class="form-field full">
+              <label class="form-label">Celular</label>
+              <div class="form-phone">
+                <select class="phone-prefix">
+                  <option>🇸🇻 +503</option>
+                  <option>🇨🇷 +506</option>
+                  <option>🇬🇹 +502</option>
+                  <option>🇭🇳 +504</option>
+                  <option>🇳🇮 +505</option>
+                  <option>🇵🇦 +507</option>
+                  <option>🇲🇽 +52</option>
+                  <option>🇺🇸 +1</option>
+                </select>
+                <input class="form-input" type="tel" id="buyer-phone" placeholder="7000 0000" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ATTENDEES SECTION -->
+        <div class="checkout-section">
+          <div class="checkout-section-head">
+            <span class="checkout-section-title">Titulares de las entradas</span>
+            <span class="checkout-section-hint"><span id="attendees-count">3</span> entradas</span>
+          </div>
+          <div class="attendees-list" id="attendees-list">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <button class="checkout-continue" onclick="alert('Continuando al pago (demo)')">
+          Ir al pago
+          <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+
+        <p class="checkout-terms-note">
+          Al continuar aceptás los <a href="#">Términos</a> y la <a href="#">Política de Privacidad</a> de VIBE.
+        </p>
+      </div>
+
+      <!-- Desktop order summary -->
+      <aside class="cart-summary-box">
+        <h3>Resumen del pedido</h3>
+        <div class="cart-event">
+          <div class="cart-event-thumb">RT</div>
+          <div class="cart-event-info">
+            <div class="cart-event-title">Reggaetón Tristito</div>
+            <div class="cart-event-date">SÁB 2 MAY · 9:00 PM</div>
+          </div>
+        </div>
+        <div class="cart-items">
+          <div class="cart-item"><span>1× General Fase 2</span><span>$17.00</span></div>
+          <div class="cart-item"><span>2× VIP Fase 2</span><span>$44.00</span></div>
+        </div>
+        <div class="cart-subtotal-row"><span>Subtotal</span><span>$61.00</span></div>
+        <div class="cart-subtotal-row"><span>Cargo servicio (5%)</span><span>$3.05</span></div>
+        <div class="cart-total"><span class="lbl">Total</span><span class="val">$64.05</span></div>
+        <p class="cart-note">Pago seguro · Tarjeta, SINPE o transferencia</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><span>© 2026 VIBE CR.</span><span>Hecho con <span style="color: var(--accent);">✦</span> en SJO</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: LOGIN (comprador)                       -->
+<!-- ============================================= -->
+<div class="page" data-page="login">
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="navigate('home')" aria-label="Cerrar"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+</header>
+<section class="auth-page">
+  <div class="auth-card-wrap">
+    <h1 class="auth-title">Hola de <em>nuevo</em></h1>
+    <p class="auth-sub">Ingresá para ver tus entradas y seguir descubriendo eventos.</p>
+    <div class="auth-social-row">
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continuar con Google
+      </button>
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Continuar con Apple
+      </button>
+    </div>
+    <div class="auth-divider">o con email</div>
+    <form class="auth-form" onsubmit="event.preventDefault(); navigate('home');">
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="tu@email.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Contraseña</label>
+        <input class="form-input" type="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="auth-submit">Ingresar</button>
+    </form>
+    <p class="auth-foot">¿Olvidaste tu contraseña? <a>Recuperala</a></p>
+    <div class="auth-switcher">
+      ¿Primera vez en VIBE? <a onclick="navigate('signup')">Creá tu cuenta</a>
+    </div>
+    <div class="auth-switcher" style="margin-top: 12px; background: #fff; border: 1px dashed var(--line-strong);">
+      ¿Sos organizador? <a onclick="navigate('creator-login')">Ingresá como creador</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: SIGNUP (comprador)                      -->
+<!-- ============================================= -->
+<div class="page" data-page="signup">
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="navigate('home')" aria-label="Cerrar"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+</header>
+<section class="auth-page">
+  <div class="auth-card-wrap">
+    <h1 class="auth-title">Creá tu <em>cuenta</em></h1>
+    <p class="auth-sub">Descubrí eventos antes que nadie y guardá tus entradas en un solo lugar.</p>
+    <div class="auth-social-row">
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Registrate con Google
+      </button>
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+        Registrate con Apple
+      </button>
+    </div>
+    <div class="auth-divider">o con email</div>
+    <form class="auth-form" onsubmit="event.preventDefault(); navigate('home');">
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Nombre</label>
+          <input class="form-input" type="text" placeholder="Tu nombre" required />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Apellido</label>
+          <input class="form-input" type="text" placeholder="Tu apellido" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email</label>
+        <input class="form-input" type="email" placeholder="tu@email.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Contraseña</label>
+        <input class="form-input" type="password" placeholder="Mínimo 8 caracteres" required />
+      </div>
+      <button type="submit" class="auth-submit">Crear cuenta</button>
+      <p class="auth-legal">Al crear tu cuenta aceptás los <a>Términos</a> y la <a>Política de Privacidad</a>.</p>
+    </form>
+    <div class="auth-switcher">
+      ¿Ya tenés cuenta? <a onclick="navigate('login')">Iniciá sesión</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CREADORES (landing)                     -->
+<!-- ============================================= -->
+<div class="page" data-page="creadores">
+<header class="header">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <nav class="nav-desktop">
+      <a onclick="navigate('creadores')" class="nav-link active">Para creadores</a>
+    </nav>
+    <div class="header-actions">
+      <a class="btn-ghost" onclick="navigate('creator-login')">Panel</a>
+      <a class="btn-primary-sm" onclick="navigate('creator-signup')">Empezá</a>
+      <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+  <div class="mobile-menu">
+    <div class="mobile-menu-section">
+      <span class="mobile-menu-label">Explorá</span>
+      <a onclick="navigate('eventos')">Eventos <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-section mobile-menu-creators">
+      <span class="mobile-menu-label">Para creadores</span>
+      <a onclick="navigate('creator-signup')">Empezá ahora <span class="chev">→</span></a>
+      <a onclick="navigate('creator-login')">Panel del organizador <span class="chev">→</span></a>
+    </div>
+    <div class="mobile-menu-ctas">
+      <a class="mobile-cta-primary" onclick="navigate('creator-signup')">Crear cuenta de creador</a>
+      <a class="mobile-cta-secondary" onclick="navigate('creator-login')">Ya tengo cuenta</a>
+    </div>
+  </div>
+</header>
+
+<section class="creators-hero">
+  <div class="container creators-hero-inner">
+    <div>
+      <span class="creators-kicker">✦ Para creadores</span>
+      <h1>Publicá tu próximo <em>evento</em> en VIBE</h1>
+      <p class="creators-hero-sub">La plataforma que conecta tu evento con miles de asistentes en Costa Rica. Sin letra chica.</p>
+      <div class="creators-cta-row">
+        <button class="creators-cta-primary" onclick="navigate('creator-signup')">
+          Empezá ahora
+          <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        <button class="creators-cta-secondary" onclick="navigate('creator-login')">Ya tengo cuenta</button>
+      </div>
+    </div>
+    <div class="creators-hero-stats">
+      <div>
+        <div class="creators-stat-num">+240</div>
+        <div class="creators-stat-label">Eventos<br>publicados</div>
+      </div>
+      <div>
+        <div class="creators-stat-num">50K</div>
+        <div class="creators-stat-label">Entradas<br>vendidas</div>
+      </div>
+      <div>
+        <div class="creators-stat-num">3%</div>
+        <div class="creators-stat-label">Comisión<br>por venta</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="creators-benefits">
+  <div class="container">
+    <div class="creators-benefits-head">
+      <h2>Todo lo que <em>necesitás</em></h2>
+      <p>Herramientas profesionales para vender entradas, gestionar accesos y crecer tu audiencia.</p>
+    </div>
+    <div class="creators-benefits-grid">
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
+        <h3>Publicación en minutos</h3>
+        <p>Creá tu evento en 5 minutos. Configurá múltiples tipos de entrada, fases de precios y descuentos.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg></div>
+        <h3>Analytics en tiempo real</h3>
+        <p>Seguí tus ventas minuto a minuto. Exportá reportes de asistentes con toda la info que necesitás.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg></div>
+        <h3>Check-in sin filas</h3>
+        <p>App de scanner para tu equipo. Valida códigos QR en segundos y controla el aforo en vivo.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg></div>
+        <h3>Pagos locales</h3>
+        <p>Aceptá tarjeta, SINPE y transferencia. Cobros liquidados en colones o dólares a tu banco en 48h.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg></div>
+        <h3>Soporte humano</h3>
+        <p>Equipo dedicado en CR. WhatsApp directo con tu ejecutivo. Respuesta en menos de 2 horas.</p>
+      </div>
+      <div class="benefit-card">
+        <div class="benefit-icon"><svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M7 11l5-5m0 0l5 5m-5-5v12"/></svg></div>
+        <h3>Audiencia que crece</h3>
+        <p>Tu evento aparece en miles de feeds. Emails segmentados a compradores que ya conocen tu marca.</p>
+      </div>
+    </div>
+
+    <div class="creators-cta-section">
+      <h2>¿Listo para <em>vender</em>?</h2>
+      <p>Registrate gratis, publicá tu evento en minutos y empezá a vender entradas hoy mismo.</p>
+      <div class="creators-cta-row">
+        <button class="creators-cta-primary" onclick="navigate('creator-signup')">
+          Crear cuenta de creador
+          <svg fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><span>© 2026 VIBE CR.</span><span>Hecho con <span style="color: var(--accent);">✦</span> en SJO</span></div>
+  </div>
+</footer>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CREATOR LOGIN                           -->
+<!-- ============================================= -->
+<div class="page" data-page="creator-login">
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('creadores')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="navigate('creadores')" aria-label="Cerrar"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+</header>
+<section class="auth-page auth-creator">
+  <div class="auth-card-wrap">
+    <span class="auth-badge">✦ Creadores</span>
+    <h1 class="auth-title">Panel del <em>organizador</em></h1>
+    <p class="auth-sub">Ingresá a tu dashboard para gestionar eventos y ventas.</p>
+    <div class="auth-social-row">
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continuar con Google
+      </button>
+    </div>
+    <div class="auth-divider">o con email</div>
+    <form class="auth-form" onsubmit="event.preventDefault(); alert('Acceso al panel (demo)');">
+      <div class="form-field">
+        <label class="form-label">Email de empresa</label>
+        <input class="form-input" type="email" placeholder="contacto@tuempresa.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Contraseña</label>
+        <input class="form-input" type="password" placeholder="••••••••" required />
+      </div>
+      <button type="submit" class="auth-submit dark">Ingresar al panel</button>
+    </form>
+    <p class="auth-foot">¿Olvidaste tu contraseña? <a>Recuperala</a></p>
+    <div class="auth-switcher">
+      ¿Todavía no sos creador? <a onclick="navigate('creator-signup')">Registrate</a>
+    </div>
+    <div class="auth-switcher" style="margin-top: 12px; background: #fff; border: 1px dashed var(--line-strong);">
+      ¿Buscás comprar entradas? <a onclick="navigate('login')">Ingresá como asistente</a>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CREATOR SIGNUP                          -->
+<!-- ============================================= -->
+<div class="page" data-page="creator-signup">
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('creadores')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn" onclick="navigate('creadores')" aria-label="Cerrar"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
+    </div>
+  </div>
+</header>
+<section class="auth-page auth-creator">
+  <div class="auth-card-wrap">
+    <span class="auth-badge">✦ Creadores</span>
+    <h1 class="auth-title">Empezá a <em>publicar</em></h1>
+    <p class="auth-sub">Registrate como organizador y empezá a vender entradas hoy mismo.</p>
+    <div class="auth-social-row">
+      <button class="auth-social-btn">
+        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
+        Continuar con Google
+      </button>
+    </div>
+    <div class="auth-divider">o con email</div>
+    <form class="auth-form" onsubmit="event.preventDefault(); alert('Cuenta de creador creada (demo)');">
+      <div class="form-field">
+        <label class="form-label">Nombre de la empresa o productora</label>
+        <input class="form-input" type="text" placeholder="Ej. Move Concerts CR" required />
+      </div>
+      <div class="form-grid">
+        <div class="form-field">
+          <label class="form-label">Tu nombre</label>
+          <input class="form-input" type="text" placeholder="Nombre" required />
+        </div>
+        <div class="form-field">
+          <label class="form-label">Apellido</label>
+          <input class="form-input" type="text" placeholder="Apellido" required />
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">Email de empresa</label>
+        <input class="form-input" type="email" placeholder="contacto@tuempresa.com" required />
+      </div>
+      <div class="form-field">
+        <label class="form-label">Contraseña</label>
+        <input class="form-input" type="password" placeholder="Mínimo 8 caracteres" required />
+      </div>
+      <button type="submit" class="auth-submit dark">Crear cuenta de creador</button>
+      <p class="auth-legal">Al crear la cuenta aceptás los <a>Términos para creadores</a> y la <a>Política de Privacidad</a>. Luego validamos tus datos fiscales.</p>
+    </form>
+    <div class="auth-switcher">
+      ¿Ya tenés cuenta? <a onclick="navigate('creator-login')">Iniciá sesión</a>
+    </div>
+  </div>
+</section>
 </div>
 
 <script>
@@ -2956,6 +4737,15 @@ body.menu-open .mobile-menu {
 const EVENT_DATA = {
   yatra: {
     eventType: 'single',
+    ticketMode: 'seated',
+    seatedConfig: {
+      sections: [
+        { id: 'platinum', name: 'Platinum', price: 85, color: '#c6f800' },
+        { id: 'vip', name: 'VIP', price: 65, color: '#00aa5c' },
+        { id: 'general', name: 'General', price: 45, color: '#2d9cdb' },
+        { id: 'accessible', name: 'Discapacidad', price: 45, color: '#f59e0b' }
+      ]
+    },
     kicker: 'ENTRE TANTA GENTE TOUR',
     title: 'Sebastián<br><em>Yatra.</em>',
     date: 'Sáb 15 Jun',
@@ -3631,6 +5421,18 @@ function refreshCart() {
     if (q > 0) items.push({ name: t.dataset.name, price: parseFloat(t.dataset.price), qty: q });
   });
 
+  // Seated mode: also include selected seats
+  const selectedSeats = document.querySelectorAll('.seat-dot.selected');
+  selectedSeats.forEach(s => {
+    items.push({
+      name: `${s.dataset.sectionName} · Fila ${s.dataset.row} · As. ${s.dataset.seat}`,
+      price: parseFloat(s.dataset.price),
+      qty: 1,
+      isSeat: true,
+      seatId: s.dataset.seatId
+    });
+  });
+
   const container = document.getElementById('cart-items');
   if (!container) return;
 
@@ -3639,7 +5441,7 @@ function refreshCart() {
   } else {
     container.innerHTML = items.map(i => `
       <div class="cart-item">
-        <span class="cart-item-name"><span class="cart-item-qty">${i.qty}×</span>${i.name}</span>
+        <span class="cart-item-name">${i.isSeat ? '' : `<span class="cart-item-qty">${i.qty}×</span>`}${i.name}</span>
         <span class="cart-item-value">$${(i.price * i.qty).toFixed(2)}</span>
       </div>
     `).join('');
@@ -3660,6 +5462,330 @@ function refreshCart() {
   else mobileBar.classList.remove('active');
   document.getElementById('mobile-cart-total').textContent = `$${total.toFixed(2)}`;
   document.getElementById('mobile-cart-count').textContent = `${totalQty} entrada${totalQty !== 1 ? 's' : ''}`;
+}
+
+// ============================================
+// SEATED TICKET PICKER
+// ============================================
+let seatedCurrentEvent = null;
+
+function renderSeatedPicker(eventId) {
+  const data = EVENT_DATA[eventId];
+  if (!data || data.ticketMode !== 'seated') return false;
+  seatedCurrentEvent = eventId;
+
+  const container = document.getElementById('ticket-mode-container');
+  if (!container) return false;
+
+  const sections = data.seatedConfig.sections;
+  // Build legend
+  const legendHTML = sections.map(s => `
+    <div class="seated-legend-item">
+      <span class="seated-legend-dot" style="background:${s.color}"></span>
+      <span>${s.name}</span>
+      <span class="seated-legend-price">$${s.price}</span>
+    </div>
+  `).join('');
+
+  // Build venue map (SVG) — 3 zones × multiple rows × seats per row
+  // Stage at top. Platinum front-center (curved), VIP sides front, General back, Accessible in corners.
+  const svg = buildVenueSVG(sections);
+
+  container.innerHTML = `
+    <div class="seated-wrapper">
+      <div class="seated-legend">${legendHTML}</div>
+      <div class="seated-stage">Escenario</div>
+      <div class="seated-map" id="seated-map-scroll">
+        ${svg}
+      </div>
+      <div class="seated-hint">Tocá un asiento para seleccionarlo. Podés elegir hasta 8.</div>
+    </div>
+    <div class="seated-tooltip" id="seated-tooltip">
+      <div class="seated-tooltip-head">
+        <span class="seated-tooltip-section" id="tt-section">—</span>
+        <span class="seated-tooltip-price" id="tt-price">—</span>
+      </div>
+      <div class="seated-tooltip-meta">
+        <div class="seated-tooltip-meta-item">
+          <div class="seated-tooltip-meta-label">Fila</div>
+          <div class="seated-tooltip-meta-value" id="tt-row">—</div>
+        </div>
+        <div class="seated-tooltip-meta-item">
+          <div class="seated-tooltip-meta-label">Asiento</div>
+          <div class="seated-tooltip-meta-value" id="tt-seat">—</div>
+        </div>
+      </div>
+      <div class="seated-tooltip-actions">
+        <button class="seated-tooltip-btn cancel" onclick="closeSeatTooltip()">Cerrar</button>
+        <button class="seated-tooltip-btn confirm" id="tt-confirm" onclick="confirmSeat()">
+          <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+          Seleccionar
+        </button>
+      </div>
+    </div>
+  `;
+
+  // Wire up seat clicks
+  container.querySelectorAll('.seat-dot:not(.sold)').forEach(dot => {
+    dot.addEventListener('click', (e) => openSeatTooltip(e, dot));
+  });
+
+  // Hide desktop ticket-list panel since we're in seated mode (title already shown)
+  return true;
+}
+
+function buildVenueSVG(sections) {
+  // Mock a venue with: platinum (front center, 3 rows), VIP left+right (3 rows), General (back, 5 rows), Accessible (corners)
+  const seats = [];
+  const rowLetter = n => String.fromCharCode(65 + n);
+
+  // Platinum — center front, 3 rows × 14 seats (rows A-C)
+  for (let r = 0; r < 3; r++) {
+    for (let s = 0; s < 14; s++) {
+      const sold = Math.random() < 0.25;
+      seats.push({
+        section: 'platinum', sectionName: 'Platinum',
+        row: rowLetter(r), seat: s + 1, price: 85,
+        cx: 160 + s * 22, cy: 60 + r * 22,
+        sold
+      });
+    }
+  }
+  // VIP left — 3 rows × 6 seats (rows A-C)
+  for (let r = 0; r < 3; r++) {
+    for (let s = 0; s < 6; s++) {
+      const sold = Math.random() < 0.2;
+      seats.push({
+        section: 'vip', sectionName: 'VIP',
+        row: rowLetter(r), seat: s + 1, price: 65,
+        cx: 20 + s * 22, cy: 60 + r * 22,
+        sold
+      });
+    }
+  }
+  // VIP right
+  for (let r = 0; r < 3; r++) {
+    for (let s = 0; s < 6; s++) {
+      const sold = Math.random() < 0.2;
+      seats.push({
+        section: 'vip', sectionName: 'VIP',
+        row: rowLetter(r), seat: s + 7, price: 65,
+        cx: 490 + s * 22, cy: 60 + r * 22,
+        sold
+      });
+    }
+  }
+  // General — 6 rows × 22 seats (rows D-I)
+  for (let r = 0; r < 6; r++) {
+    for (let s = 0; s < 22; s++) {
+      const sold = Math.random() < 0.15;
+      seats.push({
+        section: 'general', sectionName: 'General',
+        row: rowLetter(r + 3), seat: s + 1, price: 45,
+        cx: 50 + s * 22, cy: 160 + r * 22,
+        sold
+      });
+    }
+  }
+  // Accessible — 2 spots in corners
+  seats.push({ section: 'accessible', sectionName: 'Discapacidad', row: 'D', seat: 1, price: 45, cx: 25, cy: 160, sold: false });
+  seats.push({ section: 'accessible', sectionName: 'Discapacidad', row: 'D', seat: 22, price: 45, cx: 565, cy: 160, sold: false });
+  seats.push({ section: 'accessible', sectionName: 'Discapacidad', row: 'I', seat: 1, price: 45, cx: 25, cy: 270, sold: false });
+  seats.push({ section: 'accessible', sectionName: 'Discapacidad', row: 'I', seat: 22, price: 45, cx: 565, cy: 270, sold: true });
+
+  const seatElements = seats.map((s, i) => `
+    <circle class="seat-dot ${s.sold ? 'sold' : ''}"
+      data-section="${s.section}"
+      data-section-name="${s.sectionName}"
+      data-row="${s.row}"
+      data-seat="${s.seat}"
+      data-price="${s.price}"
+      data-seat-id="${s.section}-${s.row}-${s.seat}"
+      cx="${s.cx}" cy="${s.cy}" r="7"
+    ></circle>
+  `).join('');
+
+  return `
+    <svg viewBox="0 0 600 310" preserveAspectRatio="xMidYMid meet" aria-label="Mapa del venue">
+      <text x="70" y="50" class="seated-section-label">VIP</text>
+      <text x="220" y="50" class="seated-section-label">Platinum</text>
+      <text x="510" y="50" class="seated-section-label">VIP</text>
+      <text x="280" y="150" class="seated-section-label">General</text>
+      ${seatElements}
+    </svg>
+  `;
+}
+
+let currentSeatDot = null;
+
+function openSeatTooltip(event, dot) {
+  currentSeatDot = dot;
+  const tt = document.getElementById('seated-tooltip');
+  if (!tt) return;
+
+  document.getElementById('tt-section').textContent = dot.dataset.sectionName;
+  document.getElementById('tt-price').textContent = `$${dot.dataset.price}`;
+  document.getElementById('tt-row').textContent = dot.dataset.row;
+  document.getElementById('tt-seat').textContent = dot.dataset.seat;
+
+  const isSelected = dot.classList.contains('selected');
+  const confirmBtn = document.getElementById('tt-confirm');
+  if (isSelected) {
+    confirmBtn.classList.add('selected-state');
+    confirmBtn.innerHTML = `<svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>Quitar`;
+  } else {
+    confirmBtn.classList.remove('selected-state');
+    confirmBtn.innerHTML = `<svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Seleccionar`;
+  }
+
+  // Position tooltip near dot, within viewport
+  const rect = dot.getBoundingClientRect();
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const ttW = 240;
+  const ttH = 160;
+  let x = rect.left + rect.width / 2 - ttW / 2;
+  let y = rect.top - ttH - 14;
+  if (y < 60) y = rect.bottom + 14;
+  if (x < 10) x = 10;
+  if (x + ttW > vw - 10) x = vw - ttW - 10;
+  tt.style.left = x + 'px';
+  tt.style.top = y + 'px';
+  tt.classList.add('visible');
+}
+
+function closeSeatTooltip() {
+  const tt = document.getElementById('seated-tooltip');
+  if (tt) tt.classList.remove('visible');
+  currentSeatDot = null;
+}
+
+function confirmSeat() {
+  if (!currentSeatDot) return;
+  const selectedCount = document.querySelectorAll('.seat-dot.selected').length;
+  const isSelected = currentSeatDot.classList.contains('selected');
+
+  if (!isSelected && selectedCount >= 8) {
+    alert('Máximo 8 asientos por compra');
+    return;
+  }
+
+  currentSeatDot.classList.toggle('selected');
+  closeSeatTooltip();
+  refreshCart();
+}
+
+// Close tooltip on outside click
+document.addEventListener('click', (e) => {
+  const tt = document.getElementById('seated-tooltip');
+  if (!tt || !tt.classList.contains('visible')) return;
+  if (tt.contains(e.target)) return;
+  if (e.target.classList && e.target.classList.contains('seat-dot')) return;
+  closeSeatTooltip();
+});
+
+// Hook: when navigating to tickets, check if event is seated
+const _origNavForSeated = window.navigate;
+window.navigate = function(pageName, eventId) {
+  _origNavForSeated.apply(this, arguments);
+  if (pageName === 'tickets') {
+    // Use last visited event (tracked via currentEventState or fallback)
+    const id = (typeof currentEventState !== 'undefined' && currentEventState.eventId) || 'tristito';
+    const data = EVENT_DATA[id];
+    const container = document.getElementById('ticket-mode-container');
+    if (!container) return;
+    if (data && data.ticketMode === 'seated') {
+      // Render seated picker
+      renderSeatedPicker(id);
+      // Also update header to match
+      const header = document.querySelector('.tickets-header h2');
+      if (header) header.innerHTML = 'Elegí tus <em>asientos</em>';
+    } else {
+      // Render tiered ticket list (default existing markup)
+      renderTieredTickets();
+      const header = document.querySelector('.tickets-header h2');
+      if (header) header.innerHTML = 'Elegí tus <em>entradas</em>';
+    }
+    refreshCart();
+  }
+};
+
+function renderTieredTickets() {
+  const container = document.getElementById('ticket-mode-container');
+  if (!container) return;
+  container.innerHTML = `
+    <div class="ticket-list">
+      <div class="ticket sold-out">
+        <div class="ticket-info">
+          <div class="ticket-type">General Early Bird <span class="ticket-badge badge-soldout">Agotado</span></div>
+          <div class="ticket-desc">Primera fase anticipada</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price">$11</div>
+          <button class="notify-link" onclick="toggleNotify(this)">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            Avisame si se liberan
+          </button>
+        </div>
+      </div>
+      <div class="ticket sold-out">
+        <div class="ticket-info">
+          <div class="ticket-type">General Fase 1 <span class="ticket-badge badge-soldout">Agotado</span></div>
+          <div class="ticket-desc">Acceso general</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price">$13</div>
+          <button class="notify-link" onclick="toggleNotify(this)">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            Avisame si se liberan
+          </button>
+        </div>
+      </div>
+      <div class="ticket" data-name="General Fase 2" data-price="17">
+        <div class="ticket-info">
+          <div class="ticket-type">General Fase 2 <span class="ticket-badge badge-fewleft">Últimas</span></div>
+          <div class="ticket-desc">Acceso general · Shot de bienvenida</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price"><span class="ticket-price-before">$19</span>$17</div>
+          <div class="qty-control"><button class="qty-btn" onclick="updateQty(this, -1)">−</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty(this, 1)">+</button></div>
+        </div>
+      </div>
+      <div class="ticket sold-out">
+        <div class="ticket-info">
+          <div class="ticket-type">VIP Fase 1 <span class="ticket-badge badge-soldout">Agotado</span></div>
+          <div class="ticket-desc">VIP con barra exclusiva</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price">$17</div>
+          <button class="notify-link" onclick="toggleNotify(this)">
+            <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>
+            Avisame si se liberan
+          </button>
+        </div>
+      </div>
+      <div class="ticket" data-name="VIP Fase 2" data-price="22">
+        <div class="ticket-info">
+          <div class="ticket-type">VIP Fase 2</div>
+          <div class="ticket-desc">Barra VIP + zona + meet &amp; greet</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price">$22</div>
+          <div class="qty-control"><button class="qty-btn" onclick="updateQty(this, -1)">−</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty(this, 1)">+</button></div>
+        </div>
+      </div>
+      <div class="ticket" data-name="VIP Fase 3" data-price="28">
+        <div class="ticket-info">
+          <div class="ticket-type">VIP Fase 3</div>
+          <div class="ticket-desc">Última fase VIP</div>
+        </div>
+        <div class="ticket-price-col">
+          <div class="ticket-price">$28</div>
+          <div class="qty-control"><button class="qty-btn" onclick="updateQty(this, -1)">−</button><span class="qty-val">0</span><button class="qty-btn plus" onclick="updateQty(this, 1)">+</button></div>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 // ============================================
@@ -3792,6 +5918,216 @@ document.querySelectorAll('.mobile-menu a').forEach(link => {
     document.body.classList.remove('menu-open');
   });
 });
+
+// ============================================
+// EVENTOS PAGE — Filters interactivity
+// ============================================
+(function initEventosFilters() {
+  const quickPills = document.querySelectorAll('.quick-pill');
+  quickPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      quickPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      updateFilters();
+    });
+  });
+})();
+
+function updateFilters() {
+  const city = document.getElementById('filter-city');
+  const price = document.getElementById('filter-price');
+  const genre = document.getElementById('filter-genre');
+  const selects = [city, price, genre];
+
+  let activeCount = 0;
+  selects.forEach(sel => {
+    if (!sel) return;
+    if (sel.value) {
+      sel.classList.add('has-value');
+      activeCount++;
+    } else {
+      sel.classList.remove('has-value');
+    }
+  });
+
+  // Also count non-default quick pill
+  const activeQuick = document.querySelector('.quick-pill.active');
+  if (activeQuick && activeQuick.getAttribute('data-quick') !== 'all') activeCount++;
+
+  const clearBtn = document.getElementById('clear-filters');
+  if (clearBtn) {
+    if (activeCount > 0) {
+      clearBtn.style.display = 'inline-flex';
+      clearBtn.innerHTML = `<svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 6L6 18M6 6l12 12"/></svg>Limpiar (${activeCount})`;
+    } else {
+      clearBtn.style.display = 'none';
+    }
+  }
+}
+
+function clearAllFilters() {
+  ['filter-city', 'filter-price', 'filter-genre'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.querySelectorAll('.quick-pill').forEach(p => p.classList.remove('active'));
+  const first = document.querySelector('.quick-pill[data-quick="all"]');
+  if (first) first.classList.add('active');
+  const searchInput = document.getElementById('eventos-search-input');
+  if (searchInput) searchInput.value = '';
+  updateFilters();
+}
+
+function toggleNotify(btn) {
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+    btn.innerHTML = `<svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 8a6 6 0 00-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 01-3.4 0"/></svg>Avisame si se liberan`;
+  } else {
+    btn.classList.add('active');
+    btn.innerHTML = `<svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 6L9 17l-5-5"/></svg>Te avisamos`;
+  }
+}
+
+// ============================================
+// CHECKOUT — 2 screens (identity + details)
+// ============================================
+const DEMO_ATTENDEES = [
+  { ticketType: 'General Fase 2', mode: 'me', firstName: '', lastName: '', email: '' },
+  { ticketType: 'VIP Fase 2', mode: 'other', firstName: '', lastName: '', email: '' },
+  { ticketType: 'VIP Fase 2', mode: 'other', firstName: '', lastName: '', email: '' }
+];
+
+function getBuyerName() {
+  const f = document.getElementById('buyer-firstname');
+  const l = document.getElementById('buyer-lastname');
+  const fn = (f && f.value.trim()) || '';
+  const ln = (l && l.value.trim()) || '';
+  const full = (fn + ' ' + ln).trim();
+  return full;
+}
+
+function updateBuyerName() {
+  const buyerName = getBuyerName();
+  // Update all attendee cards that have mode="me" to show the buyer name
+  document.querySelectorAll('.radio-option[data-mode="me"][data-selected="true"]').forEach(el => {
+    const sub = el.querySelector('.radio-option-sub');
+    if (sub) sub.textContent = buyerName ? buyerName : 'Usaremos los datos que completaste arriba';
+  });
+}
+
+function renderAttendees() {
+  const list = document.getElementById('attendees-list');
+  if (!list) return;
+  const buyerName = getBuyerName();
+  list.innerHTML = DEMO_ATTENDEES.map((att, i) => {
+    const isMe = att.mode === 'me';
+    const meSubText = buyerName ? buyerName : 'Usaremos los datos que completaste arriba';
+    return `
+    <div class="attendee-card" data-idx="${i}">
+      <div class="attendee-card-head">
+        <span class="attendee-num">${i + 1}</span>
+        <span class="attendee-card-title">Entrada ${i + 1}</span>
+        <span class="attendee-card-type">${att.ticketType}</span>
+      </div>
+      <button class="radio-option ${isMe ? 'selected' : ''}" data-mode="me" data-selected="${isMe}" onclick="setAttendeeMode(${i}, 'me')">
+        <span class="radio-option-dot"></span>
+        <span class="radio-option-body">
+          <span class="radio-option-label">Es para mí</span>
+          <span class="radio-option-sub">${meSubText}</span>
+        </span>
+      </button>
+      <button class="radio-option ${!isMe ? 'selected' : ''}" data-mode="other" data-selected="${!isMe}" onclick="setAttendeeMode(${i}, 'other')">
+        <span class="radio-option-dot"></span>
+        <span class="radio-option-body">
+          <span class="radio-option-label">Es para otra persona</span>
+          ${!isMe ? '' : '<span class="radio-option-sub">Vas a pedirle sus datos</span>'}
+        </span>
+      </button>
+      <div class="attendee-guest-fields ${!isMe ? 'show' : ''}">
+        <div class="form-grid">
+          <div class="form-field">
+            <label class="form-label">Nombre</label>
+            <input class="form-input" type="text" value="${att.firstName}" placeholder="Nombre del titular" oninput="updateAttendeeField(${i}, 'firstName', this.value)" />
+          </div>
+          <div class="form-field">
+            <label class="form-label">Apellido</label>
+            <input class="form-input" type="text" value="${att.lastName}" placeholder="Apellido" oninput="updateAttendeeField(${i}, 'lastName', this.value)" />
+          </div>
+          <div class="form-field full">
+            <label class="form-label">Email del titular</label>
+            <input class="form-input" type="email" value="${att.email}" placeholder="titular@email.com" oninput="updateAttendeeField(${i}, 'email', this.value)" />
+            <span class="form-hint">Le mandaremos su entrada directamente a este correo.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    `;
+  }).join('');
+}
+
+function setAttendeeMode(idx, mode) {
+  DEMO_ATTENDEES[idx].mode = mode;
+  renderAttendees();
+}
+
+function updateAttendeeField(idx, field, value) {
+  DEMO_ATTENDEES[idx][field] = value;
+}
+
+// Timer (20 min countdown)
+let checkoutTimerInterval = null;
+let checkoutSecondsLeft = 20 * 60;
+
+function startCheckoutTimer() {
+  if (checkoutTimerInterval) clearInterval(checkoutTimerInterval);
+  checkoutSecondsLeft = 20 * 60;
+  updateCheckoutTimer();
+  checkoutTimerInterval = setInterval(() => {
+    checkoutSecondsLeft--;
+    if (checkoutSecondsLeft < 0) {
+      clearInterval(checkoutTimerInterval);
+      checkoutSecondsLeft = 0;
+    }
+    updateCheckoutTimer();
+  }, 1000);
+}
+
+function updateCheckoutTimer() {
+  const el = document.getElementById('checkout-timer-value');
+  const wrap = document.getElementById('checkout-timer');
+  if (!el || !wrap) return;
+  const m = Math.floor(checkoutSecondsLeft / 60);
+  const s = checkoutSecondsLeft % 60;
+  el.textContent = `${m}:${String(s).padStart(2, '0')}`;
+  wrap.classList.remove('warn', 'danger');
+  if (checkoutSecondsLeft <= 2 * 60) wrap.classList.add('danger');
+  else if (checkoutSecondsLeft <= 5 * 60) wrap.classList.add('warn');
+}
+
+function stopCheckoutTimer() {
+  if (checkoutTimerInterval) {
+    clearInterval(checkoutTimerInterval);
+    checkoutTimerInterval = null;
+  }
+}
+
+// Hook into navigate
+(function hookCheckoutNav() {
+  const origNav = window.navigate;
+  window.navigate = function(pageName, ...rest) {
+    origNav(pageName, ...rest);
+    if (pageName === 'checkout-details') {
+      renderAttendees();
+      startCheckoutTimer();
+    } else if (pageName === 'checkout') {
+      // On identity screen, no timer yet
+      stopCheckoutTimer();
+    } else {
+      stopCheckoutTimer();
+    }
+  };
+})();
+
 </script>
 </body>
 </html>
