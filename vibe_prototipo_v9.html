@@ -277,6 +277,128 @@ body.scrolled .header-hero .logo-mark svg {
   font-family: var(--font-mono); font-size: 10px; font-weight: 700;
   letter-spacing: 0.15em; text-transform: uppercase;
 }
+
+/* ==================================================== */
+/* CREATOR REDIRECT (honest demo boundary)              */
+/* ==================================================== */
+.creator-redirect-hero {
+  background: var(--ink);
+  color: #fff;
+  min-height: calc(100vh - 72px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px 60px;
+  position: relative; overflow: hidden;
+}
+.creator-redirect-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(198,248,0,0.12), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(198,248,0,0.06), transparent 50%);
+  pointer-events: none;
+}
+.creator-redirect-inner {
+  position: relative;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: center;
+}
+.creator-redirect-spinner {
+  width: 48px; height: 48px;
+  border: 3px solid rgba(255,255,255,0.12);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+  margin: 0 auto 28px;
+}
+.creator-redirect-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(32px, 5.5vw, 46px);
+  line-height: 1.05; letter-spacing: -0.025em;
+  color: #fff;
+  margin: 14px 0 10px;
+}
+.creator-redirect-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.creator-redirect-sub {
+  font-size: 15px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.5;
+  margin: 0 0 28px;
+}
+.creator-redirect-note {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 16px 18px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 12px;
+  text-align: left;
+  margin: 0 auto 28px;
+  max-width: 480px;
+}
+.creator-redirect-note > svg {
+  width: 20px; height: 20px;
+  color: var(--accent);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.creator-redirect-note > div {
+  flex: 1;
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.55;
+}
+.creator-redirect-note strong {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.creator-redirect-note code {
+  background: rgba(198,248,0,0.12);
+  color: var(--accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+}
+.creator-redirect-actions {
+  display: flex; justify-content: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.creator-redirect-actions .btn-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 600; font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+.creator-redirect-actions .btn-ghost:hover {
+  background: rgba(255,255,255,0.08);
+  color: #fff;
+  border-color: rgba(255,255,255,0.35);
+}
+.creator-redirect-actions .btn-primary-sm {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: 700; font-size: 13.5px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.creator-redirect-actions .btn-primary-sm:hover {
+  background: var(--accent-hover);
+}
 .auth-title {
   font-family: var(--font-display); font-weight: 900;
   font-size: clamp(28px, 4vw, 36px);
@@ -4086,6 +4208,565 @@ body.menu-open .mobile-menu {
   color: var(--ink);
 }
 
+/* ==================================================== */
+/* CHECKOUT PAYMENT (step 3/3)                          */
+/* ==================================================== */
+
+.payment-form { margin-top: 4px; }
+
+/* Card form */
+.card-form {
+  display: flex; flex-direction: column;
+  gap: 14px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+}
+.card-number-wrap {
+  position: relative;
+  display: flex; align-items: center;
+}
+.card-input {
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  font-size: 15px;
+  font-weight: 500;
+}
+.card-input[id="card-number"] {
+  padding-right: 110px;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+}
+.card-input[id="card-holder"] {
+  font-family: var(--font-body);
+  letter-spacing: normal;
+  text-transform: uppercase;
+}
+.card-brand-icons {
+  position: absolute;
+  right: 12px;
+  top: 50%; transform: translateY(-50%);
+  display: flex; align-items: center; gap: 4px;
+  pointer-events: none;
+}
+.card-brand {
+  display: inline-flex; align-items: center;
+  opacity: 0.3;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.card-brand svg { height: 20px; width: auto; display: block; }
+.card-brand.active {
+  opacity: 1;
+  transform: scale(1.05);
+}
+.cvv-info {
+  display: inline-flex; align-items: center;
+  color: var(--ink-dim);
+  cursor: help;
+  vertical-align: middle;
+  margin-left: 4px;
+}
+.cvv-info svg { width: 13px; height: 13px; }
+
+.card-save-row {
+  padding-top: 6px;
+  border-top: 1px dashed var(--line);
+  margin-top: 2px;
+}
+.checkbox-line {
+  display: flex; align-items: flex-start; gap: 10px;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--ink);
+  line-height: 1.4;
+}
+.checkbox-line input[type="checkbox"] {
+  width: 18px; height: 18px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  accent-color: var(--ink);
+  cursor: pointer;
+}
+.checkbox-line a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; font-weight: 600; }
+
+/* Coupon disclosure (similar to presale code but on light background) */
+.coupon-disclosure { margin: 20px 0; }
+.coupon-trigger {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: transparent; border: 0; padding: 8px 2px;
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline; text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.coupon-trigger:hover { color: var(--ink-mid); }
+.coupon-trigger svg { width: 15px; height: 15px; stroke: currentColor; }
+.coupon-disclosure.open .coupon-trigger { display: none; }
+
+.coupon-panel {
+  display: none;
+  margin-top: 2px;
+  animation: couponIn 0.2s ease;
+}
+.coupon-disclosure.open .coupon-panel { display: block; }
+@keyframes couponIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+.coupon-form {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 10px;
+  padding: 4px 4px 4px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.coupon-form:focus-within { border-color: var(--ink); }
+.coupon-form.error {
+  animation: shake 0.35s;
+  border-color: #c01010;
+}
+.coupon-input {
+  flex: 1; min-width: 0;
+  background: transparent; border: 0; outline: 0;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 10px 0;
+}
+.coupon-input::placeholder {
+  color: var(--ink-dim);
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 500;
+}
+.coupon-submit {
+  background: var(--ink); color: #fff;
+  border: 0; border-radius: 8px;
+  padding: 9px 16px;
+  font-family: var(--font-body); font-weight: 700; font-size: 12.5px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  flex-shrink: 0;
+}
+.coupon-submit:hover { background: #000; }
+.coupon-submit:active { transform: scale(0.97); }
+.coupon-close {
+  background: transparent; border: 0;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-mid);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s;
+  flex-shrink: 0;
+}
+.coupon-close:hover { background: var(--bg-soft); color: var(--ink); }
+.coupon-close svg { width: 14px; height: 14px; }
+.coupon-feedback {
+  margin-top: 8px;
+  font-size: 12.5px;
+  font-weight: 500;
+  padding: 0 4px;
+}
+.coupon-feedback.is-error { color: #c01010; }
+.coupon-feedback.is-success { color: #0e7a3a; }
+
+.coupon-applied {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: 10px;
+}
+.coupon-applied > svg {
+  width: 20px; height: 20px;
+  color: #0e7a3a;
+  flex-shrink: 0;
+}
+.coupon-applied-info {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column;
+}
+.coupon-applied-code {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+}
+.coupon-applied-sub {
+  font-size: 12px;
+  color: var(--ink-mid);
+  margin-top: 2px;
+}
+.coupon-remove {
+  background: transparent; border: 0;
+  width: 28px; height: 28px;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--ink-mid);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  flex-shrink: 0;
+}
+.coupon-remove:hover { background: #fff; color: var(--ink); }
+.coupon-remove svg { width: 14px; height: 14px; }
+
+/* Terms check and pay CTA */
+.terms-check {
+  margin: 18px 0 12px;
+}
+.pay-cta {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 100%;
+  padding: 18px 20px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  border: 0;
+  border-radius: 12px;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: -0.005em;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s, opacity 0.15s;
+  margin-top: 4px;
+}
+.pay-cta:hover:not(:disabled) { background: var(--accent-hover); }
+.pay-cta:active:not(:disabled) { transform: scale(0.99); }
+.pay-cta:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.pay-cta.is-loading { pointer-events: none; opacity: 0.9; }
+.pay-cta.is-loading .pay-cta-text { display: none; }
+.pay-cta.is-loading .pay-cta-loading { display: inline-flex !important; align-items: center; gap: 10px; }
+.pay-spinner {
+  width: 16px; height: 16px;
+  border: 2.5px solid rgba(10,10,10,0.2);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: inline-block;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.payment-trust-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 8px;
+  margin-top: 14px;
+  font-size: 12px;
+  color: var(--ink-mid);
+  text-align: center;
+}
+.payment-trust-row svg { width: 13px; height: 13px; stroke: var(--ink-mid); flex-shrink: 0; }
+
+/* Summary (desktop) coupon row style */
+.cart-coupon-row {
+  color: #0e7a3a;
+  font-weight: 600;
+}
+.cart-coupon-row strong {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  font-size: 12px;
+}
+.summary-row-total {
+  border-top: 1px solid var(--line);
+  padding-top: 8px;
+  margin-top: 4px;
+  font-weight: 700;
+}
+.pay-mobile-coupon-row {
+  color: #0e7a3a;
+  font-weight: 600;
+}
+.pay-mobile-coupon-row strong {
+  font-family: var(--font-mono);
+  letter-spacing: 0.06em;
+  font-size: 11px;
+}
+
+/* ==================================================== */
+/* CHECKOUT SUCCESS                                     */
+/* ==================================================== */
+.success-hero {
+  background: var(--ink); color: #fff;
+  padding: 60px 0 40px;
+  position: relative; overflow: hidden;
+}
+.success-hero::before {
+  content: ""; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(198,248,0,0.18), transparent 50%),
+    radial-gradient(circle at 20% 100%, rgba(198,248,0,0.08), transparent 50%);
+  pointer-events: none;
+}
+.success-hero-inner {
+  position: relative;
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+}
+.success-check {
+  width: 88px; height: 88px;
+  margin: 0 auto 20px;
+  color: var(--accent);
+  animation: successPop 0.5s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+.success-check svg { width: 100%; height: 100%; display: block; }
+.success-check-circle {
+  stroke-dasharray: 183;
+  stroke-dashoffset: 183;
+  animation: drawCircle 0.6s 0.1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+.success-check-mark {
+  stroke-dasharray: 42;
+  stroke-dashoffset: 42;
+  animation: drawCheck 0.35s 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes successPop {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes drawCircle { to { stroke-dashoffset: 0; } }
+@keyframes drawCheck { to { stroke-dashoffset: 0; } }
+.success-kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin: 0 0 8px;
+}
+.success-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(36px, 7vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: #fff;
+  margin: 0 0 10px;
+}
+.success-title em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--accent);
+}
+.success-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  margin: 0 0 20px;
+}
+.success-ref {
+  display: inline-flex; align-items: center;
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.85);
+}
+.success-ref span {
+  color: var(--accent);
+  font-weight: 700;
+  margin-left: 6px;
+}
+
+.success-body {
+  background: var(--bg-soft);
+  padding: 36px 0 60px;
+  min-height: 50vh;
+}
+.success-event-card {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 520px) {
+  .success-event-card {
+    grid-template-columns: 88px 1fr;
+    gap: 14px;
+  }
+}
+.success-event-thumb {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-soft);
+}
+.success-event-thumb > div { position: absolute; inset: 0; }
+.success-event-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.success-event-kicker {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink-mid);
+  margin: 0 0 2px;
+}
+.success-event-title {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin: 0;
+}
+.success-event-meta {
+  display: flex; gap: 12px; flex-wrap: wrap;
+  font-size: 13px;
+  color: var(--ink-mid);
+  margin-top: 6px;
+}
+.success-event-meta svg { width: 13px; height: 13px; stroke: var(--ink-mid); margin-right: 4px; vertical-align: -2px; }
+.success-tickets-list {
+  display: flex; flex-direction: column;
+  gap: 2px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+  font-size: 13px;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Notice block — email / account info */
+.success-notice {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 18px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  margin-bottom: 20px;
+}
+.success-notice.is-highlighted {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+.success-notice-icon {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--ink);
+  color: var(--accent);
+}
+.success-notice.is-highlighted .success-notice-icon {
+  background: var(--accent);
+  color: var(--ink);
+}
+.success-notice-icon svg { width: 20px; height: 20px; }
+.success-notice-body { flex: 1; min-width: 0; }
+.success-notice-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 0 0 4px;
+}
+.success-notice-copy {
+  font-size: 13.5px;
+  color: var(--ink-mid);
+  line-height: 1.5;
+  margin: 0;
+}
+.success-notice-copy strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* Success CTAs */
+.success-actions {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-bottom: 24px;
+}
+.success-cta-primary {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 16px 24px;
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  border-radius: 12px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+}
+.success-cta-primary:hover { background: #000; }
+.success-cta-primary:active { transform: scale(0.99); }
+.success-cta-primary.accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+.success-cta-primary.accent:hover { background: var(--accent-hover); }
+.success-cta-primary svg { width: 16px; height: 16px; }
+.success-cta-secondary {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 12px 20px;
+  background: transparent;
+  color: var(--ink-mid);
+  border: 0;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.15s;
+}
+.success-cta-secondary:hover { color: var(--ink); }
+
+.success-secondary-row {
+  display: flex; gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.success-secondary-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 16px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.success-secondary-btn:hover {
+  border-color: var(--ink);
+  background: var(--bg-soft);
+}
+.success-secondary-btn svg { width: 14px; height: 14px; stroke: currentColor; }
+
 </style>
 </head>
 <body>
@@ -5684,7 +6365,7 @@ body.menu-open .mobile-menu {
           </div>
         </div>
 
-        <button class="checkout-continue" onclick="alert('Continuando al pago (demo)')">
+        <button class="checkout-continue" onclick="navigate('checkout-payment')">
           Ir al pago
           <svg fill="none" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
@@ -5712,6 +6393,274 @@ body.menu-open .mobile-menu {
         <div class="cart-total"><span class="lbl">Total</span><span class="val">$64.05</span></div>
         <p class="cart-note">Pago seguro · Tarjeta, SINPE o transferencia</p>
       </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><span>© 2026 VIBE CR.</span><span>Hecho con <span style="color: var(--accent);">✦</span> en SJO</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CHECKOUT PAYMENT (Paso 3/3 — Pago)       -->
+<!-- ============================================= -->
+<div class="page" data-page="checkout-payment">
+
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+    <div class="header-actions">
+      <button class="icon-btn menu-toggle" onclick="document.body.classList.toggle('menu-open')" aria-label="Abrir menú"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <a onclick="navigate('checkout-details')" class="detail-back">
+    <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Volver
+  </a>
+</div>
+
+<section class="checkout-page">
+  <div class="container">
+    <div class="step-progress" aria-label="Paso 3 de 3">
+      <div class="step-progress-bars">
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar active"></span>
+        <span class="step-progress-bar active"></span>
+      </div>
+      <span class="step-progress-label">Paso 3 de 3 · Pago</span>
+    </div>
+
+    <div class="checkout-layout">
+      <div class="checkout-main">
+        <h2>Pago</h2>
+
+        <div class="checkout-timer" id="checkout-payment-timer">
+          <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 6v6l4 2"/></svg>
+          <span>Reservadas · <span id="checkout-payment-timer-value">19:23</span></span>
+        </div>
+
+        <!-- Mobile order summary (collapsible) -->
+        <details class="checkout-summary-mobile">
+          <summary>Resumen · <strong id="pay-mobile-total">$64.05</strong></summary>
+          <div class="summary-content">
+            <div class="summary-row"><span>1× General Fase 2</span><span>$17.00</span></div>
+            <div class="summary-row"><span>2× VIP Fase 2</span><span>$44.00</span></div>
+            <div class="summary-row"><span>Subtotal</span><span id="pay-mobile-subtotal">$61.00</span></div>
+            <div class="summary-row pay-mobile-coupon-row" id="pay-mobile-coupon-row" style="display:none;">
+              <span>Cupón <strong id="pay-mobile-coupon-code"></strong></span>
+              <span id="pay-mobile-coupon-amount"></span>
+            </div>
+            <div class="summary-row"><span>Cargo servicio (5%)</span><span id="pay-mobile-fee">$3.05</span></div>
+            <div class="summary-row summary-row-total"><span>Total</span><span id="pay-mobile-total-val">$64.05</span></div>
+          </div>
+        </details>
+
+        <!-- Payment form -->
+        <form class="payment-form" id="payment-form" onsubmit="event.preventDefault(); submitPayment();">
+          <div class="checkout-section">
+            <div class="checkout-section-head">
+              <span class="checkout-section-title">Tarjeta de crédito o débito</span>
+            </div>
+
+            <div class="card-form">
+              <div class="form-field">
+                <label class="form-label">Número de tarjeta</label>
+                <div class="card-number-wrap">
+                  <input class="form-input card-input" type="text" inputmode="numeric" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number" oninput="formatCardNumber(this)" />
+                  <div class="card-brand-icons" id="card-brand-icons">
+                    <span class="card-brand visa"><svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="24" rx="3" fill="#1434CB"/><text x="20" y="16" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="8" fill="#fff" font-weight="900" letter-spacing="0.5">VISA</text></svg></span>
+                    <span class="card-brand mc"><svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="24" rx="3" fill="#000"/><circle cx="16" cy="12" r="6" fill="#EB001B"/><circle cx="24" cy="12" r="6" fill="#F79E1B" opacity="0.9"/></svg></span>
+                    <span class="card-brand amex"><svg viewBox="0 0 40 24" xmlns="http://www.w3.org/2000/svg"><rect width="40" height="24" rx="3" fill="#2E77BB"/><text x="20" y="15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="6.5" fill="#fff" font-weight="900" letter-spacing="0.3">AMEX</text></svg></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div class="form-field">
+                  <label class="form-label">Vencimiento</label>
+                  <input class="form-input card-input" type="text" inputmode="numeric" id="card-expiry" placeholder="MM/AA" maxlength="5" autocomplete="cc-exp" oninput="formatCardExpiry(this)" />
+                </div>
+                <div class="form-field">
+                  <label class="form-label">
+                    CVV
+                    <span class="cvv-info" title="El código de 3 dígitos al reverso de tu tarjeta (4 en Amex).">
+                      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>
+                    </span>
+                  </label>
+                  <input class="form-input card-input" type="text" inputmode="numeric" id="card-cvv" placeholder="123" maxlength="4" autocomplete="cc-csc" oninput="this.value=this.value.replace(/\D/g,'')" />
+                </div>
+              </div>
+
+              <div class="form-field">
+                <label class="form-label">Nombre del titular</label>
+                <input class="form-input card-input" type="text" id="card-holder" placeholder="Tal como aparece en la tarjeta" autocomplete="cc-name" />
+              </div>
+
+              <div class="card-save-row" id="card-save-row" style="display:none;">
+                <label class="checkbox-line">
+                  <input type="checkbox" id="card-save" />
+                  <span>Guardar esta tarjeta para próximas compras</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Coupon disclosure -->
+          <div class="coupon-disclosure" id="coupon-disclosure">
+            <button class="coupon-trigger" type="button" onclick="toggleCoupon()">
+              <svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H5a2 2 0 00-2 2v4a2 2 0 012 2 2 2 0 00-2 2v4a2 2 0 002 2h4m0-16v16m0-16h10a2 2 0 012 2v4a2 2 0 00-2 2 2 2 0 012 2v4a2 2 0 01-2 2H9"/></svg>
+              <span>¿Tenés un cupón?</span>
+            </button>
+
+            <div class="coupon-panel" id="coupon-panel">
+              <div class="coupon-form">
+                <input type="text" id="coupon-input" class="coupon-input" placeholder="Ej. VIBE10" autocomplete="off" spellcheck="false" maxlength="20" aria-label="Código de cupón" onkeydown="if(event.key==='Enter'){event.preventDefault();applyCoupon();}" />
+                <button type="button" class="coupon-submit" onclick="applyCoupon()">Aplicar</button>
+                <button type="button" class="coupon-close" onclick="toggleCoupon()" aria-label="Cerrar">
+                  <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
+              </div>
+              <div class="coupon-feedback" id="coupon-feedback" style="display:none;"></div>
+            </div>
+
+            <div class="coupon-applied" id="coupon-applied" style="display:none;">
+              <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              <div class="coupon-applied-info">
+                <span class="coupon-applied-code" id="coupon-applied-code">VIBE10</span>
+                <span class="coupon-applied-sub">10% de descuento</span>
+              </div>
+              <button type="button" class="coupon-remove" onclick="removeCoupon()" aria-label="Quitar cupón">
+                <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <label class="checkbox-line terms-check">
+            <input type="checkbox" id="payment-terms" onchange="validatePaymentForm()" />
+            <span>Acepto los <a href="#">Términos</a> y la <a href="#">Política de Privacidad</a> de VIBE.</span>
+          </label>
+
+          <button type="submit" class="pay-cta" id="pay-cta" disabled>
+            <span class="pay-cta-text">Pagar <span id="pay-cta-amount">$64.05</span></span>
+            <span class="pay-cta-loading" style="display:none;">
+              <span class="pay-spinner"></span>
+              Procesando pago…
+            </span>
+          </button>
+
+          <div class="payment-trust-row">
+            <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path stroke-linecap="round" d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            <span>Pago seguro con encriptación SSL. No guardamos tu tarjeta.</span>
+          </div>
+        </form>
+      </div>
+
+      <!-- Desktop order summary -->
+      <aside class="cart-summary-box" id="pay-summary-box">
+        <h3>Resumen del pedido</h3>
+        <div class="cart-event">
+          <div class="cart-event-info">
+            <div class="cart-event-title js-cart-title">Reggaetón Tristito</div>
+            <div class="cart-event-date js-cart-date">SÁB 2 MAY · 9:00 PM</div>
+          </div>
+        </div>
+        <div class="cart-items">
+          <div class="cart-item"><span>1× General Fase 2</span><span>$17.00</span></div>
+          <div class="cart-item"><span>2× VIP Fase 2</span><span>$44.00</span></div>
+        </div>
+        <div class="cart-subtotal-row"><span>Subtotal</span><span id="pay-desktop-subtotal">$61.00</span></div>
+        <div class="cart-subtotal-row cart-coupon-row" id="pay-desktop-coupon-row" style="display:none;">
+          <span>Cupón <strong id="pay-desktop-coupon-code"></strong></span>
+          <span id="pay-desktop-coupon-amount"></span>
+        </div>
+        <div class="cart-subtotal-row"><span>Cargo servicio (5%)</span><span id="pay-desktop-fee">$3.05</span></div>
+        <div class="cart-total"><span class="lbl">Total</span><span class="val" id="pay-desktop-total">$64.05</span></div>
+        <p class="cart-note">Pago seguro · Encriptación SSL</p>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom"><span>© 2026 VIBE CR.</span><span>Hecho con <span style="color: var(--accent);">✦</span> en SJO</span></div>
+  </div>
+</footer>
+
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CHECKOUT SUCCESS                         -->
+<!-- ============================================= -->
+<div class="page" data-page="checkout-success">
+
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+  </div>
+</header>
+
+<section class="success-hero">
+  <div class="container success-hero-inner">
+    <div class="success-check" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="32" cy="32" r="29" class="success-check-circle"/>
+        <path d="M20 33l8 8 16-18" class="success-check-mark"/>
+      </svg>
+    </div>
+    <p class="success-kicker">Compra confirmada</p>
+    <h1 class="success-title">¡Entradas <em>aseguradas!</em></h1>
+    <p class="success-sub" id="success-sub">Tu compra se completó con éxito.</p>
+    <div class="success-ref">Orden <span id="success-order-ref">VIBE-20260502-A9B2</span></div>
+  </div>
+</section>
+
+<section class="success-body">
+  <div class="container">
+    <!-- Event ticket card -->
+    <div class="success-event-card" id="success-event-card">
+      <div class="success-event-thumb"><div class="art-reggaeton"></div></div>
+      <div class="success-event-info">
+        <p class="success-event-kicker">IMPERIAL PRESENTA</p>
+        <h2 class="success-event-title">Reggaetón Tristito</h2>
+        <div class="success-event-meta">
+          <span><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18"/></svg>Sáb 2 May · 9:00 PM</span>
+          <span><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 22s-8-7-8-13a8 8 0 1116 0c0 6-8 13-8 13z"/><circle cx="12" cy="9" r="2.5"/></svg>Finca La Glorita</span>
+        </div>
+        <div class="success-tickets-list">
+          <div class="success-ticket-line">1× General Fase 2</div>
+          <div class="success-ticket-line">2× VIP Fase 2</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Variant-specific block (logged-in vs guest) -->
+    <div class="success-notice" id="success-notice">
+      <!-- content injected by renderSuccessPage -->
+    </div>
+
+    <!-- Main CTAs -->
+    <div class="success-actions" id="success-actions">
+      <!-- injected by renderSuccessPage -->
+    </div>
+
+    <!-- Secondary actions -->
+    <div class="success-secondary-row">
+      <button class="success-secondary-btn" onclick="addToCalendarMock()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path stroke-linecap="round" d="M16 2v4M8 2v4M3 10h18M12 14v4m-2-2h4"/></svg>
+        Añadir al calendario
+      </button>
+      <button class="success-secondary-btn" onclick="shareTicketMock()">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path stroke-linecap="round" d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+        Compartir
+      </button>
     </div>
   </div>
 </section>
@@ -6079,30 +7028,23 @@ body.menu-open .mobile-menu {
   <div class="auth-card-wrap">
     <span class="auth-badge">✦ Creadores</span>
     <h1 class="auth-title">Panel del <em>organizador</em></h1>
-    <p class="auth-sub">Ingresá a tu dashboard para gestionar eventos y ventas.</p>
+    <p class="auth-sub">Usá tu email corporativo o tu cuenta de Google. Sin contraseñas.</p>
     <div class="auth-social-row">
-      <button class="auth-social-btn">
+      <button class="auth-social-btn" onclick="openGoogleMock('creator-redirect')">
         <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
         Continuar con Google
       </button>
     </div>
     <div class="auth-divider">o con email</div>
-    <form class="auth-form" onsubmit="event.preventDefault(); alert('Acceso al panel (demo)');">
+    <form class="auth-form" id="creator-email-form" onsubmit="event.preventDefault(); handleCreatorEmailSubmit();">
       <div class="form-field">
         <label class="form-label">Email de empresa</label>
-        <input class="form-input" type="email" placeholder="contacto@tuempresa.com" required />
+        <input class="form-input" type="email" id="creator-auth-email-input" placeholder="contacto@tuempresa.com" required autocomplete="email" />
       </div>
-      <div class="form-field">
-        <label class="form-label">Contraseña</label>
-        <input class="form-input" type="password" placeholder="••••••••" required />
-      </div>
-      <button type="submit" class="auth-submit dark">Ingresar al panel</button>
+      <button type="submit" class="auth-submit dark">Continuar</button>
+      <p class="auth-legal">Te enviaremos un código de 6 dígitos para verificar tu email. Al continuar aceptás los <a>Términos para creadores</a> y la <a>Política de Privacidad</a>.</p>
     </form>
-    <p class="auth-foot">¿Olvidaste tu contraseña? <a>Recuperala</a></p>
-    <div class="auth-switcher">
-      ¿Todavía no sos creador? <a onclick="navigate('creator-signup')">Registrate</a>
-    </div>
-    <div class="auth-switcher" style="margin-top: 12px; background: #fff; border: 1px dashed var(--line-strong);">
+    <div class="auth-switcher" style="margin-top: 20px; background: #fff; border: 1px dashed var(--line-strong);">
       ¿Buscás comprar entradas? <a onclick="navigate('login')">Ingresá como asistente</a>
     </div>
   </div>
@@ -6116,51 +7058,60 @@ body.menu-open .mobile-menu {
 <header class="header header-minimal">
   <div class="container header-inner">
     <a onclick="navigate('creadores')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
-    <div class="header-actions">
-      <button class="icon-btn" onclick="navigate('creadores')" aria-label="Cerrar"><svg fill="none" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M6 18L18 6M6 6l12 12"/></svg></button>
-    </div>
   </div>
 </header>
 <section class="auth-page auth-creator">
   <div class="auth-card-wrap">
     <span class="auth-badge">✦ Creadores</span>
-    <h1 class="auth-title">Empezá a <em>publicar</em></h1>
-    <p class="auth-sub">Registrate como organizador y empezá a vender entradas hoy mismo.</p>
-    <div class="auth-social-row">
-      <button class="auth-social-btn">
-        <svg viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.71A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.958L3.964 7.29C4.672 5.163 6.656 3.58 9 3.58z"/></svg>
-        Continuar con Google
-      </button>
-    </div>
-    <div class="auth-divider">o con email</div>
-    <form class="auth-form" onsubmit="event.preventDefault(); alert('Cuenta de creador creada (demo)');">
+    <h1 class="auth-title">Completá tu <em>perfil</em></h1>
+    <p class="auth-sub">Un último paso antes de acceder a tu panel.</p>
+    <form class="auth-form" id="creator-signup-form" onsubmit="event.preventDefault(); completeCreatorSignup();">
       <div class="form-field">
         <label class="form-label">Nombre de la empresa o productora</label>
-        <input class="form-input" type="text" placeholder="Ej. Move Concerts CR" required />
+        <input class="form-input" type="text" id="creator-company" placeholder="Ej. Move Concerts CR" required autocomplete="organization" />
       </div>
       <div class="form-grid">
         <div class="form-field">
           <label class="form-label">Tu nombre</label>
-          <input class="form-input" type="text" placeholder="Nombre" required />
+          <input class="form-input" type="text" id="creator-first-name" placeholder="Nombre" required autocomplete="given-name" />
         </div>
         <div class="form-field">
           <label class="form-label">Apellido</label>
-          <input class="form-input" type="text" placeholder="Apellido" required />
+          <input class="form-input" type="text" id="creator-last-name" placeholder="Apellido" required autocomplete="family-name" />
         </div>
       </div>
-      <div class="form-field">
-        <label class="form-label">Email de empresa</label>
-        <input class="form-input" type="email" placeholder="contacto@tuempresa.com" required />
-      </div>
-      <div class="form-field">
-        <label class="form-label">Contraseña</label>
-        <input class="form-input" type="password" placeholder="Mínimo 8 caracteres" required />
-      </div>
-      <button type="submit" class="auth-submit dark">Crear cuenta de creador</button>
-      <p class="auth-legal">Al crear la cuenta aceptás los <a>Términos para creadores</a> y la <a>Política de Privacidad</a>. Luego validamos tus datos fiscales.</p>
+      <button type="submit" class="auth-submit dark">Ir al panel</button>
+      <p class="auth-legal">Al continuar aceptás los <a>Términos para creadores</a> y la <a>Política de Privacidad</a>. Desde el panel vas a poder completar tus datos fiscales y validar tu identidad.</p>
     </form>
-    <div class="auth-switcher">
-      ¿Ya tenés cuenta? <a onclick="navigate('creator-login')">Iniciá sesión</a>
+  </div>
+</section>
+</div>
+
+<!-- ============================================= -->
+<!-- PAGE: CREATOR REDIRECT (honest demo boundary)  -->
+<!-- ============================================= -->
+<div class="page" data-page="creator-redirect">
+<header class="header header-minimal">
+  <div class="container header-inner">
+    <a onclick="navigate('home')" class="logo"><span class="logo-mark"><svg viewBox="0 0 32 32" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="8" width="6" height="16" rx="1"/><rect x="12" y="4" width="6" height="24" rx="1"/><rect x="22" y="10" width="6" height="12" rx="1"/></svg></span>VIBE</a>
+  </div>
+</header>
+<section class="creator-redirect-hero">
+  <div class="container creator-redirect-inner">
+    <div class="creator-redirect-spinner" aria-hidden="true"></div>
+    <span class="auth-badge">✦ Creadores</span>
+    <h1 class="creator-redirect-title">Preparando tu <em>panel…</em></h1>
+    <p class="creator-redirect-sub" id="creator-redirect-sub">Te estamos llevando a tu dashboard de organizador.</p>
+    <div class="creator-redirect-note">
+      <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" d="M12 16v-4m0-4h.01"/></svg>
+      <div>
+        <strong>Esto es una demo.</strong>
+        <span>En producción, serías redirigido al backoffice del organizador en <code>panel.vibe.cr</code>, donde completás datos fiscales, creás eventos y gestionás ventas.</span>
+      </div>
+    </div>
+    <div class="creator-redirect-actions">
+      <button class="btn-ghost" onclick="navigate('home')">Volver al inicio</button>
+      <button class="btn-primary-sm" onclick="navigate('creadores')">Ver página de creadores</button>
     </div>
   </div>
 </section>
@@ -6315,6 +7266,36 @@ function handleCheckoutEmailSubmit() {
   }
 }
 
+// --- Step 1 (creator variant): email submitted on creator-login page ---
+// Same as handleEmailSubmit but sets returnTo='creator-redirect' so the flow
+// routes to the creator panel redirect page after OTP.
+function handleCreatorEmailSubmit() {
+  try {
+    const input = document.getElementById('creator-auth-email-input');
+    if (!input) return;
+    const email = (input.value || '').trim().toLowerCase();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      input.focus();
+      input.reportValidity && input.reportValidity();
+      return;
+    }
+    AUTH_STATE.email = email;
+    AUTH_STATE.returnTo = 'creator-redirect';
+    const display = document.getElementById('verify-email-display');
+    if (display) display.textContent = email;
+    resetOtpInputs();
+    navigate('verify');
+    setTimeout(() => {
+      const first = document.querySelector('.otp-input');
+      if (first) first.focus();
+    }, 100);
+    startResendCooldown();
+  } catch (err) {
+    console.error('handleCreatorEmailSubmit error:', err);
+    alert('Error en el flujo de creador: ' + err.message);
+  }
+}
+
 // --- Step 2: OTP handling ---
 function resetOtpInputs() {
   document.querySelectorAll('.otp-input').forEach(i => {
@@ -6405,15 +7386,17 @@ function handleOtpSubmit() {
       firstName: guessFirstNameFromEmail(email),
       lastName: '',
       email,
-      provider: 'email',
+      provider: target === 'creator-redirect' ? 'creator-email' : 'email',
     };
     persistCurrentUser();
+    markSessionActive();
     AUTH_STATE.returnTo = null; // reset
     navigate(target);
   } else {
     // New user flow depends on context:
-    // - From login (→ cuenta): need to complete profile first
-    // - From checkout (→ checkout-details): skip profile completion, they'll fill it in checkout
+    // - From login (→ cuenta): need to complete profile first via signup page
+    // - From checkout (→ checkout-details): skip profile completion, fill it in checkout
+    // - From creator-login (→ creator-redirect): need to complete creator profile via creator-signup
     if (target === 'checkout-details') {
       // Mark known, set minimal profile, go to checkout-details
       if (email) markUserKnown(email);
@@ -6424,10 +7407,18 @@ function handleOtpSubmit() {
         provider: 'email',
       };
       persistCurrentUser();
+      markSessionActive();
       AUTH_STATE.returnTo = null;
       navigate('checkout-details');
+    } else if (target === 'creator-redirect') {
+      // New creator: complete profile (company, name, lastname) before redirect
+      navigate('creator-signup');
+      setTimeout(() => {
+        const company = document.getElementById('creator-company');
+        if (company) company.focus();
+      }, 100);
     } else {
-      // Default: go to signup (complete profile)
+      // Default (buyer): go to signup to complete profile
       navigate('signup');
       setTimeout(() => {
         const firstName = document.getElementById('signup-first-name');
@@ -6451,7 +7442,46 @@ function completeSignup(formEl) {
   // Session-only flag: true during THIS login session because they just signed up
   AUTH_STATE.isNewUserSession = true;
   persistCurrentUser();
+  markSessionActive();
   navigate('cuenta');
+}
+
+function completeCreatorSignup() {
+  const company = (document.getElementById('creator-company')?.value || '').trim();
+  const firstName = (document.getElementById('creator-first-name')?.value || '').trim();
+  const lastName = (document.getElementById('creator-last-name')?.value || '').trim();
+  const email = AUTH_STATE.email;
+  if (!company || !firstName || !lastName) return; // HTML5 required handles this too
+  if (email) markUserKnown(email);
+  AUTH_STATE.profile = {
+    firstName,
+    lastName,
+    email: email || '',
+    company,
+    provider: 'creator-email',
+  };
+  AUTH_STATE.isNewCreatorSession = true;
+  persistCurrentUser();
+  markSessionActive();
+  navigate('creator-redirect');
+}
+
+function renderCreatorRedirect() {
+  const user = getActiveUser();
+  const sub = document.getElementById('creator-redirect-sub');
+  if (!sub) return;
+  const isNew = AUTH_STATE.isNewCreatorSession === true;
+  if (user && user.firstName) {
+    if (isNew) {
+      sub.innerHTML = `¡Bienvenido, <strong>${escapeHtml(user.firstName)}</strong>! Estamos abriendo tu dashboard${user.company ? ' de <strong>' + escapeHtml(user.company) + '</strong>' : ''}.`;
+    } else {
+      sub.innerHTML = `Volvemos a verte, <strong>${escapeHtml(user.firstName)}</strong>. Abriendo tu dashboard${user.company ? ' de <strong>' + escapeHtml(user.company) + '</strong>' : ''}.`;
+    }
+  } else {
+    sub.textContent = 'Te estamos llevando a tu dashboard de organizador.';
+  }
+  // Clear the new-creator flag now that we've used it
+  AUTH_STATE.isNewCreatorSession = false;
 }
 
 // --- Resend OTP with 30s cooldown ---
@@ -6488,7 +7518,7 @@ function handleResendOtp() {
 
 // --- Google mock popup ---
 function openGoogleMock(returnTo) {
-  // returnTo: 'cuenta' (default, from login page) or 'checkout-details' (from guest checkout)
+  // returnTo: 'cuenta' (default, from login), 'checkout-details' (guest checkout), or 'creator-redirect' (creator login)
   AUTH_STATE.returnTo = returnTo || 'cuenta';
   const overlay = document.getElementById('google-mock');
   if (overlay) overlay.classList.add('active');
@@ -6501,19 +7531,30 @@ function closeGoogleMock(e) {
 function completeGoogleMock() {
   const overlay = document.getElementById('google-mock');
   if (overlay) overlay.classList.remove('active');
-  // Use the Google account as the current user
-  AUTH_STATE.email = 'juan.perez@gmail.com';
-  AUTH_STATE.profile = {
-    firstName: 'Juan',
-    lastName: 'Pérez',
-    email: 'juan.perez@gmail.com',
-    provider: 'google',
-  };
+  const target = AUTH_STATE.returnTo || 'cuenta';
+  // Use the Google account as the current user — shape varies if creator flow
+  if (target === 'creator-redirect') {
+    AUTH_STATE.email = 'juan.perez@gmail.com';
+    AUTH_STATE.profile = {
+      firstName: 'Juan',
+      lastName: 'Pérez',
+      email: 'juan.perez@gmail.com',
+      company: 'Tu Productora',
+      provider: 'creator-google',
+    };
+  } else {
+    AUTH_STATE.email = 'juan.perez@gmail.com';
+    AUTH_STATE.profile = {
+      firstName: 'Juan',
+      lastName: 'Pérez',
+      email: 'juan.perez@gmail.com',
+      provider: 'google',
+    };
+  }
   // Mark as known so next Google sign-in is consistent
   markUserKnown('juan.perez@gmail.com');
   persistCurrentUser();
-  // Route based on where we came from
-  const target = AUTH_STATE.returnTo || 'cuenta';
+  markSessionActive();
   AUTH_STATE.returnTo = null; // reset
   navigate(target);
 }
@@ -6553,6 +7594,28 @@ function getCurrentUser() {
   } catch {}
   return null;
 }
+
+// --- Session state (ephemeral, per-tab) ---
+// This simulates a real app's session token: once you close the tab the session dies.
+// localStorage still holds the profile so "next time you log in with the same email,
+// we skip your profile completion" — but without an active session you cannot use the
+// profile to skip auth screens.
+const SESSION_FLAG_KEY = 'vibe_session_active';
+function markSessionActive() {
+  try { sessionStorage.setItem(SESSION_FLAG_KEY, '1'); } catch {}
+}
+function clearSession() {
+  try { sessionStorage.removeItem(SESSION_FLAG_KEY); } catch {}
+}
+function hasActiveSession() {
+  try { return sessionStorage.getItem(SESSION_FLAG_KEY) === '1'; } catch { return false; }
+}
+// Get the active user only if session is active (otherwise treat as anonymous)
+function getActiveUser() {
+  if (!hasActiveSession()) return null;
+  return getCurrentUser();
+}
+
 function guessFirstNameFromEmail(email) {
   if (!email) return 'Usuario';
   const local = email.split('@')[0];
@@ -6563,6 +7626,7 @@ function guessFirstNameFromEmail(email) {
 function handleLogout() {
   AUTH_STATE.email = null;
   AUTH_STATE.profile = null;
+  clearSession();
   try {
     localStorage.removeItem(USER_PROFILE_KEY);
   } catch {}
@@ -6793,7 +7857,9 @@ function escapeHtml(str) {
 let TICKETS_REGISTRY = {};
 
 function renderAccountPage() {
-  const user = getCurrentUser();
+  const user = getActiveUser();
+  // No active session → kick to login (the account page requires auth)
+  if (!user) { navigate('login'); return; }
   // isNewUser is a session-only flag: only true right after signup completion in this session
   const isNewUser = AUTH_STATE.isNewUserSession === true;
 
@@ -6934,7 +8000,7 @@ function renderAccountPage() {
 function openTicketModal(ticketId) {
   const ticket = TICKETS_REGISTRY[ticketId];
   if (!ticket) return;
-  const user = getCurrentUser();
+  const user = getActiveUser();
   const holderName = (user && user.firstName ? user.firstName + ' ' + (user.lastName || '') : 'Titular').trim();
   const isPast = ticket.isPast;
 
@@ -7545,6 +8611,354 @@ function submitPresaleCode() {
   }, 900);
 }
 
+// ============================================
+// CHECKOUT PAYMENT (step 3/3)
+// ============================================
+
+const PAYMENT_STATE = {
+  subtotal: 61.00,
+  feePct: 0.05,
+  couponCode: null,
+  couponDiscount: 0,
+  orderRef: null,
+};
+
+function formatCardNumber(input) {
+  const digits = input.value.replace(/\D/g, '').slice(0, 16);
+  const groups = [];
+  for (let i = 0; i < digits.length; i += 4) groups.push(digits.slice(i, i + 4));
+  input.value = groups.join(' ');
+  updateCardBrand(digits);
+  validatePaymentForm();
+}
+
+function updateCardBrand(digits) {
+  const container = document.getElementById('card-brand-icons');
+  if (!container) return;
+  container.querySelectorAll('.card-brand').forEach(el => el.classList.remove('active'));
+  if (!digits) return;
+  let brand = null;
+  if (digits.startsWith('4')) brand = 'visa';
+  else if (/^5[1-5]/.test(digits) || /^2[2-7]/.test(digits)) brand = 'mc';
+  else if (/^3[47]/.test(digits)) brand = 'amex';
+  if (brand) {
+    const el = container.querySelector(`.card-brand.${brand}`);
+    if (el) el.classList.add('active');
+  }
+}
+
+function formatCardExpiry(input) {
+  let digits = input.value.replace(/\D/g, '').slice(0, 4);
+  if (digits.length >= 3) {
+    input.value = digits.slice(0, 2) + '/' + digits.slice(2);
+  } else {
+    input.value = digits;
+  }
+  validatePaymentForm();
+}
+
+function validatePaymentForm() {
+  const number = (document.getElementById('card-number')?.value || '').replace(/\s/g, '');
+  const expiry = document.getElementById('card-expiry')?.value || '';
+  const cvv = document.getElementById('card-cvv')?.value || '';
+  const holder = (document.getElementById('card-holder')?.value || '').trim();
+  const terms = document.getElementById('payment-terms')?.checked;
+  const cta = document.getElementById('pay-cta');
+  if (!cta) return;
+  const valid = number.length === 16
+    && /^\d{2}\/\d{2}$/.test(expiry)
+    && /^\d{3,4}$/.test(cvv)
+    && holder.length >= 3
+    && terms;
+  cta.disabled = !valid;
+}
+
+// Wire card input listeners
+document.addEventListener('input', (e) => {
+  if (e.target && ['card-cvv', 'card-holder'].includes(e.target.id)) {
+    validatePaymentForm();
+  }
+});
+
+// Coupon logic
+function toggleCoupon() {
+  const wrap = document.getElementById('coupon-disclosure');
+  if (!wrap) return;
+  const applied = document.getElementById('coupon-applied');
+  if (applied && applied.style.display !== 'none') return; // if already applied, do nothing
+  const isOpen = wrap.classList.contains('open');
+  wrap.classList.toggle('open');
+  const form = wrap.querySelector('.coupon-form');
+  const feedback = document.getElementById('coupon-feedback');
+  const input = document.getElementById('coupon-input');
+  if (form) form.classList.remove('error');
+  if (feedback) { feedback.style.display = 'none'; feedback.className = 'coupon-feedback'; }
+  if (input) input.value = '';
+  if (!isOpen && input) setTimeout(() => input.focus(), 120);
+}
+
+function applyCoupon() {
+  const input = document.getElementById('coupon-input');
+  const form = document.querySelector('#coupon-panel .coupon-form');
+  const feedback = document.getElementById('coupon-feedback');
+  if (!input || !form || !feedback) return;
+  const code = (input.value || '').trim().toUpperCase();
+  const isValid = code.length >= 4 && /^[A-Z0-9]+$/.test(code);
+
+  if (!isValid) {
+    form.classList.add('error');
+    feedback.className = 'coupon-feedback is-error';
+    feedback.textContent = code.length === 0
+      ? 'Ingresá un cupón.'
+      : 'Cupón no válido o expirado.';
+    feedback.style.display = 'block';
+    setTimeout(() => form.classList.remove('error'), 400);
+    input.focus();
+    input.select();
+    return;
+  }
+
+  // Apply 10% discount
+  PAYMENT_STATE.couponCode = code;
+  PAYMENT_STATE.couponDiscount = Math.round(PAYMENT_STATE.subtotal * 0.10 * 100) / 100;
+
+  // Hide form panel, show applied card
+  const wrap = document.getElementById('coupon-disclosure');
+  if (wrap) wrap.classList.remove('open');
+  feedback.style.display = 'none';
+
+  const applied = document.getElementById('coupon-applied');
+  const codeEl = document.getElementById('coupon-applied-code');
+  if (codeEl) codeEl.textContent = code;
+  if (applied) applied.style.display = 'flex';
+
+  updatePaymentTotals();
+}
+
+function removeCoupon() {
+  PAYMENT_STATE.couponCode = null;
+  PAYMENT_STATE.couponDiscount = 0;
+  const applied = document.getElementById('coupon-applied');
+  if (applied) applied.style.display = 'none';
+  const input = document.getElementById('coupon-input');
+  if (input) input.value = '';
+  updatePaymentTotals();
+}
+
+function updatePaymentTotals() {
+  const sub = PAYMENT_STATE.subtotal;
+  const discount = PAYMENT_STATE.couponDiscount;
+  const discountedSub = sub - discount;
+  const fee = Math.round(discountedSub * PAYMENT_STATE.feePct * 100) / 100;
+  const total = Math.round((discountedSub + fee) * 100) / 100;
+
+  const fmt = (v) => '$' + v.toFixed(2);
+
+  // Desktop summary
+  document.getElementById('pay-desktop-subtotal')?.replaceChildren(document.createTextNode(fmt(sub)));
+  document.getElementById('pay-desktop-fee')?.replaceChildren(document.createTextNode(fmt(fee)));
+  document.getElementById('pay-desktop-total')?.replaceChildren(document.createTextNode(fmt(total)));
+  const ddcRow = document.getElementById('pay-desktop-coupon-row');
+  if (ddcRow) {
+    if (PAYMENT_STATE.couponCode) {
+      ddcRow.style.display = 'flex';
+      const cc = document.getElementById('pay-desktop-coupon-code');
+      const ca = document.getElementById('pay-desktop-coupon-amount');
+      if (cc) cc.textContent = PAYMENT_STATE.couponCode;
+      if (ca) ca.textContent = '-' + fmt(discount);
+    } else {
+      ddcRow.style.display = 'none';
+    }
+  }
+
+  // Mobile summary
+  document.getElementById('pay-mobile-subtotal')?.replaceChildren(document.createTextNode(fmt(sub)));
+  document.getElementById('pay-mobile-fee')?.replaceChildren(document.createTextNode(fmt(fee)));
+  document.getElementById('pay-mobile-total-val')?.replaceChildren(document.createTextNode(fmt(total)));
+  document.getElementById('pay-mobile-total')?.replaceChildren(document.createTextNode(fmt(total)));
+  const mdcRow = document.getElementById('pay-mobile-coupon-row');
+  if (mdcRow) {
+    if (PAYMENT_STATE.couponCode) {
+      mdcRow.style.display = 'flex';
+      const cc = document.getElementById('pay-mobile-coupon-code');
+      const ca = document.getElementById('pay-mobile-coupon-amount');
+      if (cc) cc.textContent = PAYMENT_STATE.couponCode;
+      if (ca) ca.textContent = '-' + fmt(discount);
+    } else {
+      mdcRow.style.display = 'none';
+    }
+  }
+
+  // Pay CTA amount
+  const payAmount = document.getElementById('pay-cta-amount');
+  if (payAmount) payAmount.textContent = fmt(total);
+}
+
+function renderPaymentPage() {
+  // Show/hide "save card" based on auth state
+  const user = getActiveUser();
+  const saveRow = document.getElementById('card-save-row');
+  if (saveRow) saveRow.style.display = user ? '' : 'none';
+
+  // Prefill holder name if logged in
+  const holderInput = document.getElementById('card-holder');
+  if (holderInput && !holderInput.value && user && user.firstName) {
+    const full = (user.firstName + ' ' + (user.lastName || '')).trim().toUpperCase();
+    holderInput.value = full;
+  }
+
+  updatePaymentTotals();
+  validatePaymentForm();
+}
+
+// Prefill checkout-details form when user is authenticated (Google or email OTP)
+function prefillCheckoutDetails() {
+  const user = getActiveUser();
+  if (!user) return;
+  const fn = document.getElementById('buyer-firstname');
+  const ln = document.getElementById('buyer-lastname');
+  const em = document.getElementById('buyer-email');
+  if (fn && !fn.value && user.firstName) fn.value = user.firstName;
+  if (ln && !ln.value && user.lastName) ln.value = user.lastName;
+  if (em && !em.value && user.email) em.value = user.email;
+  // Trigger the updateBuyerName to sync attendee cards that say "es para mí"
+  if (typeof updateBuyerName === 'function') updateBuyerName();
+}
+
+function generateOrderRef() {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, '0');
+  const dd = String(now.getDate()).padStart(2, '0');
+  const rand = Array.from({length: 4}, () => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+    return chars[Math.floor(Math.random() * chars.length)];
+  }).join('');
+  return `VIBE-${yyyy}${mm}${dd}-${rand}`;
+}
+
+function submitPayment() {
+  const cta = document.getElementById('pay-cta');
+  if (!cta || cta.disabled) return;
+  cta.classList.add('is-loading');
+  cta.disabled = true;
+  // Simulate payment processing
+  setTimeout(() => {
+    PAYMENT_STATE.orderRef = generateOrderRef();
+    cta.classList.remove('is-loading');
+    navigate('checkout-success');
+  }, 1200);
+}
+
+// ============================================
+// CHECKOUT SUCCESS
+// ============================================
+function renderSuccessPage() {
+  const user = getActiveUser();
+  const isLoggedIn = !!user;
+  const email = (user && user.email) || getGuestEmail() || 'tu email';
+
+  // Order ref
+  const refEl = document.getElementById('success-order-ref');
+  if (refEl) refEl.textContent = PAYMENT_STATE.orderRef || generateOrderRef();
+
+  const notice = document.getElementById('success-notice');
+  const actions = document.getElementById('success-actions');
+  if (!notice || !actions) return;
+
+  if (isLoggedIn) {
+    // ===== VARIANT A: Logged-in user =====
+    const sub = document.getElementById('success-sub');
+    if (sub) sub.textContent = `Tu compra se completó con éxito, ${escapeHtml(user.firstName || '')}.`;
+
+    notice.className = 'success-notice is-highlighted';
+    notice.innerHTML = `
+      <div class="success-notice-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10V7a2 2 0 012-2h14a2 2 0 012 2v3a2 2 0 000 4v3a2 2 0 01-2 2H5a2 2 0 01-2-2v-3a2 2 0 000-4z"/><path stroke-linecap="round" d="M13 5v14"/></svg>
+      </div>
+      <div class="success-notice-body">
+        <h3 class="success-notice-title">Tus entradas ya están en Mi Cuenta</h3>
+        <p class="success-notice-copy">También te enviamos una copia a <strong>${escapeHtml(email)}</strong>. Podés presentar el QR desde la app o desde el email.</p>
+      </div>
+    `;
+
+    actions.innerHTML = `
+      <button class="success-cta-primary accent" onclick="navigate('cuenta'); switchAccountTab('tickets');">
+        Ver mis entradas
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <button class="success-cta-secondary" onclick="navigate('home')">Volver al inicio</button>
+    `;
+  } else {
+    // ===== VARIANT B: Guest =====
+    const sub = document.getElementById('success-sub');
+    if (sub) sub.textContent = `Enviamos tu entrada a ${email}. Revisá tu bandeja.`;
+
+    notice.className = 'success-notice is-highlighted';
+    notice.innerHTML = `
+      <div class="success-notice-icon">
+        <svg fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </div>
+      <div class="success-notice-body">
+        <h3 class="success-notice-title">Te enviamos las entradas por email</h3>
+        <p class="success-notice-copy">Revisá tu bandeja en <strong>${escapeHtml(email)}</strong> en los próximos minutos. Desde ahí podés agregarlas a tu wallet o reenviártelas si hace falta.</p>
+      </div>
+    `;
+
+    actions.innerHTML = `
+      <button class="success-cta-primary accent" onclick="startPostPurchaseSignup()">
+        Crear cuenta para no perder tus entradas
+        <svg fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <button class="success-cta-secondary" onclick="navigate('home')">Volver al inicio</button>
+    `;
+  }
+}
+
+// Track buyer email in guest purchases (read from checkout form if present)
+function getGuestEmail() {
+  const buyerEmail = document.getElementById('buyer-email');
+  if (buyerEmail && buyerEmail.value) return buyerEmail.value.trim().toLowerCase();
+  return null;
+}
+
+// Start passwordless signup with email prefilled (from checkout)
+function startPostPurchaseSignup() {
+  const email = getGuestEmail();
+  if (email) {
+    AUTH_STATE.email = email;
+    AUTH_STATE.returnTo = 'cuenta';
+    const display = document.getElementById('verify-email-display');
+    if (display) display.textContent = email;
+    resetOtpInputs();
+    navigate('verify');
+    setTimeout(() => {
+      const first = document.querySelector('.otp-input');
+      if (first) first.focus();
+    }, 100);
+    startResendCooldown();
+  } else {
+    navigate('login');
+  }
+}
+
+// Secondary actions — mocks
+function addToCalendarMock() {
+  alert('En la versión real, descargaría un archivo .ics con el evento.');
+}
+function shareTicketMock() {
+  const text = 'Voy a Reggaetón Tristito el 2 de mayo, ¿vas?';
+  const url = window.location.href;
+  if (navigator.share) {
+    navigator.share({ title: 'VIBE', text, url }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text + ' ' + url);
+    alert('Link copiado al portapapeles.');
+  } else {
+    alert(text);
+  }
+}
+
 function updateStickyPrice(price) {
   const stickyPrice = document.querySelector('.sticky-buy-price');
   if (stickyPrice) {
@@ -7838,6 +9252,17 @@ function continueToTickets() {
 }
 
 function navigate(pageName, eventId) {
+  // If user has an ACTIVE SESSION and is heading to the checkout identity step,
+  // skip it and go straight to details. They already identified themselves.
+  // Anonymous users (no active session) see the identity screen as normal.
+  if (pageName === 'checkout') {
+    const user = (typeof getActiveUser === 'function') ? getActiveUser() : null;
+    // Only skip for buyer-shaped profiles (email or google). Creator profiles don't buy.
+    if (user && user.email && (user.provider === 'google' || user.provider === 'email')) {
+      pageName = 'checkout-details';
+    }
+  }
+
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const page = document.querySelector(`.page[data-page="${pageName}"]`);
   if (page) page.classList.add('active');
@@ -7856,6 +9281,26 @@ function navigate(pageName, eventId) {
   // Populate account page whenever we land on it
   if (pageName === 'cuenta') {
     renderAccountPage();
+  }
+
+  // Payment page: prefill + recalculate totals on entry
+  if (pageName === 'checkout-payment') {
+    renderPaymentPage();
+  }
+
+  // Checkout-details: prefill buyer info if user is authenticated
+  if (pageName === 'checkout-details') {
+    prefillCheckoutDetails();
+  }
+
+  // Success page: render appropriate variant based on auth state
+  if (pageName === 'checkout-success') {
+    renderSuccessPage();
+  }
+
+  // Creator redirect page: personalize subtitle with user info if available
+  if (pageName === 'creator-redirect') {
+    renderCreatorRedirect();
   }
 
   // Show sticky buy bar only on evento page AND only for single-date events.
@@ -8598,11 +10043,52 @@ function clearAllFilters() {
 // ============================================
 // CHECKOUT — 2 screens (identity + details)
 // ============================================
-const DEMO_ATTENDEES = [
+// DEMO_ATTENDEES is regenerated from the actual cart selection before rendering.
+// Starts with a reasonable default so the demo always has something; gets replaced
+// with real data every time the user enters checkout-details.
+let DEMO_ATTENDEES = [
   { ticketType: 'General Fase 2', mode: 'me', firstName: '', lastName: '', email: '', dni: '' },
-  { ticketType: 'VIP Fase 2', mode: 'other', firstName: '', lastName: '', email: '', dni: '' },
-  { ticketType: 'VIP Fase 2', mode: 'other', firstName: '', lastName: '', email: '', dni: '' }
 ];
+
+// Read selected tickets from the /tickets page and rebuild DEMO_ATTENDEES to match.
+// First attendee defaults to 'me' (buyer is usually one of the attendees);
+// the rest default to 'other'. Preserves previously entered data when possible.
+function buildAttendeesFromCart() {
+  const items = [];
+  document.querySelectorAll('.ticket[data-name]').forEach(t => {
+    const q = parseInt(t.querySelector('.qty-val').textContent) || 0;
+    if (q > 0) {
+      for (let i = 0; i < q; i++) items.push({ ticketType: t.dataset.name });
+    }
+  });
+  // Seated mode: each selected seat = 1 attendee
+  document.querySelectorAll('.seat-dot.selected').forEach(s => {
+    items.push({ ticketType: `${s.dataset.sectionName} · Fila ${s.dataset.row}, As. ${s.dataset.seat}` });
+  });
+
+  // If the user didn't select anything (e.g. direct navigation for demo purposes),
+  // fall back to a single placeholder so the page isn't empty.
+  if (!items.length) {
+    DEMO_ATTENDEES = [
+      { ticketType: 'Entrada', mode: 'me', firstName: '', lastName: '', email: '', dni: '' }
+    ];
+    return;
+  }
+
+  // Preserve as much previously-entered data as possible
+  const prev = DEMO_ATTENDEES || [];
+  DEMO_ATTENDEES = items.map((it, i) => {
+    const existing = prev[i];
+    return {
+      ticketType: it.ticketType,
+      mode: existing ? existing.mode : (i === 0 ? 'me' : 'other'),
+      firstName: existing ? existing.firstName : '',
+      lastName: existing ? existing.lastName : '',
+      email: existing ? existing.email : '',
+      dni: existing ? existing.dni : '',
+    };
+  });
+}
 
 function getBuyerName() {
   const f = document.getElementById('buyer-firstname');
@@ -8707,6 +10193,19 @@ function renderAttendees() {
     `;
   }).join('');
 
+  // Update the "N entradas" counter in the section header
+  const countEl = document.getElementById('attendees-count');
+  if (countEl) {
+    const n = DEMO_ATTENDEES.length;
+    countEl.textContent = n;
+    // Also update the parent's label (entrada vs entradas)
+    const parent = countEl.parentElement;
+    if (parent) {
+      // parent structure: <span>N</span> entradas  → we rebuild cleanly
+      parent.innerHTML = `<span id="attendees-count">${n}</span> ${n === 1 ? 'entrada' : 'entradas'}`;
+    }
+  }
+
   // Also update the buyer-side age state (banner + buyer DNI)
   updateCheckoutForAge();
 }
@@ -8762,10 +10261,14 @@ function stopCheckoutTimer() {
   const origNav = window.navigate;
   window.navigate = function(pageName, ...rest) {
     origNav(pageName, ...rest);
-    if (pageName === 'checkout-details') {
-      renderAttendees(); // Also calls updateCheckoutForAge internally
+    // Read the page that ACTUALLY ended up active (origNav may have redirected,
+    // e.g. auto-skipping /checkout identity when the user is already logged in).
+    const active = document.querySelector('.page.active')?.getAttribute('data-page');
+    if (active === 'checkout-details') {
+      buildAttendeesFromCart(); // regenerate DEMO_ATTENDEES from real cart
+      renderAttendees();
       startCheckoutTimer();
-    } else if (pageName === 'checkout') {
+    } else if (active === 'checkout') {
       // On identity screen, no timer yet
       stopCheckoutTimer();
     } else {
